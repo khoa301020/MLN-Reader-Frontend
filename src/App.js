@@ -1,5 +1,7 @@
+import { Button } from 'antd';
 import './App.css';
 import logo from './logo.svg';
+import './output.css';
 
 function App() {
   return (
@@ -18,6 +20,10 @@ function App() {
           Learn React
         </a>
       </header>
+      <h1 class="text-4xl font-bold underline bg-red-600">
+        Hello world!!
+      </h1>
+      <Button type="primary">ABCD</Button>
     </div>
   );
 }

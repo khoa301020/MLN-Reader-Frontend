@@ -1,11 +1,12 @@
 import { Button } from 'antd';
+import toast, { Toaster } from 'react-hot-toast';
 import './App.css';
 import logo from './logo.svg';
-import './output.css';
 
 function App() {
   return (
     <div className="App">
+      <div><Toaster position="bottom-right" reverseOrder={false} /> </div>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -23,7 +24,7 @@ function App() {
       <h1 class="text-4xl font-bold underline bg-red-600">
         Hello world!!
       </h1>
-      <Button type="primary">ABCD</Button>
+      <Button type="primary" onClick={() => { toast.success('Successfully toasted!') }}>ABCD</Button>
     </div>
   );
 }

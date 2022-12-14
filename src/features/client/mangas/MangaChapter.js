@@ -1,19 +1,14 @@
 import { CaretLeftOutlined, CaretRightOutlined, HomeFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import CommentForm from '../../components/CommentForm';
-import CommentSection from '../../components/CommentSection';
+import CommentForm from '../../../components/CommentForm';
+import CommentSection from '../../../components/CommentSection';
 
-function BookInfo() {
+function MangaChapter() {
   return (
     <div className='wrapper'>
       <div className='container' class='flex flex-col flex-wrap w-full h-fit bg-gray-100'>
         <div class='grid grid-cols-12 h-auto max-w-screen-xl mx-auto'>
           <div class='col-start-2 col-span-10 h-auto mt-10'>
-
-
-
-
-
             <div className='ChapterInfo' class='text-center'>
               <div className='Season' class='font-bold text-3xl mb-3'>
                 Chính truyện - Phần Một
@@ -129,4 +124,4 @@ function BookInfo() {
   );
 }
 
-export default BookInfo;
+export default MangaChapter;

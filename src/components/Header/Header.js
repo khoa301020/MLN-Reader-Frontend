@@ -1,7 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import mlnLogo from '../../assets/icons/mlnLogo.png';
-import coverHeader from '../../assets/img/coverHeader.jpg';
 
 function Header() {
     return (
@@ -43,9 +42,6 @@ function Header() {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className='cover'>
-                <img class='w-full h-56 object-cover' src={coverHeader} alt='cover' />
             </div>
         </>
     );

@@ -34,17 +34,16 @@ export default function TinyMCE() {
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue={html}
                 init={{
-                    height: 500,
+                    height: 300,
                     menubar: false,
+                    branding: false,
                     plugins: [
-                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                        'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+                        'autolink', 'link', 'image', 'charmap',
+                        'searchreplace', 'fullscreen', 'emoticons', 'wordcount'
                     ],
-                    toolbar: 'undo redo | blocks | ' +
-                        'bold italic forecolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist outdent indent | ' +
-                        'removeformat | help',
+                    toolbar: 'emoticons undo redo |' +
+                        'bold italic underline strikethrough forecolor |' +
+                        'link image | removeformat | fullscreen',
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                 }
                 }

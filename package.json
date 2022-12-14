@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
+    "@headlessui/react": "^1.7.5",
+    "@heroicons/react": "^2.0.13",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",

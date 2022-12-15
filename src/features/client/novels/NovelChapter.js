@@ -42,7 +42,7 @@ function NovelChapter() {
             </div>
             <div className='ChapterContent'>
               <div class='block m-auto h-auto max-w-screen-xl text-justify font-normal text-xl overflow-hidden'>
-                {parse(chapter.content) }
+                {parse(chapter.content)}
               </div>
               <div className='TableOfcontents' class='grid grid-cols-3 rounded-full w-full mt-10 border border-solid border-gray-500'>
                 <a href='##'>

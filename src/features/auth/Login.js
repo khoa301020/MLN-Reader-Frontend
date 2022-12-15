@@ -30,12 +30,10 @@ export default function Login() {
         e.preventDefault();
 
         await userApi.login({ query: user, password: pwd }).then((res) => {
-            console.log({
-                username: res.data.result.username,
-                role: res.data.result.role,
-            });
             localStorage.setItem('username', res.data.result.username);
             localStorage.setItem('role', res.data.result.role);
+            console.log(res.data.result.token);
+            Cookies.set('token', res.data.result.token);
             setUser('');
             setPwd('');
             toast.success("Đăng nhập thành công");

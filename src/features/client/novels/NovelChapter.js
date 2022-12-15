@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { novelApi } from '../../../api/api';
 import CommentForm from '../../../components/CommentForm';
 import CommentSection from '../../../components/CommentSection';
+import './image.css';
 
 function NovelChapter() {
   const { id } = useParams();
@@ -26,7 +27,7 @@ function NovelChapter() {
     <div className='wrapper'>
       <div className='container' class='flex flex-col flex-wrap w-full h-fit bg-gray-100'>
         <div class='grid grid-cols-12 h-auto max-w-screen-xl mx-auto'>
-          <div class='col-start-2 col-span-10 h-auto mt-10'>
+          <div class='col-start-2 col-span-10 h-auto mt-10 max-w-screen-xl'>
             <div className='ChapterInfo' class='text-center'>
               <div className='Season' class='font-bold text-3xl mb-3'>
                 {chapter.title}
@@ -40,8 +41,8 @@ function NovelChapter() {
               <div className='Line' class='w-20 h-px bg-slate-600 mx-auto my-auto'></div>
             </div>
             <div className='ChapterContent'>
-              <div class='text-justify font-normal text-xl '>
-                {parse(chapter.content)}
+              <div class='block m-auto h-auto max-w-screen-xl text-justify font-normal text-xl overflow-hidden'>
+                {parse(chapter.content) }
               </div>
               <div className='TableOfcontents' class='grid grid-cols-3 rounded-full w-full mt-10 border border-solid border-gray-500'>
                 <a href='##'>

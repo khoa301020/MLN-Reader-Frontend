@@ -1,54 +1,91 @@
 import { SearchOutlined } from '@ant-design/icons';
+import Cookies from 'js-cookie';
+import React, { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { userApi } from '../../api/api';
 import mlnLogo from '../../assets/icons/mlnLogo.png';
-import coverHeader from '../../assets/img/coverHeader.jpg';
 
 function Header() {
-    return (
-        <>
-            <div className='wrapper' class='flex flex-col flex-wrap w-full h-fit min-h-fit max-w-screen-xl mx-auto'>
-                <div className='navBar' class='grid grid-cols-12 gap-12 bg-white'>
-                    <div className='container' class='col-start-2 col-span-10'>
-                        <div class='flex flex-row flex-nowrap justify-between'>
-                            <div className='left-nav' class='flex flex-row flex-wrap content-center items-center'>
-                                <div className='logo'>
-                                    <a href='/' class='no-underline'>
-                                        <img class='w-48' src={mlnLogo} alt='logo' />
-                                    </a>
-                                </div>
-                                <div className='menu'>
-                                    <ul className='navigation' class='list-none inline-flex'>
-                                        <li>
-                                            <Link to='/manga' class='no-underline pr-6 font-medium text-black hover:text-gray-500 duration-700'>Truyện tranh</Link>
-                                        </li>
-                                        <li>
-                                            <Link to='/lightnovel' class='no-underline text-black font-medium hover:text-gray-500 duration-700'>Tiểu Thuyết</Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className='right-nav' class='flex flex-row justify-between content-center items-center'>
-                                <div class="relative text-gray-600 mr-5">
-                                    <input type="search" name="serch" placeholder="Search" class="bg-white h-8 px-5 pr-10 rounded-full text-sm focus:outline-none border border-solid " />
-                                    <button type="submit" class="absolute right-0 top-0 mt-2 mr-2 bg-transparent border-0">
-                                        <SearchOutlined />
-                                    </button>
-                                </div>
-                                <Link to='/login'>
-                                    <button class="bg-cyan-400 hover:bg-teal-400 duration-300 text-white font-medium py-2 px-4 rounded-full border-none">
-                                        Đăng nhập
-                                    </button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
+  useEffect(() => {
+    if (Cookies.get('token')) {
+      console.log(Cookies.get('token'));
+    }
+  }, []);
+
+  function handleSearch() {
+    console.log('search');
+  }
+
+  function handleLogout() {
+    const body = {
+      username: localStorage.getItem('username'),
+    }
+    userApi.logout(body).then(() => {
+      Cookies.remove('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      toast.success('Đăng xuất thành công');
+      window.location.reload();
+    }).catch((err) => {
+      console.log(err);
+      toast.error(err.response.message);
+    })
+  }
+
+  return (
+    <>
+      <div className='wrapper flex flex-col flex-wrap w-full h-fit min-h-fit max-w-screen-xl mx-auto'>
+        <div className='navBar grid grid-cols-12 gap-12 bg-white'>
+          <div className='container col-start-2 col-span-10'>
+            <div className='flex flex-row flex-nowrap justify-between'>
+              <div className='left-nav flex flex-row flex-wrap content-center items-center'>
+                <div className='logo'>
+                  <a href='/' className='no-underline'>
+                    <img className='w-48' src={mlnLogo} alt='logo' />
+                  </a>
                 </div>
+                <div className='menu'>
+                  <ul className='navigation list-none inline-flex'>
+                    <li>
+                      <Link to='/manga' className='no-underline pr-6 font-medium text-black hover:text-gray-500 duration-700'>Truyện tranh</Link>
+                    </li>
+                    <li>
+                      <Link to='/lightnovel' className='no-underline text-black font-medium hover:text-gray-500 duration-700'>Tiểu Thuyết</Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className='right-nav flex flex-row justify-between content-center items-center'>
+                <div className="relative text-gray-600 mr-5">
+                  <input type="search" name="serch" placeholder="Search" className="bg-white h-8 px-5 pr-10 rounded-full text-sm focus:outline-none border border-solid " />
+                  <button type="submit" className="absolute right-0 top-0 mt-2 mr-2 bg-transparent border-0" onClick={handleSearch}>
+                    <SearchOutlined />
+                  </button>
+                </div>
+                {Cookies.get('token') ? (
+                  <>
+                    <p className="text-black font-medium">Xin chào, {localStorage.getItem('username')}</p>
+                    <button className="bg-cyan-400 hover:bg-teal-400 duration-300 text-white font-medium py-2 px-4 rounded-full border-none"
+                      onClick={handleLogout}>
+                      Đăng xuất
+                    </button>
+                  </>
+                ) : (
+
+                  <Link to='/auth/login'>
+                    <button className="bg-cyan-400 hover:bg-teal-400 duration-300 text-white font-medium py-2 px-4 rounded-full border-none">
+                      Đăng nhập
+                    </button>
+                  </Link>
+                )}
+              </div>
             </div>
-            <div className='cover'>
-                <img class='w-full h-56 object-cover' src={coverHeader} alt='cover' />
-            </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Header;

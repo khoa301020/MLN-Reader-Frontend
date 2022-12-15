@@ -1,0 +1,11 @@
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown:focus .dropdown-menu {
+    display: block;
+}
+
+.dropdown:active .dropdown-menu {
+    display: block;
+}

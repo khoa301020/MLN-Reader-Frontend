@@ -51,10 +51,10 @@ function NovelInfo() {
                     </div>
                     <div className='Info' class='col-span-3 text-base'>
                       <div class='xl:text-3xl sm:text-base lg:text-2xl md:text-xl font-semibold'>{book.title}</div>
-                      <div class='flex flex-row-wrap h-auto w-full mt-3 mb-3'>
+                      <div class='flex flex-wrap h-auto w-full mt-3 mb-3'>
                         {book.tags?.map((tag, index) => (
                           <a href='##' id={tag.code} class='no-underline' key={index}>
-                            <div class='w-fit h-fit bg-slate-100 px-3 py-1 font-normal text-xs mx-1 rounded-full text-black hover:text-cyan-600'>{tag.name}</div>
+                            <div class='w-fit h-fit bg-slate-100 px-3 py-1 font-normal text-xs mx-1 rounded-full text-black hover:text-cyan-600 mb-2'>{tag.name}</div>
                           </a>
                         ))}
                       </div>

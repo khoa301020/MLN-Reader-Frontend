@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { userApi } from '../../api/api';
-import { timer } from '../../helpers/helper';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -78,9 +77,7 @@ export default function Login() {
                 toast.success('Registration Successful');
 
                 // redirect to login page
-                timer(3000).then(() => {
-                    navigate('/auth/login');
-                })
+                navigate('/auth/login');
             }
         }).catch((error) => {
             if (!error?.response) {

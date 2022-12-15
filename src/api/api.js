@@ -10,12 +10,14 @@ export const homeApi = {
     getTopViewNovel: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewTotal"),
     getTopViewNovelDaily: () => api.get("/novel/get-list?page=1&limit=8&sort=topViewDaily"),
     getTopViewNovelMonthly: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewMonthly"),
+    getTopViewNovelYearly: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewYearly"),
     getTopFollowNovel: () => api.get("/novel/get-list?page=1&limit=20&sort=topFollow"),
     getLastUpdateManga: () => api.get("/manga/get-list?page=1&limit=30&sort=lastUpdate"),
     getNewestManga: () => api.get("/manga/get-list?page=1&limit=4&sort=newest"),
     getTopViewManga: () => api.get("/manga/get-list?page=1&limit=20&sort=topView"),
     getTopViewMangaDaily: () => api.get("/manga/get-list?page=1&limit=8&sort=topViewDaily"),
     getTopViewMangaMonthly: () => api.get("/manga/get-list?page=1&limit=20&sort=topViewMonthly"),
+    getTopViewMangaYearly: () => api.get("/manga/get-list?page=1&limit=20&sort=topViewYearly"),
     getTopFollowManga: () => api.get("/manga/get-list?page=1&limit=20&sort=topFollow"),
 };
 
@@ -51,20 +53,23 @@ export const mangaApi = {
 };
 
 export const userApi = {
-    login: (data) => api.post("/user/login", data),
-    register: (data) => api.post("/user/register", data),
+    login: (data) => api.post("/auth/login", data, { withCredentials: true, "Access-Control-Allow-Origin": "http://localhost:3000" }),
+    register: (data) => api.post("/auth/register", data),
+    logout: (data) => api.post("/auth/logout", data),
+    verify: (username, token) => api.post("/auth/verify", username, { headers: { Authorization: `Bearer ${token}` } }),
     getProfile: () => api.get("/user/get-profile"),
-    updateProfile: (data) => api.post("/user/update-profile", data),
-    updateAvatar: (data) => api.post("/user/update-avatar", data),
-    updatePassword: (data) => api.post("/user/update-password", data),
-    follow: (data) => api.post("/user/follow", data),
-    unfollow: (data) => api.post("/user/unfollow", data),
-    comment: (data) => api.post("/user/comment", data),
-    rate: (data) => api.post("/user/rate", data),
+    // updateProfile: (data) => api.post("/user/update-profile", data),
+    // updateAvatar: (data) => api.post("/user/update-avatar", data),
+    // updatePassword: (data) => api.post("/user/update-password", data),
+    followNovel: (data) => api.post("/novel/follow-action", data),
+    unfollowNovel: (data) => api.post("/novel/follow-action", data),
+    followManga: (data) => api.post("/manga/follow-action", data),
+    unfollowManga: (data) => api.post("/manga/follow-action", data),
+    comment: (data) => api.post("/common/comment", data),
+    // rate: (data) => api.post("/user/rate", data),
 };
 
 export const adminApi = {
-    login: (data) => api.post("/admin/login", data),
     getProfile: () => api.get("/admin/get-profile"),
     updateProfile: (data) => api.post("/admin/update-profile", data),
     updateAvatar: (data) => api.post("/admin/update-avatar", data),

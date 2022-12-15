@@ -1,5 +1,6 @@
+import { DownOutlined, FormOutlined } from '@ant-design/icons';
 import React from 'react';
-import { DownOutlined, FormOutlined, PlusCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+// PlusCircleOutlined, CloseCircleOutlined
 import { Tree } from 'antd';
 const treeData = [
   {

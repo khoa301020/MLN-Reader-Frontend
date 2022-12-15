@@ -1,9 +1,5 @@
 import { Editor } from '@tinymce/tinymce-react';
-import { domToReact, htmlToDOM } from 'html-react-parser';
 import React, { useRef } from 'react';
-
-console.log(domToReact);
-console.log(htmlToDOM);
 
 const html = `\n
       <p>Tôi đang chạy</p>

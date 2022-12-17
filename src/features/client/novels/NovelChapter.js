@@ -3,8 +3,8 @@ import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { novelApi } from '../../../api/api';
-import CommentForm from '../../../components/CommentForm';
 import CommentSection from '../../../components/CommentSection';
+import EditorForm from '../../../components/Editor';
 import './image.css';
 
 function NovelChapter() {
@@ -79,7 +79,7 @@ function NovelChapter() {
                     Bạn phải <Link to='/login' class='no-underline text-cyan-700 hover:text-cyan-600'>đăng nhập</Link> hoặc <Link to='/login' class='no-underline text-cyan-700 hover:text-cyan-600'>tạo tài khoản</Link> để bình luận.
                   </div>
                   <div>
-                    <CommentForm />
+                    <EditorForm />
                   </div>
                 </div>
                 <div class='col-span-6'>

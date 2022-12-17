@@ -54,7 +54,7 @@ export default function Login() {
                 <div className="w-full max-w-xs">
                     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlhtmlFor="username">
                                 Tên đăng nhập
                             </label>
                             <input className="appearance-none border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
@@ -67,7 +67,7 @@ export default function Login() {
                             />
                         </div>
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlhtmlFor="password">
                                 Mật khẩu
                             </label>
                             <input className="appearance-none border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 mb-3 leading-tight focus:outline-none focus:shadow-outline"

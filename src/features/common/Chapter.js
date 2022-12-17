@@ -1,7 +1,7 @@
 import { CaretLeftOutlined, CaretRightOutlined, HomeFilled } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import CommentForm from '../../components/CommentForm';
 import CommentSection from '../../components/CommentSection';
+import EditorForm from '../../components/Editor';
 
 function BookInfo() {
   return (
@@ -112,7 +112,7 @@ function BookInfo() {
                     Bạn phải <Link to='/login' class='no-underline text-cyan-700 hover:text-cyan-600'>đăng nhập</Link> hoặc <Link to='/login' class='no-underline text-cyan-700 hover:text-cyan-600'>tạo tài khoản</Link> để bình luận.
                   </div>
                   <div>
-                    <CommentForm />
+                    <EditorForm />
                   </div>
                 </div>
                 <div class='col-span-6'>

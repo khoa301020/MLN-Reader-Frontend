@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { novelApi } from '../../../api/api';
-import CommentForm from '../../../components/CommentForm';
 import CommentSection from '../../../components/CommentSection';
+import CommentForm from '../../../components/Editor';
 import TableListChapter from '../../../components/TableListChapter';
 
 function NovelInfo() {

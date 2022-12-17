@@ -31,9 +31,11 @@ function Home() {
     });
     homeApi.getLastUpdateNovel().then((res) => {
       setNovels(res.data.result);
-      setMangas(res.data.result);
-      setLoading(false);
     });
+    homeApi.getLastUpdateManga().then((res) => {
+      setMangas(res.data.result);
+    });
+    setLoading(false);
   }, []);
 
   if (loading) return <div>Loading section...</div>;

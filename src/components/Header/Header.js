@@ -2,11 +2,12 @@ import { SearchOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { userApi } from '../../api/api';
 import mlnLogo from '../../assets/icons/mlnLogo.png';
 
 function Header() {
+  const navigate = useNavigate();
   useEffect(() => {
     if (Cookies.get('token')) {
       console.log(Cookies.get('token'));
@@ -17,20 +18,34 @@ function Header() {
     console.log('search');
   }
 
+  function removeAuth() {
+    Cookies.remove('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+  }
+
   function handleLogout() {
     const body = {
       username: localStorage.getItem('username'),
     }
     userApi.logout(body).then(() => {
-      Cookies.remove('token');
-      localStorage.removeItem('username');
-      localStorage.removeItem('role');
+      removeAuth()
       toast.success('Đăng xuất thành công');
-      window.location.reload();
+      navigate('/auth/login')
     }).catch((err) => {
       console.log(err);
       toast.error(err.response.message);
     })
+  }
+
+  function preCreateSeries() {
+    if (!localStorage.getItem('role') || !localStorage.getItem('username') || !Cookies.get('token')) {
+      removeAuth()
+      toast.error('Bạn phải đăng nhập để đăng truyện');
+      navigate('/auth/login');
+    } else {
+      navigate('/action/create-series');
+    }
   }
 
   return (
@@ -53,6 +68,11 @@ function Header() {
                     <li>
                       <Link to='/lightnovel' className='no-underline text-black font-medium hover:text-gray-500 duration-700'>Tiểu Thuyết</Link>
                     </li>
+                    {localStorage.getItem('username') && (
+                      <li>
+                        <p className='no-underline text-black font-medium hover:text-gray-500 duration-700' onClick={preCreateSeries}>Đăng truyện</p>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -72,7 +92,6 @@ function Header() {
                     </button>
                   </>
                 ) : (
-
                   <Link to='/auth/login'>
                     <button className="bg-cyan-400 hover:bg-teal-400 duration-300 text-white font-medium py-2 px-4 rounded-full border-none">
                       Đăng nhập

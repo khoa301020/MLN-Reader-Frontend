@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { novelApi } from '../api/api';
+import { mangaApi, novelApi } from '../api/api';
 
 function JustRead() {
     const [novelHistory, setNovelHistory] = useState([]);
+    const [mangaHistory, setMangaHistory] = useState([]);
 
     useEffect(() => {
         if (localStorage.getItem('username')) {
@@ -20,21 +21,21 @@ function JustRead() {
         }
     }, []);
 
-    // useEffect(() => {
-    //     if (localStorage.getItem('username')) {
-    //         mangaApi.getHistory(localStorage.getItem('username')).then((res) => {
-    //             if (res.data.result) {
-    //                 setMangaHistory(res.data.result);
-    //             } else {
-    //                 setMangaHistory([]);
-    //             }
-    //         }).catch((err) => {
-    //             console.log(err);
-    //         });
-    //     } else if (localStorage.getItem('readingManga')) {
-    //         setMangaHistory(JSON.parse(localStorage.getItem('readingManga')).slice(0, 4));
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (localStorage.getItem('username')) {
+            mangaApi.getHistory(localStorage.getItem('username')).then((res) => {
+                if (res.data.result) {
+                    setMangaHistory(res.data.result);
+                } else {
+                    setMangaHistory([]);
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+        } else if (localStorage.getItem('readingManga')) {
+            setMangaHistory(JSON.parse(localStorage.getItem('readingManga')).slice(0, 4));
+        }
+    }, []);
 
     return (
         <div className="flex flex-none w-full">

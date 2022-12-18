@@ -1,5 +1,4 @@
 import { CaretLeftOutlined, CaretRightOutlined, HomeFilled } from '@ant-design/icons';
-import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { mangaApi } from '../../../api/api';
@@ -13,7 +12,56 @@ function MangaChapter() {
 
   useEffect(() => {
     mangaApi.getChapter(id).then((res) => {
-      setChapter(res.data.result);
+      const chapter = res.data.result.chapter;
+
+      setChapter(chapter);
+
+      const newReadingManga = {
+        mangaId: chapter.mangaId,
+        mangaCover: res.data.result.mangaCover,
+        mangaTitle: res.data.result.mangaTitle,
+        chapterId: chapter.id,
+        chapterTitle: chapter.title,
+      };
+
+      if (localStorage.getItem('username') !== null) {
+        newReadingManga.username = localStorage.getItem('username');
+        mangaApi.addHistory(newReadingManga);
+      }
+
+      newReadingManga.type = 'manga';
+      // Check if there is any reading history in localStorage
+      if (localStorage.getItem('readingManga')) {
+        // Get the reading history from localStorage
+        const readingManga = JSON.parse(localStorage.getItem('readingManga'));
+        // Check if the manga is already in the reading history
+        const index = readingManga.findIndex((item) => item.mangaId === chapter.mangaId);
+        // If the manga is already in the reading history, remove it
+        if (index !== -1) {
+          readingManga.splice(index, 1);
+        }
+        // Add the manga to the reading history
+        readingManga.unshift(newReadingManga);
+        // Save the reading history to localStorage
+        localStorage.setItem('readingManga', JSON.stringify(readingManga));
+      } else {
+        // If there is no reading history in localStorage, create a new one
+        const readingManga = [];
+        // Add the manga to the reading history
+        readingManga.unshift(newReadingManga);
+        // Save the reading history to localStorage
+        localStorage.setItem('readingManga', JSON.stringify(readingManga));
+      }
+
+      // Slice the reading history to 10 items
+      const readingManga = JSON.parse(localStorage.getItem('readingManga'));
+      if (readingManga.length > 10) {
+        readingManga.splice(10, readingManga.length - 10);
+        localStorage.setItem('readingManga', JSON.stringify(readingManga));
+
+      }
+
+      window.scrollTo(0, 0);
     }).catch((err) => {
       console.log(err);
     });
@@ -42,7 +90,13 @@ function MangaChapter() {
             </div>
             <div className='ChapterContent'>
               <div className='block m-auto h-auto max-w-screen-xl text-justify font-normal text-xl overflow-hidden'>
-                {parse(chapter.content)}
+                {chapter.pages?.map((page, index) => {
+                  return (
+                    <div className='w-full h-auto' key={index}>
+                      <img src={page.pageUrl} alt='page' className='w-full h-auto' />
+                    </div>
+                  );
+                })}
               </div>
               <div className='TableOfcontents grid grid-cols-3 rounded-full w-full mt-10 border border-solid border-gray-500'>
                 <a href='##'>

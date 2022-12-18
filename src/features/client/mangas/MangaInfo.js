@@ -28,7 +28,7 @@ function MangaInfo() {
 
   return (
 
-    <div className='containerflex flex-col flex-wrap w-full h-fit bg-grabooky-100'>
+    <div className='container flex flex-col flex-wrap w-full h-fit bg-grabooky-100'>
       <div className='grid grid-cols-12 h-auto max-w-screen-xl mx-auto'>
         <div className='col-start-2 col-span-10 h-auto mt-10'>
           <div className='grid xl:grid-cols-4 lg:grid-cols-4 gap-10 md:grid-cols-1 sm:grid-cols-1'>
@@ -36,7 +36,7 @@ function MangaInfo() {
               <div className='max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md'>
                 <div>
                   <div className='grid grid-cols-4 gap-4 sm:grid-col-1 p-3'>
-                    <div className='leftcol-span-1'>
+                    <div className='left col-span-1'>
                       <div className='mb-2'>
                         <div className='w-full h-9 bg-cyan-600 max-w-xs rounded'>
                           <div className='text-white text-bold text-center leading-9 text-base font-semibold'>Truyện tranh</div>
@@ -49,7 +49,7 @@ function MangaInfo() {
                       </div>
                       <img className='w-full h-auto object-cover max-w-md' src={book.cover} alt={book.title} />
                     </div>
-                    <div className='Infocol-span-3 text-base'>
+                    <div className='Info col-span-3 text-base'>
                       <div className='xl:text-3xl sm:text-base lg:text-2xl md:text-xl font-semibold'>{book.title}</div>
                       <div className='flex flex-wrap h-auto w-full mt-3 mb-3'>
                         {book.tags?.map((tag, index) => (
@@ -58,21 +58,21 @@ function MangaInfo() {
                           </a>
                         ))}
                       </div>
-                      <div className='other-namesmb-2'>
+                      <div classNam='other-names mb-2'>
                         <span className='font-semibold mr-2'>Tên khác:</span>
                         <span>{book.otherNames?.join('; ')}</span>
                       </div>
-                      <div className='authormb-2'>
+                      <div className='author mb-2'>
                         <span className='font-semibold mr-2'>Tác giả:</span>
                         <span>{book.author}</span>
                       </div>
                       {book.artist && book.artist !== book.author && (
-                        <div className='artistmb-2'>
+                        <div className='artist mb-2'>
                           <span className='font-semibold mr-2'>Hoạ sĩ:</span>
                           <span>{book.artist}</span>
                         </div>
                       )}
-                      <div className='statusmb-2'>
+                      <div className='status mb-2'>
                         <span className='font-semibold mr-2'>Tình trạng:</span>
                         <span>{book.status}</span>
                       </div>
@@ -90,17 +90,17 @@ function MangaInfo() {
                 <div className='max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md mt-8 pb-3' key={index}>
                   <div className='grid grid-cols-6 gap-4 sm:grid-col-1'>
                     <div className='col-span-6 bg-gray-100 w-full h-fit mb-3 p-3 font-bold text-xl rounded-t-md'>{section.name}</div>
-                    <div className='leftcol-span-1 pl-3'>
+                    <div className='left col-span-1 pl-3'>
                       <img className='w-full h-auto object-cover max-w-md' src={section.cover} alt={section.title} />
                     </div>
-                    <div className='Infocol-span-5 text-base pr-3'>
-                      <TableListChapter chapters={section.chapters} prefix='/novel-chapter/' />
+                    <div className='Info col-span-5 text-base pr-3'>
+                      <TableListChapter chapters={section.chapters} prefix='/manga-chapter/' />
                     </div>
                   </div>
                 </div>
               ))}
 
-              <div className='Commentmax-w-full h-fit bg-white border border-solid border-gray-400 rounded-md mt-8 pb-3 mb-10'>
+              <div className='Comment max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md mt-8 pb-3 mb-10'>
                 <div className='grid grid-cols-6 gap-4 sm:grid-col-1'>
                   <div className='col-span-6 bg-gray-100 w-full h-fit p-3 font-bold text-xl rounded-t-md'>Bình luận</div>
                   <div className='col-span-6 w-full h-fit px-3 font-bold text-2xl rounded-t-md'>

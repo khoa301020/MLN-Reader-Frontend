@@ -78,7 +78,7 @@ function Header() {
               </div>
               <div className='right-nav flex flex-row justify-between content-center items-center'>
                 <div className="relative text-gray-600 mr-5">
-                  <input type="search" name="serch" placeholder="Search" className="bg-white h-8 px-5 pr-10 rounded-full text-sm focus:outline-none border border-solid " />
+                  <input type="search" placeholder="Search" className="search bg-white text-gray-700 h-8 px-5 pr-10 rounded-full text-sm focus:outline-none border border-solid " />
                   <button type="submit" className="absolute right-0 top-0 mt-2 mr-2 bg-transparent border-0" onClick={handleSearch}>
                     <SearchOutlined />
                   </button>

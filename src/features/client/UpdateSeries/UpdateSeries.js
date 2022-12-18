@@ -22,13 +22,13 @@ export default class UpdateSeries extends React.Component {
                                     <label className='text-right text-gray-900 '>Tiêu đề<span className='text-red-500'>*</span></label>
                                 </div>
                                 <div className='col-span-6'>
-                                    <input type="text" class="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2      " required />
+                                    <input type="text" className="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2      " required />
                                 </div>
                             </div>
 
                             <div className='grid grid-cols-9 gap-9 content-center mb-4'>
                                 <div className='col-span-2 text-right place-items-center my-2'>
-                                    <label class='text-right text-gray-900 '>Tên khác</label>
+                                    <label className='text-right text-gray-900 '>Tên khác</label>
                                 </div>
                                 <div className='col-span-6'>
                                     <input type="text" className="bg-white placeholder-gray-400 border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2      " placeholder='Ngăn cách nhiều tên bằng dấu chấm phẩy ;' required />
@@ -58,16 +58,16 @@ export default class UpdateSeries extends React.Component {
                                     <label className='text-right text-gray-900 '>Ảnh bìa</label>
                                 </div>
                                 <div className='col-span-6'>
-                                    <input class="block w-full text-sm py-2 text-gray-900 border border-gray-300 cursor-pointer  focus:outline-none   " id="file_input" type="file"></input>
+                                    <input className="block w-full text-sm py-2 text-gray-900 border border-gray-300 cursor-pointer  focus:outline-none   " id="file_input" type="file"></input>
                                 </div>
                             </div>
 
-                            <div class='grid grid-cols-9 gap-9 content-center mb-4'>
+                            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
                                 <div className='col-span-2 text-right place-items-center my-2'>
                                     <label className='text-right text-gray-900 '>Loại truyện<span className='text-red-500'>*</span></label>
                                 </div>
                                 <div className='col-span-6'>
-                                    <select id="TheLoai" class="w-fit bg-white border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2      ">
+                                    <select id="TheLoai" className="w-fit bg-white border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2      ">
                                         <option value="Novel">Tiểu thuyết</option>
                                         <option value="Managa">Truyện tranh</option>
                                     </select>
@@ -107,7 +107,7 @@ export default class UpdateSeries extends React.Component {
 
                             <div className='grid grid-cols-9 gap-9 content-center mb-4'>
                                 <div className='col-span-2 text-right place-items-center my-2'>
-                                    <label className='text-right text-gray-900 '>Loại truyện<span class='text-red-500'>*</span></label>
+                                    <label className='text-right text-gray-900 '>Loại truyện<span className='text-red-500'>*</span></label>
                                 </div>
                                 <div className='col-span-6'>
                                     <EditorForm />
@@ -116,7 +116,7 @@ export default class UpdateSeries extends React.Component {
 
                             <div className='grid grid-cols-9 gap-9 content-center mb-4'>
                                 <div className='col-span-2 text-right place-items-center my-2'>
-                                    <label class='text-right text-gray-900 '>Tình trạng dịch<span class='text-red-500'>*</span></label>
+                                    <label className='text-right text-gray-900 '>Tình trạng dịch<span className='text-red-500'>*</span></label>
                                 </div>
                                 <div className='col-span-6'>
                                     <select id="TheLoai" className="w-fit bg-white border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2      ">

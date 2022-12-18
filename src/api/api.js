@@ -25,6 +25,8 @@ export const homeApi = {
 export const novelApi = {
     getNovel: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}`),
     getChapter: (chapterId) => api.get(`/novel/get-chapter?chapterId=${chapterId}`),
+    addHistory: (data) => api.post("/novel/add-history", data),
+    getHistory: (username) => api.get("/novel/get-history?username=" + username),
     createNovel: (data) => api.post("/novel/create-action", data),
     updateNovel: (data) => api.post("/novel/update-action", Object.assign({ subject: "novel" }, data)),
     deleteNovel: (data) => api.post("/novel/delete-action", Object.assign({ subject: "novel" }, data)),
@@ -42,6 +44,8 @@ export const novelApi = {
 export const mangaApi = {
     getManga: (mangaId) => api.get(`/manga/get-manga?mangaId=${mangaId}`),
     getChapter: (chapterId) => api.get(`/manga/get-chapter?chapterId=${chapterId}`),
+    addHistory: (data) => api.post("/manga/add-history", data),
+    getHistory: (data) => api.post("/manga/get-history", data),
     createManga: (data) => api.post("/manga/create-action", data),
     updateManga: (data) => api.post("/manga/update-action", Object.assign({ subject: "manga" }, data)),
     deleteManga: (data) => api.post("/manga/delete-action", Object.assign({ subject: "manga" }, data)),

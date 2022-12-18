@@ -12,11 +12,11 @@ function SlickCarousel(data) {
     arrows: false,
   };
   return (
-    <div class='gap-4 mx-auto lg:max-w-7xl'>
+    <div className='gap-4 mx-auto lg:max-w-7xl'>
       <Slider {...settings}>
         {data.books.map((book, index) => (
           <div key={index}>
-            <a href={'/novel/' + book.id} class='hover:opacity-75'><img class='w-44 h-64 object-cover' src={book.cover} alt={book.title} /></a>
+            <a href={'/novel/' + book.id} className='hover:opacity-75'><img className='w-44 h-64 object-cover' src={book.cover} alt={book.title} /></a>
           </div>
         ))}
       </Slider>

@@ -104,7 +104,7 @@ export default function Login() {
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlhtmlFor="username">
                                 Tên đăng nhập
                             </label>
-                            <input className="appearance-none border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
+                            <input className="appearance-none bg-white border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
                                 id="username"
                                 type="text"
                                 ref={userRef}
@@ -124,7 +124,7 @@ export default function Login() {
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlhtmlFor="username">
                                 Email
                             </label>
-                            <input className="appearance-none border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
+                            <input className="appearance-none bg-white border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
                                 id="email"
                                 type="email"
                                 placeholder="Nhập email"
@@ -142,7 +142,7 @@ export default function Login() {
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlhtmlFor="username">
                                 Mật khẩu
                             </label>
-                            <input className="appearance-none border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
+                            <input className="appearance-none bg-white border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
                                 id="password"
                                 type="password"
                                 placeholder="Nhập mật khẩu"
@@ -160,7 +160,7 @@ export default function Login() {
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlhtmlFor="password">
                                 Nhập lại mật khẩu
                             </label>
-                            <input className="appearance-none border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            <input className="appearance-none bg-white border-gray-400 border-solid border rounded w-full py-2 px-3 text-gray-500 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                                 id="matchPassword"
                                 type="password"
                                 placeholder="Nhập lại mật khẩu"

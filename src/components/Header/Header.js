@@ -1,6 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { userApi } from '../../api/api';
@@ -8,11 +8,6 @@ import mlnLogo from '../../assets/icons/mlnLogo.png';
 
 function Header() {
   const navigate = useNavigate();
-  useEffect(() => {
-    if (Cookies.get('token')) {
-      console.log(Cookies.get('token'));
-    }
-  }, []);
 
   function handleSearch() {
     console.log('search');

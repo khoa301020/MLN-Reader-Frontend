@@ -1,5 +1,8 @@
+import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
+import { userApi } from '../../../api/api';
 import TreeView from '../../../components/TreeView';
 import Book from '../UpdateComponents/Book';
 import MangaChapter from '../UpdateComponents/MangaChapter';
@@ -8,6 +11,7 @@ import Section from '../UpdateComponents/Section';
 
 export default function UpdateSeries() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [childId, setChildId] = useState({});
   const [type, setType] = useState('');
 
@@ -18,6 +22,26 @@ export default function UpdateSeries() {
       setType('manga');
     }
   }, [id]);
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    const token = Cookies.get('token');
+
+    userApi.bookVerify(id, username, token).then(res => {
+      if (res.data.message === 'Failed') {
+        console.log(res.data.message);
+        toast.error("Bạn không có quyền truy cập");
+        navigate("/");
+      }
+    }).catch(err => {
+      Cookies.remove('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      console.log(err);
+      toast.error("Phiên đăng nhập đã hết hạn");
+      navigate("/auth/login");
+    })
+  }, [id, navigate]);
 
   function onSubjectClick({ id, type }) {
     setChildId(id);

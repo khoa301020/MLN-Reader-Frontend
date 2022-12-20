@@ -1,11 +1,16 @@
+import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link, useParams } from 'react-router-dom';
-import { mangaApi } from '../../../api/api';
+import { mangaApi, userApi } from '../../../api/api';
 import CommentSection from '../../../components/CommentSection';
 import CommentForm from '../../../components/Editor';
 import TableListChapter from '../../../components/TableListChapter';
 
+
 function MangaInfo() {
+  const [auth, setAuth] = useState(false);
+
   const { id } = useParams();
   const [book, setBook] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,6 +18,7 @@ function MangaInfo() {
   useEffect(() => {
     console.log(id);
     setLoading(true);
+
     mangaApi.getManga(id).then((res) => {
       setBook(res.data.result);
     }).catch((err) => {
@@ -20,6 +26,27 @@ function MangaInfo() {
     }).finally(() => {
       setLoading(false);
     });
+  }, [id]);
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    const token = Cookies.get('token');
+    if (username === null || token === null) {
+      setAuth(false);
+    }
+
+    userApi.bookVerify(id, username, token).then(res => {
+      if (res.data.message === 'Succeed') {
+        setAuth(true);
+      } else setAuth(false);
+    }).catch(err => {
+      Cookies.remove('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      console.log(err);
+      toast.error("Phiên đăng nhập đã hết hạn");
+      window.location.href = "/auth/login";
+    })
   }, [id]);
 
   if (loading) {
@@ -31,11 +58,13 @@ function MangaInfo() {
     <div className='container flex flex-col flex-wrap w-full h-fit bg-grabooky-100'>
       <div className='grid grid-cols-12 h-auto max-w-screen-xl mx-auto'>
         <div className='col-start-2 col-span-10 h-auto mt-10'>
-          <div className='flex justify-end'>
-            <Link to={`/action/update-series/${id}`}>
-              <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'>Edit</button>
-            </Link>
-          </div>
+          {auth && (
+            <div className='flex justify-end'>
+              <Link to={`/action/update-series/${id}`}>
+                <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'>Edit</button>
+              </Link>
+            </div>
+          )}
           <div className='grid xl:grid-cols-4 lg:grid-cols-4 gap-10 md:grid-cols-1 sm:grid-cols-1'>
             <div className='col-span-3 max-w-full'>
               <div className='max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md'>

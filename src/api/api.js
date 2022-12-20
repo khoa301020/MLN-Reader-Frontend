@@ -66,10 +66,11 @@ export const mangaApi = {
 };
 
 export const userApi = {
-    login: (data) => api.post("/auth/login", data, { withCredentials: true, "Access-Control-Allow-Origin": "http://localhost:3000" }),
+    login: (data) => api.post("/auth/login", data, { withCredentials: true }),
     register: (data) => api.post("/auth/register", data),
     logout: (data) => api.post("/auth/logout", data),
     verify: (username, token) => api.post("/auth/verify", { username: username }, { headers: { Authorization: `Bearer ${token}` } }),
+    bookVerify: (id, username, token) => api.post("/auth/book-verify", { id, username }, { headers: { Authorization: `Bearer ${token}` } }),
     getProfile: () => api.get("/user/get-profile"),
     // updateProfile: (data) => api.post("/user/update-profile", data),
     // updateAvatar: (data) => api.post("/user/update-avatar", data),

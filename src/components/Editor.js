@@ -1,13 +1,24 @@
 import { Editor } from '@tinymce/tinymce-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function MyEditor({ initContent = "", onEditorChange, type = "html" }) {
+    const [content, setContent] = useState("");
+
+    useEffect(() => {
+        setContent(initContent);
+    }, [initContent]);
+
     return (
         <>
             <Editor
                 tinymceScriptSrc={process.env.PUBLIC_URL + '/tinymce/tinymce.min.js'}
-                onEditorChange={(content, editor) => onEditorChange(type === "html" ? content : editor.getContent({ format: 'text' }))}
-                initialValue={initContent}
+                onEditorChange={
+                    (content, editor) => onEditorChange(type === "html" ? {
+                        content: content,
+                        wordCount: editor.plugins.wordcount.getCount()
+                    } :
+                        editor.getContent({ format: 'text' }))}
+                initialValue={content ? content : ""}
                 init={{
                     height: 300,
                     menubar: false,

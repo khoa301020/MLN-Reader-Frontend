@@ -31,6 +31,12 @@ function NovelInfo() {
     <div className='container flex flex-col flex-wrap w-full h-fit bg-grabooky-100'>
       <div className='grid grid-cols-12 h-auto max-w-screen-xl mx-auto'>
         <div className='col-start-2 col-span-10 h-auto mt-10'>
+          {/* add button to edit book */}
+          <div className='flex justify-end'>
+            <Link to={`/action/update-series/${id}`}>
+              <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'>Edit</button>
+            </Link>
+          </div>
           <div className='grid xl:grid-cols-4 lg:grid-cols-4 gap-10 md:grid-cols-1 sm:grid-cols-1'>
             <div className='col-span-3 max-w-full'>
               <div className='max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md'>

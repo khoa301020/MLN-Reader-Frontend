@@ -35,7 +35,7 @@ function App() {
 
       <Route path="/action" element={<LayoutDashboard />}>
         <Route path="/action/create-series" element={<CreateSeries />} />
-        <Route path="/action/update-novel/:id" element={<UpdateSeries />} />
+        <Route path="/action/update-series/:id" element={<UpdateSeries />} />
       </Route>
 
     </Routes>

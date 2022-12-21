@@ -1,15 +1,21 @@
 import { CaretLeftOutlined, CaretRightOutlined, HomeFilled } from '@ant-design/icons';
 import parse from 'html-react-parser';
+import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { novelApi } from '../../../api/api';
+import toast from 'react-hot-toast';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { novelApi, userApi } from '../../../api/api';
 import CommentSection from '../../../components/CommentSection';
-import EditorForm from '../../../components/Editor';
+import Editor from '../../../components/Editor';
 import './image.css';
 
 function NovelChapter() {
   const { id } = useParams();
   const [chapter, setChapter] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isLogged, setIsLogged] = useState(false);
+  const [comment, setComment] = useState([]);
 
   useEffect(() => {
     novelApi.getChapter(id).then((res) => {
@@ -68,6 +74,52 @@ function NovelChapter() {
     });
   }, [id]);
 
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    const token = Cookies.get('token');
+    if (username === null || token === null) {
+      setIsLogged(false);
+    } else {
+      userApi.verify(username, token).then(res => {
+        if (res.data.code === 200)
+          setIsLogged(true);
+        else
+          setIsLogged(false);
+      }).catch(err => {
+        Cookies.remove('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
+        console.log(err);
+        toast.error("Phiên đăng nhập đã hết hạn");
+        navigate("/auth/login");
+      })
+    }
+  }, [navigate]);
+
+  const onEditorChange = (content) => {
+    setComment(content.content);
+  }
+
+  function handleComment() {
+    const token = Cookies.get('token');
+    const data = {
+      path: location.pathname,
+      targetId: id,
+      username: localStorage.getItem('username'),
+      content: comment,
+      type: 'novel-chapter',
+      action: 'comment'
+    }
+    userApi.comment(data, token).then(res => {
+      console.log(res.data);
+      toast.success("Bình luận thành công");
+      window.location.reload();
+    }).catch(err => {
+      console.log(err);
+      toast.error("Bình luận thất bại");
+    })
+  }
+
   if (!chapter) {
     return <div>Loading chapter...</div>;
   }
@@ -79,7 +131,7 @@ function NovelChapter() {
           <div className='col-start-2 col-span-10 h-auto mt-10 max-w-screen-xl'>
             <div className='ChapterInfo text-center'>
               <div className='Season font-bold text-3xl mb-3'>
-                {chapter.title}
+                {chapter.sectionInfo.name}
               </div>
               <div className='Title font-bold text-2xl mb-3'>
                 {chapter.title}
@@ -119,20 +171,27 @@ function NovelChapter() {
                 </a>
               </div>
             </div>
-            <div className='max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md mb-10 pb-10 mt-10'>
+            <div className='Comment max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md mt-8 pb-3 mb-10'>
               <div className='grid grid-cols-6 gap-4 sm:grid-col-1'>
-                <div className='col-span-6 bg-gray-100 w-full h-fit p-3 font-bold text-xl rounded-t-md'>Bình luận</div>
+                <div className='col-span-6 bg-gray-100 w-full h-fit p-3 font-bold text-xl rounded-t-md'>Bình luận {`(${chapter.comments?.length})`}</div>
                 <div className='col-span-6 w-full h-fit px-3 font-bold text-2xl rounded-t-md'>
-                  <div className='mb-3'>50 bình luận</div>
-                  <div className='text-sm font-normal mb-2'>
-                    Bạn phải <Link to='/login' className='no-underline text-cyan-700 hover:text-cyan-600'>đăng nhập</Link> hoặc <Link to='/login' className='no-underline text-cyan-700 hover:text-cyan-600'>tạo tài khoản</Link> để bình luận.
-                  </div>
-                  <div>
-                    <EditorForm />
-                  </div>
+                  {!isLogged ? (
+                    <div className='text-sm font-normal mb-2'>
+                      Bạn phải <Link to='/auth/login' className='no-underline text-cyan-700 hover:text-cyan-600'>đăng nhập</Link> hoặc <Link to='/auth/register' className='no-underline text-cyan-700 hover:text-cyan-600'>tạo tài khoản</Link> để bình luận.
+                    </div>
+                  ) : (
+                    <div className='text-sm font-normal mb-2'>
+                      <div>
+                        <Editor onEditorChange={onEditorChange} />
+                      </div>
+                      <div className='mt-3'>
+                        <button type='submit' onClick={handleComment} className='bg-cyan-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-cyan-700'>Bình luận</button>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className='col-span-6'>
-                  <CommentSection />
+                  <CommentSection comments={chapter.comments} />
                 </div>
               </div>
             </div>

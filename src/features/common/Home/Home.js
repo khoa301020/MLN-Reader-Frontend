@@ -20,6 +20,7 @@ function Home() {
   const [newNovels, setNewNovels] = useState([]);
   const [mangas, setMangas] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -34,6 +35,9 @@ function Home() {
     });
     homeApi.getLastUpdateManga().then((res) => {
       setMangas(res.data.result);
+    });
+    homeApi.getNewestComment().then((res) => {
+      setComments(res.data.result);
     });
     setLoading(false);
   }, []);
@@ -105,7 +109,7 @@ function Home() {
             <div>
               <h3 className='uppercase'>Bình luận gần đây</h3>
               <hr />
-              <CommentList />
+              <CommentList comments={comments} />
             </div>
           </div>
         </div>

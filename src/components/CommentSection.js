@@ -1,29 +1,63 @@
-function CommentSection() {
+import parse from 'html-react-parser';
+import React, { useEffect, useState } from 'react';
+function CommentSection({ comments }) {
+    const [displayComments, setDisplayComments] = useState([]);
+    const [page, setPage] = useState(1);
+
+    // useEffect(() => {
+    //     setDisplayComments(comments?.slice(0, 1));
+    // }, [comments]);
+
+    useEffect(() => {
+        const startIndex = (page - 1) * 10;
+        const endIndex = startIndex + 10;
+        setDisplayComments(comments?.slice(startIndex, endIndex));
+    }, [page, comments]);
+
+    const handleNext = () => {
+        setPage((page + 1) > Math.ceil(comments.length / 10) ? page : page + 1);
+    };
+
+    const handlePrevious = () => {
+        setPage((page - 1) < 1 ? page : page - 1);
+    };
+
     return (
         <div className="flex flex-col">
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="overflow-hidden">
                         <div className='grid grid-cols-10 gap-4'>
-
-                            <div className='col-span-1 ml-3'>
-                                <img className="min-w-6 min-h-6 w-12 h-12 max-w-12 max-h-12 object-cover rounded-full" src="https://i.imgur.com/euhIwLt.png" alt="Rounded avatar" />
-                            </div>
-                            <div className='col-span-9 bg-slate-100 mr-3 px-3 py-2 text-base'>
-                                <div>
-                                    <div className='nameUser font-bold mb-1' >Chris</div>
-                                    <div className="commentUser">Đánh giá truyện sau khi đọc hết 3 phần chính truyện. Đánh giá 5 sao vì năng suất của team dịch cũng như nội dung truyện mới lạ. Đánh giá main: phát huy tinh thần tự nhục đến cảnh giới đăng phong tạo cực. Đặc biệt thích lo chuyện bao đồng và hay tỏ lòng thương hại nhưng bản thân chả làm cái mịa gì ra hồn. Ăn mày quá khứ trong nhiều trường hợp. Điểm cuốn hút của main làm tôi theo dõi không ngừng chính là mỗi khi tôi nghĩ main nó đã ngu hết mức có thể thì nó lại lòi ra cái ngu mới, luôn tạo cảm giác mới mẻ và k trùng lặp.</div>
-                                    <div className='commentDate text-sm mt-3 text-gray-500'>3 ngày</div>
+                            {displayComments?.map((comment, index) => (
+                                <div key={index} className='col-span-10'>
+                                    <div className='col-span-1 ml-3'>
+                                        <img className="min-w-6 min-h-6 w-12 h-12 max-w-12 max-h-12 object-cover rounded-full" src={comment.user?.avatar} alt="Rounded avatar" />
+                                    </div>
+                                    <div className='col-span-9 bg-slate-100 mr-3 px-3 py-2 text-base'>
+                                        <div>
+                                            <div className='nameUser font-bold mb-1'>{comment.user?.name}</div>
+                                            <div className="commentUser">
+                                                {parse(comment.content)}
+                                            </div>
+                                            <div className='commentDate text-sm mt-3 text-gray-500'>{comment.createdAt}</div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div><div className='col-span-1 ml-3'>
-                                <img className="min-w-6 min-h-6 w-12 h-12 max-w-12 max-h-12 object-cover rounded-full" src="https://i.docln.net/lightnovel/users/ua51333-a1037d00-ba81-4a0b-bd65-4866a7b7db29.jpg" alt="Rounded avatar" />
+                            ))}
+                        </div>
+                        {/* Pagination */}
+                        <div className='flex justify-center mt-5'>
+                            <div className='flex space-x-3'>
+                                <button className='px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50' onClick={handlePrevious} >
+                                    Previous
+                                </button>
+                                <p className='px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50'>
+                                    {page}
+                                </p>
+                                <button className='px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50' onClick={handleNext}>
+                                    Next
+                                </button>
                             </div>
-                            <div className='col-span-9 bg-slate-100 mr-3 px-3 py-2 text-base'>
-                                <div className='nameUser font-bold mb-1' >Chris</div>
-                                <div className="commentUser">Đánh giá truyện sau khi đọc hết 3 phần chính truyện. Đánh giá 5 sao vì năng suất của team dịch cũng như nội dung truyện mới lạ. Đánh giá main: phát huy tinh thần tự nhục đến cảnh giới đăng phong tạo cực. Đặc biệt thích lo chuyện bao đồng và hay tỏ lòng thương hại nhưng bản thân chả làm cái mịa gì ra hồn. Ăn mày quá khứ trong nhiều trường hợp. Điểm cuốn hút của main làm tôi theo dõi không ngừng chính là mỗi khi tôi nghĩ main nó đã ngu hết mức có thể thì nó lại lòi ra cái ngu mới, luôn tạo cảm giác mới mẻ và k trùng lặp.</div>
-                                <div className='commentDate text-sm mt-3 text-gray-500'>3 ngày</div>
-                            </div>
-
                         </div>
                     </div>
                 </div>

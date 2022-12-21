@@ -20,6 +20,7 @@ export const homeApi = {
     getTopViewMangaYearly: () => api.get("/manga/get-list?page=1&limit=20&sort=topViewYearly"),
     getTopFollowManga: () => api.get("/manga/get-list?page=1&limit=20&sort=topFollow"),
     getTags: () => api.get("/common/get-tags"),
+    getNewestComment: () => api.get("/common/get-newest-comments"),
 };
 
 export const novelApi = {
@@ -79,7 +80,7 @@ export const userApi = {
     unfollowNovel: (data) => api.post("/novel/follow-action", data),
     followManga: (data) => api.post("/manga/follow-action", data),
     unfollowManga: (data) => api.post("/manga/follow-action", data),
-    comment: (data) => api.post("/common/comment", data),
+    comment: (data, token) => api.post("/common/comment-action", data, { headers: { Authorization: `Bearer ${token}` } }),
     // rate: (data) => api.post("/user/rate", data),
 };
 

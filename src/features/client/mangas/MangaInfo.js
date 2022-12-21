@@ -1,24 +1,27 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { mangaApi, userApi } from '../../../api/api';
 import CommentSection from '../../../components/CommentSection';
-import CommentForm from '../../../components/Editor';
+import Editor from '../../../components/Editor';
 import TableListChapter from '../../../components/TableListChapter';
 
 
 function MangaInfo() {
-  const [auth, setAuth] = useState(false);
-
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [auth, setAuth] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   const [book, setBook] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [comment, setComment] = useState([]);
 
   useEffect(() => {
+
     console.log(id);
     setLoading(true);
-
     mangaApi.getManga(id).then((res) => {
       setBook(res.data.result);
     }).catch((err) => {
@@ -33,21 +36,68 @@ function MangaInfo() {
     const token = Cookies.get('token');
     if (username === null || token === null) {
       setAuth(false);
+    } else {
+      userApi.bookVerify(id, username, token).then(res => {
+        if (res.data.message === 'Succeed')
+          setAuth(true);
+        else
+          setAuth(false);
+      }).catch(err => {
+        Cookies.remove('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
+        console.log(err);
+        toast.error("Phiên đăng nhập đã hết hạn");
+        window.location.href = "/auth/login";
+      })
     }
-
-    userApi.bookVerify(id, username, token).then(res => {
-      if (res.data.message === 'Succeed') {
-        setAuth(true);
-      } else setAuth(false);
-    }).catch(err => {
-      Cookies.remove('token');
-      localStorage.removeItem('username');
-      localStorage.removeItem('role');
-      console.log(err);
-      toast.error("Phiên đăng nhập đã hết hạn");
-      window.location.href = "/auth/login";
-    })
   }, [id]);
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    const token = Cookies.get('token');
+    if (username === null || token === null) {
+      setIsLogged(false);
+    } else {
+      userApi.verify(username, token).then(res => {
+        if (res.data.code === 200)
+          setIsLogged(true);
+        else
+          setIsLogged(false);
+      }).catch(err => {
+        Cookies.remove('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
+        console.log(err);
+        toast.error("Phiên đăng nhập đã hết hạn");
+        navigate("/auth/login");
+      })
+    }
+  }, [navigate]);
+
+  const onEditorChange = (content) => {
+    setComment(content.content);
+  }
+
+  function handleComment() {
+    const token = Cookies.get('token');
+    const data = {
+      path: location.pathname,
+      targetId: id,
+      username: localStorage.getItem('username'),
+      content: comment,
+      type: 'manga',
+      action: 'comment'
+    }
+    userApi.comment(data, token).then(res => {
+      console.log(res.data);
+      toast.success("Bình luận thành công");
+      window.location.reload();
+    }).catch(err => {
+      console.log(err);
+      toast.error("Bình luận thất bại");
+    })
+  }
 
   if (loading) {
     return <div>Loading book...</div>;
@@ -73,7 +123,7 @@ function MangaInfo() {
                     <div className='left col-span-1'>
                       <div className='mb-2'>
                         <div className='w-full h-9 bg-cyan-600 max-w-xs rounded'>
-                          <div className='text-white text-bold text-center leading-9 text-base font-semibold'>Truyện tranh</div>
+                          <div className='text-white text-bold text-center leading-9 text-base font-semibold'>Tiểu thuyết</div>
                         </div>
                         <div className='-mt-1 flex justify-center'>
                           <div className="overflow-hidden inline-block">
@@ -92,7 +142,7 @@ function MangaInfo() {
                           </a>
                         ))}
                       </div>
-                      <div classNam='other-names mb-2'>
+                      <div className='other-names mb-2'>
                         <span className='font-semibold mr-2'>Tên khác:</span>
                         <span>{book.otherNames?.join('; ')}</span>
                       </div>
@@ -100,11 +150,13 @@ function MangaInfo() {
                         <span className='font-semibold mr-2'>Tác giả:</span>
                         <span>{book.author}</span>
                       </div>
-                      {book.artist && book.artist !== book.author && (
-                        <div className='artist mb-2'>
-                          <span className='font-semibold mr-2'>Hoạ sĩ:</span>
-                          <span>{book.artist}</span>
-                        </div>
+                      {book.artist && (
+                        <>
+                          <div className='artist mb-2'>
+                            <span className='font-semibold mr-2'>Hoạ sĩ:</span>
+                            <span>{book.artist}</span>
+                          </div>
+                        </>
                       )}
                       <div className='status mb-2'>
                         <span className='font-semibold mr-2'>Tình trạng:</span>
@@ -136,18 +188,25 @@ function MangaInfo() {
 
               <div className='Comment max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md mt-8 pb-3 mb-10'>
                 <div className='grid grid-cols-6 gap-4 sm:grid-col-1'>
-                  <div className='col-span-6 bg-gray-100 w-full h-fit p-3 font-bold text-xl rounded-t-md'>Bình luận</div>
+                  <div className='col-span-6 bg-gray-100 w-full h-fit p-3 font-bold text-xl rounded-t-md'>Bình luận {`(${book.comments?.length})`}</div>
                   <div className='col-span-6 w-full h-fit px-3 font-bold text-2xl rounded-t-md'>
-                    <div className='mb-3'>4620 bình luận</div>
-                    <div className='text-sm font-normal mb-2'>
-                      Bạn phải <Link to='/login' className='no-underline text-cyan-700 hover:text-cyan-600'>đăng nhập</Link> hoặc <Link to='/login' className='no-underline text-cyan-700 hover:text-cyan-600'>tạo tài khoản</Link> để bình luận.
-                    </div>
-                    <div>
-                      <CommentForm />
-                    </div>
+                    {!isLogged ? (
+                      <div className='text-sm font-normal mb-2'>
+                        Bạn phải <Link to='/auth/login' className='no-underline text-cyan-700 hover:text-cyan-600'>đăng nhập</Link> hoặc <Link to='/auth/register' className='no-underline text-cyan-700 hover:text-cyan-600'>tạo tài khoản</Link> để bình luận.
+                      </div>
+                    ) : (
+                      <div className='text-sm font-normal mb-2'>
+                        <div>
+                          <Editor onEditorChange={onEditorChange} />
+                        </div>
+                        <div className='mt-3'>
+                          <button type='submit' onClick={handleComment} className='bg-cyan-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-cyan-700'>Bình luận</button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className='col-span-6'>
-                    <CommentSection />
+                    <CommentSection comments={book.comments} />
                   </div>
                 </div>
               </div>
@@ -157,23 +216,19 @@ function MangaInfo() {
               <div className='border border-solid border-gray-400 rounded-md mb-6'>
                 <div className='w-full h-10 bg-cyan-600 flex flex-row rounded-t-md'>
                   <div>
-                    <img className='w-10 h-10 object-cover rounded-tl-md' src='https://i.docln.net/lightnovel/users/ua176-d8b5a8d6-e741-4ce0-825f-2e94ff8591d5.jpg' alt='' />
+                    <img className='w-10 h-10 object-cover rounded-tl-md' src={book.uploaderInfo?.avatar} alt='' />
                   </div>
-                  <div className='mx-auto my-auto text-sm font-semibold'><a href='##' className='no-underline text-white hover:text-cyan-100 line-clamp-1 px-2'>Nguyễn Trần Anh Khoa</a></div>
-                </div>
-                <div className='w-full h-50 bg-white p-2'>
-                  <div className='text-gray-400 text-sm'>Nhóm dịch</div>
-                  <div className='text-2xl font-bold'><a href='##' className='text-black no-underline hover:text-cyan-700'>NEET-kiêm-Hikkomori</a></div>
+                  <div className='mx-auto my-auto text-sm font-semibold'><a href={`/user/${book.uploaderInfo?.id}`} className='no-underline text-white hover:text-cyan-100 line-clamp-1 px-2'>{book.uploaderInfo?.name}</a></div>
                 </div>
                 <div className='w-full h-1 bg-red-500 rounded-b-md'></div>
               </div>
 
-              <div className='border border-solid border-gray-400 rounded-md'>
+              {/* <div className='border border-solid border-gray-400 rounded-md'>
                 <div className='col-span-6 bg-gray-100 w-full h-fit p-3 font-bold text-md rounded-t-md'>Ghi chú thêm</div>
                 <div className='w-full h-fit bg-white p-2 rounded-b-md'>
                   <div className='text-gray-900 text-sm text-justify'>Về "góc nhìn meta" (メタ視点) được nhắc đến trong phần tóm tắt, đây là một thuật ngữ ám chỉ một góc nhìn nằm ngoài thế giới, nắm bắt sự vật và sự kiện trong thế giới này một cách khách quan. Trong bộ này thì đó là góc nhìn của MC - Koutarou, nhìn thế giới này như một bộ romcom mà Ryuuzaki là nhân vật chính của bộ romcom đấy.</div>
                 </div>
-              </div>
+              </div> */}
 
             </div>
           </div>

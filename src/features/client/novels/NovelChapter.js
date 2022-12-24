@@ -126,8 +126,8 @@ function NovelChapter() {
 
   return (
     <div className='wrapper'>
-      <div className='container flex flex-col flex-wrap w-full h-fit bg-gray-100'>
-        <div className='grid grid-cols-12 h-auto max-w-screen-xl mx-auto'>
+      <div className='container max-w-full min-h-screen bg-gray-50'>
+        <div className='grid grid-cols-12 h-auto w-screen mx-auto'>
           <div className='col-start-2 col-span-10 h-auto mt-10 max-w-screen-xl'>
             <div className='ChapterInfo text-center'>
               <div className='Season font-bold text-3xl mb-3'>

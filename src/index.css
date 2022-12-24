@@ -24,3 +24,8 @@ code {
   position: absolute;
   left: -9999px;
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}

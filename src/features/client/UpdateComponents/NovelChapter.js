@@ -71,7 +71,7 @@ export default function NovelChapter({ id }) {
 
   return (
     <div className='w-full min-h-screen'>
-      <div className='grid grid-cols-12 gap-12'>
+      <div className='w-full grid grid-cols-12 gap-12'>
         <div className='row-start-3 col-start-3 col-span-8 bg-white min-h-screen h-auto border-solid border border-gray-400 rounded mb-20'>
           <div className='w-full h-auto p-3 bg-gray-100 text-black font-semibold rounded-t-md'>
             Chỉnh sửa chương truyện

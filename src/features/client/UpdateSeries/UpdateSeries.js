@@ -50,7 +50,7 @@ export default function UpdateSeries() {
 
   return (
     <div className='w-full min-h-screen flex flex-row'>
-      <div className='grid grid-cols-12 gap-6'>
+      <div className='grid grid-cols-12 gap-6 w-full'>
         <div className='col-start-1 col-span-2 w-full h-full overflow-auto border-r border-t-0 border-l-0 border-b-0  border-gray-400 border-solid pr-2'>
           <TreeView id={id} onSubjectClick={onSubjectClick} />
         </div>

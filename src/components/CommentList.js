@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom';
 
 function CommentList({ comments }) {
     return (
-        <div className="flex bg-white divide-y rounded-lg flex-none w-full">
+        <div class="flex bg-white divide-y rounded-lg flex-none w-full">
             <div className="flex flex-col space-y-2">
                 {comments?.map((comment) => (
                     <>
-                        <div className="flex flex-col p-4 pt-2">
-                            <div className='font-bold text-xl mb-3 line-clamp-1'>
-                                <Link to={`/${comment.type}/${comment?.target.id}`}>{comment?.target.title}</Link>
+                        <div className="flex flex-col pt-1">
+                            <div className='font-bold text-md mb-3 line-clamp-1'>
+                                <Link to={`/${comment.type}/${comment?.target.id}`} class='no-underline text-black hover:text-cyan-500 duration-300'>{comment?.target.title}</Link>
                             </div>
-                            <div className="flex space-x-4">
+                            <div className="flex space-x-2">
                                 <img src={comment?.user.avatar} className="rounded-full w-10 h-10" alt="" />
-                                <div className="flex flex-col space-y-2">
-                                    <span className='font-medium line-clamp-1'>{comment?.user.name}</span>
-                                    <span className='line-clamp-2'>{parse(comment?.content)}</span>
+                                <div className="flex flex-col">
+                                    <div class='font-bold text-sm line-clamp-1'>{comment?.user.name}</div>
+                                    <div class='line-clamp-2'>{parse(comment?.content)}</div>
                                 </div>
                             </div>
                             {/* Type of book */}

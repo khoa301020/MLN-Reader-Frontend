@@ -13,6 +13,10 @@ import NovelChapter from './features/client/novels/NovelChapter';
 import NovelInfo from './features/client/novels/NovelInfo';
 import UpdateSeries from './features/client/UpdateSeries/UpdateSeries';
 import Home from './features/common/Home/Home';
+import User from './features/client/User/User';
+import MangaArea from './features/client/mangas/MangaArea';
+import NovelArea from './features/client/novels/NovelArea';
+import NewUpdate from './features/common/NewUpdate/NewUpdate';
 
 
 function App() {
@@ -24,6 +28,11 @@ function App() {
         <Route path="novel-chapter/:id" element={<NovelChapter />} />
         <Route path="manga/:id" element={<MangaInfo />} />
         <Route path="manga-chapter/:id" element={<MangaChapter />} />
+        <Route path="user" element={<User />} />
+        <Route path="manga" element={<MangaArea />} />
+        <Route path="lightnovel" element={<NovelArea />} />
+        <Route path="newupdate" element={<NewUpdate />} />
+
       </Route>
 
       <Route path="/auth" element={<LayoutAuth />}>

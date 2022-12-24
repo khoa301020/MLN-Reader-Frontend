@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { homeApi } from '../../../api/api';
-
+import { Link } from 'react-router-dom';
 import { RightOutlined } from '@ant-design/icons';
 import { Carousel } from 'antd';
 import ChainsawMan from '../../../assets/img/ChainsawMan.jpg';
@@ -10,7 +10,6 @@ import Saegusa from '../../../assets/img/Saegusa.jpg';
 import Shimotsuki from '../../../assets/img/Shimotsuki.jpg';
 import CommentList from '../../../components/CommentList';
 import CompletedList from '../../../components/CompletedList';
-import JustRead from '../../../components/JustRead';
 import ListImageAndTitle from '../../../components/ListImageAndTitle/ListImageAndTitle';
 import SlickCarousel from '../../../components/SlickCarousel/SlickCarousel';
 
@@ -46,8 +45,8 @@ function Home() {
 
   return (
 
-    <div className='container flex flex-col flex-wrap w-full h-full'>
-      <div className='grid grid-cols-12 h-full max-w-screen-xl mx-auto'>
+    <div className='container' class='flex flex-col w-full h-full'>
+      <div className='grid grid-cols-12 w-full h-full'>
         <div className='col-start-2 col-span-10 h-full'>
           <div>
             <Carousel autoplay>
@@ -80,86 +79,100 @@ function Home() {
           </div>
           <div className='grid grid-cols-4 gap-10'>
             <div className='col-span-3 h-auto'>
-              <h3 className='uppercase'>Nổi bật</h3>
-              <hr />
-              <br />
+            <div class='flex flex-row items-center mt-7'>
+                <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Nổi bật</div>
+            </div>
+            <div class='w-full h-1 bg-zinc-800 mb-5'></div>
               <SlickCarousel books={topDaily} />
               <br />
               <div className='manga'>
-                <h3 className='uppercase'>Truyện tranh</h3>
-                <hr />
-                <br />
+              <div class='flex flex-row items-center mt-7'>
+                <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Truyện tranh</div>
+              </div>
+              <div class='w-full h-1 bg-zinc-800 mb-5'></div>
                 <ListImageAndTitle books={mangas} prefix='/manga/' />
                 <div className='flex flex-row-nowrap items-center justify-end hover:opacity-75'>
-                  <a href='##' className='text-black no-underline uppercase font-medium mr-2 hover:mr-1 duration-300'><p>Xem thêm</p></a>
+                  <Link to='/manga' className='text-black no-underline uppercase font-medium mr-2 hover:mr-1 duration-300'><p>Xem thêm</p></Link>
                   <div><RightOutlined /></div>
                 </div>
               </div>
               <div className='ln'>
-                <h3 className='uppercase'>Tiểu thuyết</h3>
-                <hr />
-                <br />
+              <div class='flex flex-row items-center mt-7'>
+                <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Tiểu thuyết</div>
+              </div>
+              <div class='w-full h-1 bg-zinc-800 mb-5'></div>
                 <ListImageAndTitle books={novels} prefix='/novel/' />
                 <div className='flex flex-row-nowrap items-center justify-end hover:opacity-75'>
-                  <a href='##' className='text-black no-underline uppercase font-medium mr-2 hover:mr-1 duration-300'><p>Xem thêm</p></a>
+                  <Link to='/lightnovel' className='text-black no-underline uppercase font-medium mr-2 hover:mr-1 duration-300'><p>Xem thêm</p></Link>
                   <div><RightOutlined /></div>
                 </div>
               </div>
             </div>
             <div>
-              <h3 className='uppercase'>Bình luận gần đây</h3>
-              <hr />
-              <CommentList comments={comments} />
+              <div>
+              <div class='flex flex-row items-center mt-7'>
+                <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Bình luận gần đây</div>
+              </div>
+              <div class='w-full h-1 bg-zinc-800 mb-5'></div>
+                <CommentList comments={comments} />
+              </div>
+              <div class='mt-12'>
+              <div class='flex flex-row items-center mt-7'>
+                <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Truyện vừa đọc</div>
+              </div>
+              <div class='w-full h-1 bg-zinc-800 mb-5'></div>
+                <div>Halo</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className='bg-gray-200 my-10'>
-        <div className='grid grid-cols-12 max-w-screen-xl mx-auto'>
+      <div className='bg-gray-200 my-10 w-full h-fit'>
+        <div className='grid grid-cols-12 w-full'>
           <div className='col-start-2 col-span-10 h-auto'>
             <div className='grid grid-cols-4 gap-10 my-16'>
-              <div className='col-span-3 h-auto'>
+              <div className='col-span-4 h-auto'>
                 <div className='NewBook'>
-                  <h3 className='uppercase'>Truyện vừa đăng</h3>
-                  <hr />
-                  <div className='mx-auto max-w-2xl lg:max-w-7xl'>
-                    <div className='grid grid-cols-1 gap-y-1 gap-x-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 xl:gap-x-8 mb-6'>
+                <div class='flex flex-row items-center mt-7'>
+                  <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Truyện vừa đăng</div>
+                </div>
+                <div class='w-full h-1 bg-zinc-800 mb-5'></div>
+                  <div className='mx-auto w-full'>
+                    <div className='grid gap-y-1 gap-x-6 grid-cols-3 mb-6'>
                       {newNovels.map((book, index) => (
-                        <div className='grid grid-cols-3 gap-y-1 gap-x-6 xl:grid-cols-3 w-full mt-3' key={index}>
-                          <a href={'/novel/' + book.id}><img className='w-full' src={book.cover} alt={book.title} /></a>
+                        <div className='grid grid-cols-3 gap-y-1 gap-x-4 w-full mt-3' key={index}>
+                          <a href={'/novel/' + book.id}><img class='w-full' src={book.cover} alt={book.title} /></a>
                           <div className='col-span-2'>
-                            <a href={'/novel/' + book.id} className='no-underline text-black hover:text-cyan-700'>
-                              <div className='text-xl font-bold truncate ...'>
+                            <a href={'/novel/' + book.id} className='no-underline text-black hover:text-cyan-600 duration-300 '>
+                              <div className='text-base font-bold truncate ...'>
                                 {book.title}
                               </div>
                             </a>
-                            <div className='font-normal line-clamp-4'>
+                            <div className='text-xs line-clamp-6'>
                               {book.description?.split(/\n/).map((line, index) => <p key={index}>{line}</p>)}
                             </div>
                           </div>
                         </div>
                       ))}
                     </div>
-                    <button className="bg-gray-150 rounded-full w-full border-solid border hover:bg-black text-black font-semibold hover:text-white py-3 px-4 border-black hover:border-transparent">
-                      Xem thêm
-                    </button>
+                    <Link to='/newupdate'>
+                      <button className="bg-gray-150 rounded-full w-full border-solid border hover:bg-black text-black font-semibold hover:text-white py-3 px-4 border-black hover:border-transparent">
+                        Xem thêm
+                      </button>
+                    </Link>
                   </div>
                 </div>
-              </div>
-              <div className='Right'>
-                <h3 className='uppercase'>Truyện vừa đọc</h3>
-                <hr />
-                <JustRead />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className='grid grid-cols-12 max-w-screen-xl mx-auto mt-3 mb-10'>
+      <div className='grid grid-cols-12 w-full mx-auto mt-3 mb-10'>
         <div className='col-start-2 col-span-10 h-full'>
-          <h3 className='uppercase'>Đã hoàn thành</h3>
-          <hr />
-          <br />
+        <div class='flex flex-row items-center mt-7'>
+          <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Đã hoàn thành</div>
+        </div>
+        <div class='w-full h-1 bg-zinc-800 mb-5'></div>
           <CompletedList />
           <div className='flex flex-row-nowrap items-center justify-end hover:opacity-75'>
             <a href='##' className='text-black no-underline uppercase font-medium mr-2 hover:mr-1 duration-300'><p>Xem thêm</p></a>

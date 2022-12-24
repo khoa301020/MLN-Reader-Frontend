@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { Button } from 'antd';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { novelApi, userApi } from '../../../api/api';
 import CommentSection from '../../../components/CommentSection';
@@ -105,18 +107,18 @@ function NovelInfo() {
 
   return (
 
-    <div className='container flex flex-col flex-wrap w-full h-fit bg-grabooky-100'>
-      <div className='grid grid-cols-12 h-auto max-w-screen-xl mx-auto'>
+    <div className='flex flex-col flex-wrap w-full h-fit bg-gray-50'>
+      <div className='grid grid-cols-12 h-auto w-full mx-auto'>
         <div className='col-start-2 col-span-10 h-auto mt-10'>
           {auth && (
-            <div className='flex justify-end'>
+            <div className='flex justify-end mb-4'>
               <Link to={`/action/update-series/${id}`}>
-                <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'>Edit</button>
+                <Button>Chỉnh sửa</Button>
               </Link>
             </div>
           )}
           <div className='grid xl:grid-cols-4 lg:grid-cols-4 gap-10 md:grid-cols-1 sm:grid-cols-1'>
-            <div className='col-span-3 max-w-full'>
+            <div className='col-span-3 w-full'>
               <div className='max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md'>
                 <div>
                   <div className='grid grid-cols-4 gap-4 sm:grid-col-1 p-3'>
@@ -133,7 +135,7 @@ function NovelInfo() {
                       </div>
                       <img className='w-full h-auto object-cover max-w-md' src={book.cover} alt={book.title} />
                     </div>
-                    <div className='Info col-span-3 text-base'>
+                    <div className='Info col-span-3 text-sm'>
                       <div className='xl:text-3xl sm:text-base lg:text-2xl md:text-xl font-semibold'>{book.title}</div>
                       <div className='flex flex-wrap h-auto w-full mt-3 mb-3'>
                         {book.tags?.map((tag, index) => (
@@ -161,9 +163,17 @@ function NovelInfo() {
                     </div>
                   </div>
                 </div>
-                <div className='w-full h-fit p-3 border-t border-b-0 border-x-0 border-gray-200 border-solid'>
+                <div class='py-5 w-full h-auto border-y border-x-0 border-gray-200 border-solid'>
+                  <div class='flex flex-col justify-center items-center cursor-pointer'>
+                    <div><HeartOutlined style={{fontSize: '32px', color: '#fda4af'}} />
+                    <HeartFilled style={{fontSize: '32px', color: '#fb7185'}} />
+                    </div>
+                    <div class='text-rose-300 mt-1 font-semibold hover:text-rose-400'>Theo dõi</div>
+                  </div>
+                </div>
+                <div className=' h-fit p-3'>
                   <div className='font-bold text-lg'>Tóm tắt</div>
-                  <div className='mt-3 text-base'>
+                  <div className='mt-3 text-sm'>
                     {book.description?.split(/\n/).map((line, index) => <p key={index}>{line}</p>)}
                   </div>
                 </div>
@@ -182,7 +192,7 @@ function NovelInfo() {
                 </div>
               ))}
 
-              <div className='Comment max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md mt-8 pb-3 mb-10'>
+              <div className='Comment w-auto h-fit bg-white border border-solid border-gray-400 rounded-md mt-8 pb-3 mb-10'>
                 <div className='grid grid-cols-6 gap-4 sm:grid-col-1'>
                   <div className='col-span-6 bg-gray-100 w-full h-fit p-3 font-bold text-xl rounded-t-md'>Bình luận {`(${book.comments?.length})`}</div>
                   <div className='col-span-6 w-full h-fit px-3 font-bold text-2xl rounded-t-md'>

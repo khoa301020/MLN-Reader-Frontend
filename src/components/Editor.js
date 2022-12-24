@@ -1,34 +1,24 @@
 import { Editor } from '@tinymce/tinymce-react';
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const html = `\n
-      <p>Tôi đang chạy</p>
-      <p>Tôi đang chạy bằng tất cả sức lực để thoát khỏi móng vuốt của con quái thú.</p>\n
-      `;
+export default function MyEditor({ initContent = "", onEditorChange, type = "html" }) {
+    const [content, setContent] = useState("");
 
-// const parser = input =>
-//     parse(input, {
-//         replace: domNode => {
-//             if (domNode instanceof Element && domNode.attribs.class === 'remove') {
-//                 return <></>;
-//             }
-//         }
-//     });
-
-export default function TinyMCE() {
-    const editorRef = useRef(null);
-    // const log = () => {
-    //     if (editorRef.current) {
-    //         console.log(editorRef.current.getContent());
-    //     }
-    // };
+    useEffect(() => {
+        setContent(initContent);
+    }, [initContent]);
 
     return (
         <>
             <Editor
                 tinymceScriptSrc={process.env.PUBLIC_URL + '/tinymce/tinymce.min.js'}
-                onInit={(evt, editor) => editorRef.current = editor}
-                initialValue={html}
+                onEditorChange={
+                    (content, editor) => onEditorChange(type === "html" ? {
+                        content: content,
+                        wordCount: editor.plugins.wordcount.getCount()
+                    } :
+                        editor.getContent({ format: 'text' }))}
+                initialValue={content ? content : ""}
                 init={{
                     height: 300,
                     menubar: false,
@@ -41,8 +31,7 @@ export default function TinyMCE() {
                         'bold italic underline strikethrough forecolor |' +
                         'link image | removeformat | fullscreen',
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                }
-                }
+                }}
             />
         </>
     );

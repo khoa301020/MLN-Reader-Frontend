@@ -1,19 +1,53 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { toast } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { homeApi, mangaApi, novelApi } from '../../../api/api'
 import EditorForm from '../../../components/Editor'
-import AuthContext from '../../auth/AuthContext'
 
-export default function CreateSeries() {
-  AuthContext();
+export default function Book({ id }) {
+  const [info, setInfo] = useState({});
+
+  useEffect(() => {
+    if (id?.includes('novel')) {
+      novelApi.getNovelOnly(id).then((res) => {
+        if (res.data.result) {
+          setInfo(res.data.result);
+        } else {
+          setInfo({});
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+    } else if (id.includes('manga')) {
+      mangaApi.getMangaOnly(id).then((res) => {
+        if (res.data.result) {
+          setInfo(res.data.result);
+        } else {
+          setInfo({});
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [id]);
+
+  useEffect(() => {
+    console.log(info);
+    setTitle(info.title);
+    setOtherNames(info.otherNames?.join('; '));
+    setDescription(info.description);
+    setAuthor(info.author);
+    setArtist(info.artist);
+    setStatus(info.status);
+    setSelectedTags(info.tags);
+    setImageUrl(info.cover);
+  }, [info]);
+
   const navigate = useNavigate()
 
-  const [allTags, setAllTags] = useState([])
   const [showTags, setShowTags] = useState([])
   const [selectedTags, setSelectedTags] = useState([]);
-
-  const [type, setType] = useState("novel")
+  const [type, setType] = useState("")
 
   const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -29,10 +63,11 @@ export default function CreateSeries() {
 
   useEffect(() => {
     homeApi.getTags().then(res => {
-      setAllTags(res.data.result)
-      setShowTags(res.data.result.filter(tag => tag.type === "novel" || tag.type === "both"))
+      const type = id.includes('novel') ? 'novel' : 'manga';
+      setType(type);
+      setShowTags(res.data.result)
     })
-  }, [])
+  }, [id])
 
   useEffect(() => {
     console.log(selectedTags);
@@ -47,23 +82,18 @@ export default function CreateSeries() {
   }, [imageUrl]);
 
   useEffect(() => {
-    if (selectedTags.length === 0 || title === '' || description === '' || type === '' || status === '') {
+    if (selectedTags?.length === 0 || title === '' || description === '' || status === '') {
       setCheck(false);
     }
-    if (selectedTags.length !== 0 && title !== '' && description !== '' && type !== '' && status !== '') {
+    if (selectedTags?.length !== 0 && title !== '' && description !== '' && status !== '') {
       setCheck(true);
     }
-  }, [selectedTags, title, description, type, status])
+  }, [selectedTags, title, description, status])
 
   const handleImageChange = () => {
     const file = fileInput.current.files[0];
     setImageUrl(URL.createObjectURL(file));
   };
-
-  const handleTypeChange = (e) => {
-    setType(e.target.value)
-    setShowTags(allTags.filter(tag => tag.type === e.target.value || tag.type === "both"))
-  }
 
   const handleTagCheck = (e) => {
     const { id, name, checked } = e.target;
@@ -81,25 +111,26 @@ export default function CreateSeries() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append('id', id);
     formData.append('title', title);
-    formData.append('cover', fileInput.current.files[0]);
+    fileInput.current.files[0] && formData.append('cover', fileInput.current.files[0]);
     formData.append('author', author);
     formData.append('artist', artist);
     formData.append('status', status);
-    formData.append('otherNames', JSON.stringify(otherNames?.split(';').map(name => name.trim())));
+    formData.append('otherNames', JSON.stringify(otherNames.split(';').map(name => name.trim())));
     formData.append('description', description);
-    formData.append('uploader', localStorage.getItem('username'));
     formData.append('tags', JSON.stringify(selectedTags));
+
     if (type === "novel") {
       formData.append('subject', 'novel');
-      novelApi.createNovel(formData).then(res => {
-        toast.success("Đăng tiểu thuyết mới thành công");
+      novelApi.updateNovel(formData).then(res => {
+        toast.success("Cập nhật tiểu thuyết thành công");
         navigate(`/novel/${res.data.result.id}`);
       })
     } else if (type === "manga") {
       formData.append('subject', 'manga');
-      mangaApi.createManga(formData).then(res => {
-        toast.success("Đăng truyện tranh mới thành công");
+      mangaApi.updateManga(formData).then(res => {
+        toast.success("Cập nhật truyện tranh thành công");
         navigate(`/manga/${res.data.result.id}`);
       })
     }
@@ -110,7 +141,7 @@ export default function CreateSeries() {
       <div className='grid grid-cols-12 gap-12'>
         <div className='row-start-3 col-start-3 col-span-8 bg-white min-h-screen h-auto border-solid border border-gray-400 rounded mb-20'>
           <div className='w-full h-auto p-3 bg-gray-100 text-black font-semibold rounded-t-md'>
-            Đăng truyện mới
+            Chỉnh sửa thông tin truyện
           </div>
           <div className='px-8 py-10 min-h-screen'>
             <div className='grid grid-cols-9 gap-9 content-center mb-4'>
@@ -118,7 +149,7 @@ export default function CreateSeries() {
                 <label className='text-right text-gray-900'>Tiêu đề<span className='text-red-500'>*</span></label>
               </div>
               <div className='col-span-6'>
-                <input type="text" name='title' className="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" required value={title} onChange={e => setTitle(e.target.value)} />
+                <input type="text" name='title' className="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" required value={title ? title : ""} onChange={e => setTitle(e.target.value)} />
               </div>
             </div>
 
@@ -156,8 +187,8 @@ export default function CreateSeries() {
                 <label className='text-right text-gray-900'>Ảnh bìa</label>
               </div>
               <div className='col-span-6'>
-                <input className="block w-full text-sm py-2 text-gray-900 border cursor-pointer  focus:outline-none" id="file_input" type="file"
-                  ref={fileInput}
+                <input className="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" id="file_input" type="file"
+                  ref={fileInput} accept="image/*"
                   onChange={handleImageChange} />
                 <div className="flex flex-col items-center justify-center w-full h-64 mt-4 overflow-hidden bg-gray-100 border-2 border-dashed rounded-md">
                   {imageUrl ? (<img src={imageUrl} alt="preview" className=" object-scale-down w-full h-full" />) : (<p className="text-sm text-gray-600">
@@ -192,26 +223,12 @@ export default function CreateSeries() {
 
             <div className='grid grid-cols-9 gap-9 content-center mb-4'>
               <div className='col-span-2 text-right place-items-center my-2'>
-                <label className='text-right text-gray-900'>Loại truyện<span className='text-red-500'>*</span></label>
-              </div>
-              <div className='col-span-6'>
-                <select id="TheLoai" className="w-fit bg-white border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2"
-                  value={type}
-                  onChange={handleTypeChange}>
-                  <option value="novel">Tiểu thuyết</option>
-                  <option value="manga">Truyện tranh</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
                 <label className='text-right text-gray-900'>Thể loại<span className='text-red-500'>*</span></label>
               </div>
               <div className='col-span-6 my-2'>
                 <div className='grid grid-cols-4 gap-x-4'>
-                  {showTags.map((tag, index) => (<div className="flex items-center mb-4">
-                    <input key={index} id={tag.code} type="checkbox" code={tag.code} name={tag.name} checked={selectedTags.find(e => e.code === tag.code)} onChange={handleTagCheck} className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2" />
+                  {showTags.map((tag, index) => (<div className="flex items-center mb-4" key={index}>
+                    <input id={tag.code} type="checkbox" code={tag.code} name={tag.name} checked={selectedTags?.find(e => e.code === tag.code)} onChange={handleTagCheck} className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2" />
                     <label htmlFor="Action" className="ml-1 text-sm font-medium text-gray-900 ">{tag.name}</label>
                   </div>
                   ))}
@@ -224,7 +241,7 @@ export default function CreateSeries() {
                 <label className='text-right text-gray-900'>Mô tả<span className='text-red-500'>*</span></label>
               </div>
               <div className='col-span-6'>
-                <EditorForm onEditorChange={onEditorChange} type="text" />
+                <EditorForm initContent={info.description} onEditorChange={onEditorChange} type="text" />
               </div>
             </div>
 
@@ -248,7 +265,7 @@ export default function CreateSeries() {
                 <button type="button"
                   disabled={!check ? true : false}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 border border-solid border-transparent font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none "
-                  onClick={handleSubmit}>Thêm truyện</button>
+                  onClick={handleSubmit}>Lưu lại</button>
               </div>
             </div>
           </div>

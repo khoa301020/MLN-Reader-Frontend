@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_URL_DEV : process.env.REACT_APP_API_URL_PROD,
 });
 
 export const homeApi = {
@@ -19,44 +19,59 @@ export const homeApi = {
     getTopViewMangaMonthly: () => api.get("/manga/get-list?page=1&limit=20&sort=topViewMonthly"),
     getTopViewMangaYearly: () => api.get("/manga/get-list?page=1&limit=20&sort=topViewYearly"),
     getTopFollowManga: () => api.get("/manga/get-list?page=1&limit=20&sort=topFollow"),
+    getTags: () => api.get("/common/get-tags"),
+    getNewestComment: () => api.get("/common/get-newest-comments"),
 };
 
 export const novelApi = {
     getNovel: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}`),
+    getNovelOnly: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}&isOnly=true`),
+    getNovelUpdate: (novelId) => api.get(`/novel/get-novel-update?novelId=${novelId}`),
+    getSection: (sectionId) => api.get(`/novel/get-section?sectionId=${sectionId}`),
     getChapter: (chapterId) => api.get(`/novel/get-chapter?chapterId=${chapterId}`),
-    createNovel: (data) => api.post("/novel/create-action", Object.assign({ subject: "novel" }, data)),
-    updateNovel: (data) => api.post("/novel/update-action", Object.assign({ subject: "novel" }, data)),
+    getChapterOnly: (chapterId) => api.get(`/novel/get-chapter?chapterId=${chapterId}&isOnly=true`),
+    addHistory: (data) => api.post("/novel/add-history", data),
+    getHistory: (username) => api.get("/novel/get-history?username=" + username),
+    createNovel: (data) => api.post("/novel/create-action", data),
+    updateNovel: (data) => api.post("/novel/update-action", data),
     deleteNovel: (data) => api.post("/novel/delete-action", Object.assign({ subject: "novel" }, data)),
-    createNovelSection: (data) => api.post("/novel/create-action", Object.assign({ subject: "section" }, data)),
-    updateNovelSection: (data) => api.post("/novel/update-action", Object.assign({ subject: "section" }, data)),
-    deleteNovelSection: (data) => api.post("/novel/delete-action", Object.assign({ subject: "section" }, data)),
-    createNovelChapter: (data) => api.post("/novel/create-action", Object.assign({ subject: "chapter" }, data)),
-    updateNovelChapter: (data) => api.post("/novel/update-action", Object.assign({ subject: "chapter" }, data)),
-    deleteNovelChapter: (data) => api.post("/novel/delete-action", Object.assign({ subject: "chapter" }, data)),
-    createNovelNote: (data) => api.post("/novel/create-action", Object.assign({ subject: "note" }, data)),
-    updateNovelNote: (data) => api.post("/novel/update-action", Object.assign({ subject: "note" }, data)),
-    deleteNovelNote: (data) => api.post("/novel/delete-action", Object.assign({ subject: "note" }, data)),
+    createSection: (data) => api.post("/novel/create-action", data),
+    updateSection: (data) => api.post("/novel/update-action", data),
+    deleteSection: (data) => api.post("/novel/delete-action", Object.assign({ subject: "section" }, data)),
+    createChapter: (data) => api.post("/novel/create-action", data),
+    updateChapter: (data) => api.post("/novel/update-action", data),
+    deleteChapter: (data) => api.post("/novel/delete-action", Object.assign({ subject: "chapter" }, data)),
+    createNote: (data) => api.post("/novel/create-action", data),
+    updateNote: (data) => api.post("/novel/update-action", data),
+    deleteNote: (data) => api.post("/novel/delete-action", Object.assign({ subject: "note" }, data)),
 };
 
 export const mangaApi = {
     getManga: (mangaId) => api.get(`/manga/get-manga?mangaId=${mangaId}`),
+    getMangaOnly: (mangaId) => api.get(`/manga/get-manga?mangaId=${mangaId}&isOnly=true`),
+    getMangaUpdate: (mangaId) => api.get(`/manga/get-manga-update?mangaId=${mangaId}`),
+    getSection: (sectionId) => api.get(`/manga/get-section?sectionId=${sectionId}`),
     getChapter: (chapterId) => api.get(`/manga/get-chapter?chapterId=${chapterId}`),
-    createManga: (data) => api.post("/manga/create-action", Object.assign({ subject: "manga" }, data)),
-    updateManga: (data) => api.post("/manga/update-action", Object.assign({ subject: "manga" }, data)),
+    getChapterOnly: (chapterId) => api.get(`/manga/get-chapter?chapterId=${chapterId}&isOnly=true`),
+    addHistory: (data) => api.post("/manga/add-history", data),
+    getHistory: (username) => api.get("/manga/get-history?username=" + username),
+    createManga: (data) => api.post("/manga/create-manga", data),
+    updateManga: (data) => api.post("/manga/update-manga", data),
     deleteManga: (data) => api.post("/manga/delete-action", Object.assign({ subject: "manga" }, data)),
-    createMangaSection: (data) => api.post("/manga/create-action", Object.assign({ subject: "section" }, data)),
-    updateMangaSection: (data) => api.post("/manga/update-action", Object.assign({ subject: "section" }, data)),
-    deleteMangaSection: (data) => api.post("/manga/delete-action", Object.assign({ subject: "section" }, data)),
-    createMangaChapter: (data) => api.post("/manga/create-action", Object.assign({ subject: "chapter" }, data)),
-    updateMangaChapter: (data) => api.post("/manga/update-action", Object.assign({ subject: "chapter" }, data)),
-    deleteMangaChapter: (data) => api.post("/manga/delete-action", Object.assign({ subject: "chapter" }, data)),
+    createSection: (data) => api.post("/manga/create-section", data),
+    updateSection: (data) => api.post("/manga/update-section", data),
+    deleteSection: (data) => api.post("/manga/delete-action", Object.assign({ subject: "section" }, data)),
+    createChapter: (data) => api.post("/manga/create-chapter", data),
+    updateChapter: (data) => api.post("/manga/update-chapter", data),
+    deleteChapter: (data) => api.post("/manga/delete-action", Object.assign({ subject: "chapter" }, data)),
 };
 
 export const userApi = {
-    login: (data) => api.post("/auth/login", data, { withCredentials: true, "Access-Control-Allow-Origin": "http://localhost:3000" }),
+    login: (data) => api.post("/auth/login", data, { withCredentials: true }),
     register: (data) => api.post("/auth/register", data),
     logout: (data) => api.post("/auth/logout", data),
-    verify: (username, token) => api.post("/auth/verify", username, { headers: { Authorization: `Bearer ${token}` } }),
+    verify: (username, token) => api.post("/auth/verify", { username: username }, { headers: { Authorization: `Bearer ${token}` } }),
+    bookVerify: (id, username, token) => api.post("/auth/book-verify", { id, username }, { headers: { Authorization: `Bearer ${token}` } }),
     getProfile: () => api.get("/user/get-profile"),
     // updateProfile: (data) => api.post("/user/update-profile", data),
     // updateAvatar: (data) => api.post("/user/update-avatar", data),
@@ -65,7 +80,7 @@ export const userApi = {
     unfollowNovel: (data) => api.post("/novel/follow-action", data),
     followManga: (data) => api.post("/manga/follow-action", data),
     unfollowManga: (data) => api.post("/manga/follow-action", data),
-    comment: (data) => api.post("/common/comment", data),
+    comment: (data, token) => api.post("/common/comment-action", data, { headers: { Authorization: `Bearer ${token}` } }),
     // rate: (data) => api.post("/user/rate", data),
 };
 

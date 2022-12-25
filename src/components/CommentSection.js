@@ -29,17 +29,17 @@ function CommentSection({ comments }) {
                     <div className="overflow-hidden">
                         <div className='grid grid-cols-10 gap-4'>
                             {displayComments?.map((comment, index) => (
-                                <div key={index} className='col-span-10'>
-                                    <div className='col-span-1 ml-3'>
-                                        <img className="min-w-6 min-h-6 w-12 h-12 max-w-12 max-h-12 object-cover rounded-full" src={comment.user?.avatar} alt="Rounded avatar" />
+                                <div key={index} class='grid col-span-10'>
+                                    <div className='mx-auto w-fit'>
+                                        <img className="min-w-6 min-h-6 w-14 h-14 object-cover rounded-full" src={comment.user?.avatar} alt="Rounded avatar" />
                                     </div>
-                                    <div className='col-span-9 bg-slate-100 mr-3 px-3 py-2 text-base'>
+                                    <div className='col-start-2 col-span-9 bg-gray-100 mr-3 px-3 py-2 text-base w-auto'>
                                         <div>
-                                            <div className='nameUser font-bold mb-1'>{comment.user?.name}</div>
-                                            <div className="commentUser">
+                                            <div className='nameUser' class='font-bold mb-1'>{comment.user?.name}</div>
+                                            <div className='commentUser'>
                                                 {parse(comment.content)}
                                             </div>
-                                            <div className='commentDate text-sm mt-3 text-gray-500'>{comment.createdAt}</div>
+                                            <div className='commentDate' class='text-sm mt-3 text-gray-500'>{comment.createdAt}</div>
                                         </div>
                                     </div>
                                 </div>

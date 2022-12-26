@@ -8,7 +8,7 @@ export const homeApi = {
     getLastUpdateNovel: () => api.get("/novel/get-list?page=1&limit=30&sort=lastUpdate"),
     getNewestNovel: () => api.get("/novel/get-list?page=1&limit=4&sort=newest"),
     getTopViewNovel: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewTotal"),
-    getTopViewNovelDaily: () => api.get("/novel/get-list?page=1&limit=8&sort=topViewDaily"),
+    getTopViewNovelDaily: () => api.get("/novel/get-list?page=1&limit=10&sort=topViewDaily"),
     getTopViewNovelMonthly: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewMonthly"),
     getTopViewNovelYearly: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewYearly"),
     getTopFollowNovel: () => api.get("/novel/get-list?page=1&limit=20&sort=topFollow"),
@@ -21,6 +21,8 @@ export const homeApi = {
     getTopFollowManga: () => api.get("/manga/get-list?page=1&limit=20&sort=topFollow"),
     getTags: () => api.get("/common/get-tags"),
     getNewestComment: () => api.get("/common/get-newest-comments"),
+    getHistory: (username) => api.get("/common/get-history?username=" + username),
+    getNewestBoth: () => api.get("/common/get-latest"),
 };
 
 export const novelApi = {
@@ -72,7 +74,7 @@ export const userApi = {
     logout: (data) => api.post("/auth/logout", data),
     verify: (username, token) => api.post("/auth/verify", { username: username }, { headers: { Authorization: `Bearer ${token}` } }),
     bookVerify: (id, username, token) => api.post("/auth/book-verify", { id, username }, { headers: { Authorization: `Bearer ${token}` } }),
-    getProfile: () => api.get("/user/get-profile"),
+    getUser: (id) => api.get("/common/get-user?id=" + id),
     // updateProfile: (data) => api.post("/user/update-profile", data),
     // updateAvatar: (data) => api.post("/user/update-avatar", data),
     // updatePassword: (data) => api.post("/user/update-password", data),

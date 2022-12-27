@@ -1,8 +1,8 @@
+import { HeartFilled, HeartOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { Button } from 'antd';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { novelApi, userApi } from '../../../api/api';
 import CommentSection from '../../../components/CommentSection';
@@ -102,7 +102,13 @@ function NovelInfo() {
   }
 
   if (loading) {
-    return <div>Loading book...</div>;
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4">
+          Loading
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -165,8 +171,8 @@ function NovelInfo() {
                 </div>
                 <div class='py-5 w-full h-auto border-y border-x-0 border-gray-200 border-solid'>
                   <div class='flex flex-col justify-center items-center cursor-pointer'>
-                    <div><HeartOutlined style={{fontSize: '32px', color: '#fda4af'}} />
-                    <HeartFilled style={{fontSize: '32px', color: '#fb7185'}} />
+                    <div><HeartOutlined style={{ fontSize: '32px', color: '#fda4af' }} />
+                      <HeartFilled style={{ fontSize: '32px', color: '#fb7185' }} />
                     </div>
                     <div class='text-rose-300 mt-1 font-semibold hover:text-rose-400'>Theo dõi</div>
                   </div>

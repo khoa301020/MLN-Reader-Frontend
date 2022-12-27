@@ -1,8 +1,8 @@
+import { HeartFilled, HeartOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
-import { Button } from 'antd';
 import toast from 'react-hot-toast';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { mangaApi, userApi } from '../../../api/api';
 import CommentSection from '../../../components/CommentSection';
@@ -102,11 +102,16 @@ function MangaInfo() {
   }
 
   if (loading) {
-    return <div>Loading book...</div>;
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4">
+          Loading
+        </div>
+      </div>
+    )
   }
 
   return (
-
     <div className='flex flex-col flex-wrap w-full h-fit bg-gray-50'>
       <div className='grid grid-cols-12 h-auto w-full mx-auto'>
         <div className='col-start-2 col-span-10 h-auto mt-10'>
@@ -125,7 +130,7 @@ function MangaInfo() {
                     <div className='left col-span-1'>
                       <div className='mb-2'>
                         <div className='w-full h-9 bg-cyan-600 max-w-xs rounded'>
-                          <div className='text-white text-bold text-center leading-9 text-base font-semibold'>Tiểu thuyết</div>
+                          <div className='text-white text-bold text-center leading-9 text-base font-semibold'>Truyện tranh</div>
                         </div>
                         <div className='-mt-1 flex justify-center'>
                           <div className="overflow-hidden inline-block">
@@ -169,8 +174,8 @@ function MangaInfo() {
                 </div>
                 <div class='py-5 w-full h-auto border-y border-x-0 border-gray-200 border-solid'>
                   <div class='flex flex-col justify-center items-center cursor-pointer'>
-                    <div><HeartOutlined style={{fontSize: '32px', color: '#fda4af'}} />
-                    <HeartFilled style={{fontSize: '32px', color: '#fb7185'}} />
+                    <div><HeartOutlined style={{ fontSize: '32px', color: '#fda4af' }} />
+                      <HeartFilled style={{ fontSize: '32px', color: '#fb7185' }} />
                     </div>
                     <div class='text-rose-300 mt-1 font-semibold hover:text-rose-400'>Theo dõi</div>
                   </div>

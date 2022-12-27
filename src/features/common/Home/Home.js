@@ -18,6 +18,7 @@ function Home() {
   const [novels, setNovels] = useState([]);
   const [topDaily, setTopDaily] = useState([]);
   const [newBooks, setNewBooks] = useState([]);
+  const [completedBooks, setCompletedBooks] = useState([]);
   const [mangas, setMangas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
@@ -27,12 +28,8 @@ function Home() {
     homeApi.getTopViewNovelDaily().then((res) => {
       setTopDaily(res.data.result);
     });
-    homeApi.getNewestBoth().then((res) => {
-      const newBooks = res.data.result;
-      newBooks.forEach((book) => {
-        book.type = book.id.includes('novel') ? 'novel' : 'manga';
-      });
-      setNewBooks(newBooks);
+    homeApi.getNewestHome().then((res) => {
+      setNewBooks(res.data.result);
     });
     homeApi.getLastUpdateNovel().then((res) => {
       setNovels(res.data.result);
@@ -43,13 +40,23 @@ function Home() {
     homeApi.getNewestComment().then((res) => {
       setComments(res.data.result);
     });
+    homeApi.getCompleted().then((res) => {
+      setCompletedBooks(res.data.result);
+    });
     setLoading(false);
   }, []);
 
-  if (loading) return <div>Loading section...</div>;
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4">
+          Loading
+        </div>
+      </div>
+    )
+  }
 
   return (
-
     <div className='container' class='flex flex-col w-full h-full'>
       <div className='grid grid-cols-12 w-full h-full'>
         <div className='col-start-2 col-span-10 h-full'>
@@ -181,14 +188,17 @@ function Home() {
       <div className='grid grid-cols-12 w-full mx-auto mt-3 mb-10'>
         <div className='col-start-2 col-span-10 h-full'>
           <div class='flex flex-row items-center mt-7'>
-            <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Đã hoàn thành</div>
+            <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Tiểu thuyết đã hoàn thành</div>
           </div>
           <div class='w-full h-1 bg-zinc-800 mb-5'></div>
-          <CompletedList />
-          <div className='flex flex-row-nowrap items-center justify-end hover:opacity-75'>
-            <a href='##' className='text-black no-underline uppercase font-medium mr-2 hover:mr-1 duration-300'><p>Xem thêm</p></a>
-            <div><RightOutlined /></div>
+          <CompletedList books={completedBooks?.novels} />
+        </div>
+        <div className='col-start-2 col-span-10 h-full'>
+          <div class='flex flex-row items-center mt-7'>
+            <div class='p-2 bg-zinc-800 text-white font-bold uppercase'>Truyện tranh đã hoàn thành</div>
           </div>
+          <div class='w-full h-1 bg-zinc-800 mb-5'></div>
+          <CompletedList books={completedBooks?.mangas} />
         </div>
       </div>
     </div >

@@ -5,14 +5,14 @@ const api = axios.create({
 });
 
 export const homeApi = {
-    getLastUpdateNovel: () => api.get("/novel/get-list?page=1&limit=30&sort=lastUpdate"),
+    getLastUpdateNovel: () => api.get("/novel/get-last-update?limit=30"),
     getNewestNovel: () => api.get("/novel/get-list?page=1&limit=4&sort=newest"),
     getTopViewNovel: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewTotal"),
     getTopViewNovelDaily: () => api.get("/novel/get-list?page=1&limit=10&sort=topViewDaily"),
     getTopViewNovelMonthly: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewMonthly"),
     getTopViewNovelYearly: () => api.get("/novel/get-list?page=1&limit=20&sort=topViewYearly"),
     getTopFollowNovel: () => api.get("/novel/get-list?page=1&limit=20&sort=topFollow"),
-    getLastUpdateManga: () => api.get("/manga/get-list?page=1&limit=30&sort=lastUpdate"),
+    getLastUpdateManga: () => api.get("/manga/get-last-update?limit=30"),
     getNewestManga: () => api.get("/manga/get-list?page=1&limit=4&sort=newest"),
     getTopViewManga: () => api.get("/manga/get-list?page=1&limit=20&sort=topView"),
     getTopViewMangaDaily: () => api.get("/manga/get-list?page=1&limit=8&sort=topViewDaily"),
@@ -22,13 +22,16 @@ export const homeApi = {
     getTags: () => api.get("/common/get-tags"),
     getNewestComment: () => api.get("/common/get-newest-comments"),
     getHistory: (username) => api.get("/common/get-history?username=" + username),
-    getNewestBoth: () => api.get("/common/get-latest"),
+    getNewest: () => api.get("/common/get-latest"),
+    getNewestHome: () => api.get("/common/get-latest?limit=6"),
+    getCompleted: () => api.get("/common/get-completed"),
 };
 
 export const novelApi = {
     getNovel: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}`),
     getNovelOnly: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}&isOnly=true`),
     getNovelUpdate: (novelId) => api.get(`/novel/get-novel-update?novelId=${novelId}`),
+    getLastUpdateNovel: () => api.get("/novel/get-last-update"),
     getSection: (sectionId) => api.get(`/novel/get-section?sectionId=${sectionId}`),
     getChapter: (chapterId) => api.get(`/novel/get-chapter?chapterId=${chapterId}`),
     getChapterOnly: (chapterId) => api.get(`/novel/get-chapter?chapterId=${chapterId}&isOnly=true`),
@@ -55,6 +58,7 @@ export const mangaApi = {
     getSection: (sectionId) => api.get(`/manga/get-section?sectionId=${sectionId}`),
     getChapter: (chapterId) => api.get(`/manga/get-chapter?chapterId=${chapterId}`),
     getChapterOnly: (chapterId) => api.get(`/manga/get-chapter?chapterId=${chapterId}&isOnly=true`),
+    getLastUpdateManga: () => api.get("/manga/get-last-update"),
     addHistory: (data) => api.post("/manga/add-history", data),
     getHistory: (username) => api.get("/manga/get-history?username=" + username),
     createManga: (data) => api.post("/manga/create-manga", data),

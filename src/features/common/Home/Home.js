@@ -32,10 +32,10 @@ function Home() {
       setNewBooks(res.data.result);
     });
     homeApi.getLastUpdateNovel().then((res) => {
-      setNovels(res.data.result);
+      setNovels(res.data.result.novels);
     });
     homeApi.getLastUpdateManga().then((res) => {
-      setMangas(res.data.result);
+      setMangas(res.data.result.mangas);
     });
     homeApi.getNewestComment().then((res) => {
       setComments(res.data.result);

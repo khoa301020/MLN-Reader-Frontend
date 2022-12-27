@@ -5,9 +5,9 @@ function CommentList({ comments }) {
     return (
         <div className="flex bg-white divide-y rounded-lg flex-none w-full">
             <div className="flex flex-col space-y-2">
-                {comments?.map((comment) => (
-                    <>
-                        <div className="flex flex-col pt-1">
+                {comments?.map((comment, index) => (
+                    <div key={index}>
+                        <div className="flex flex-col pt-1" >
                             <div className='font-bold text-md mb-3 line-clamp-1'>
                                 <Link to={`/${comment.type}/${comment?.target.id}`} className='no-underline text-black hover:text-cyan-500 duration-300'>{comment?.target.title}</Link>
                             </div>
@@ -24,7 +24,7 @@ function CommentList({ comments }) {
                             </div>
                         </div>
                         <div className='w-full h-px bg-gray-200'></div>
-                    </>
+                    </div>
                 ))}
             </div>
         </div>

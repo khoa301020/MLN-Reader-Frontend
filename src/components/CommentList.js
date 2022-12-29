@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function CommentList({ comments }) {
     return (
         <div className="flex bg-white divide-y rounded-lg flex-none w-full">
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 w-full">
                 {comments?.map((comment, index) => (
                     <div key={index}>
                         <div className="flex flex-col pt-1" >
@@ -23,7 +23,7 @@ function CommentList({ comments }) {
                                 <span className='text-xs text-gray-500'>{comment.type === 'novel' ? "Tiểu thuyết" : "Truyện tranh"}</span>
                             </div>
                         </div>
-                        <div className='w-full h-px bg-gray-200'></div>
+                        <div className='w-full h-px bg-gray-200 mt-2'></div>
                     </div>
                 ))}
             </div>

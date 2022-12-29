@@ -58,8 +58,8 @@ function Home() {
 
   return (
     <div className='container' class='flex flex-col w-full h-full'>
-      <div className='grid grid-cols-12 w-full h-full'>
-        <div className='col-start-2 col-span-10 h-full'>
+      <div className='grid grid-cols-12 w-full h-full justify-items-center'>
+        <div className='col-start-2 col-span-10 h-full max-w-7xl w-full'>
           <div>
             <Carousel autoplay>
               <div>
@@ -155,6 +155,12 @@ function Home() {
                         <div className='grid grid-cols-3 gap-y-1 gap-x-4 w-full mt-3' key={index}>
                           <a href={`/${book.type}/` + book.id}><img class='w-full' src={book.cover} alt={book.title} /></a>
                           <div className='col-span-2'>
+                            {/* type of book */}
+                            <div className="flex flex-col justify-center ml-auto">
+                                <div className="px-3 py-0 text-xs text-white bg-cyan-500 rounded-full w-fit">
+                                  {book.type === 'novel' ? 'Novel' : 'Manga'}
+                                </div>
+                              </div>
                             <a href={`/${book.type}/` + book.id} className='no-underline text-black hover:text-cyan-600 duration-300 '>
                               <div className='text-base font-bold truncate ...'>
                                 {book.title}
@@ -162,12 +168,6 @@ function Home() {
                             </a>
                             <div className='text-xs line-clamp-6'>
                               {book.description?.split(/\n/).map((line, index) => <p key={index}>{line}</p>)}
-                            </div>
-                            {/* type of book */}
-                            <div className="flex flex-col justify-center ml-auto">
-                              <div className="flex flex-row justify-center items-center px-2 py-1 text-xs font-bold text-white bg-cyan-700 rounded-full">
-                                {book.type === 'novel' ? 'Novel' : 'Manga'}
-                              </div>
                             </div>
                           </div>
                         </div>

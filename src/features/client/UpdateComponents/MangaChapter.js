@@ -1,8 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { mangaApi } from '../../../api/api';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Modal } from 'antd';
 
 export default function MangaChapter({ id }) {
+  const { confirm } = Modal;
+  const showConfirm = () => {
+    confirm({
+      title: 'Bạn có muốn xoá truyện này không',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn vào nút "Ok" để xoá',
+      onOk() {
+        console.log('Có');
+      },
+      onCancel() {
+        console.log('Không');
+      },
+    });
+  };
+
   const fileInput = useRef(null);
 
   const [manga, setManga] = useState({})
@@ -51,8 +68,8 @@ export default function MangaChapter({ id }) {
 
   return (
     <div className='w-full min-h-screen'>
-      <div className='grid grid-cols-12 gap-12'>
-        <div className='row-start-3 col-start-3 col-span-8 bg-white min-h-screen h-auto border-solid border border-gray-400 rounded mb-20'>
+      <div className='grid grid-cols-12 gap-12 w-full'>
+        <div className='col-start-1 col-span-12 bg-white min-h-screen h-auto rounded mb-20 w-full'>
           <div className='w-full h-auto p-3 bg-gray-100 text-black font-semibold rounded-t-md'>
             Chỉnh sửa chương truyện
           </div>
@@ -97,8 +114,14 @@ export default function MangaChapter({ id }) {
               <div className='col-start-3 col-span-6'>
                 <button type="button"
                   disabled={!title ? true : false}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 border border-solid border-transparent font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none "
-                  onClick={handleSubmit}>Lưu thay đổi</button>
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 border border-solid border-transparent font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2 focus:outline-none "
+                  onClick={handleSubmit}>Lưu thay đổi
+                </button>
+                <button
+                  className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-blue-300 border border-solid border-transparent font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2 focus:outline-none "
+                  onClick={showConfirm}>
+                  Xoá chương
+                </button>
               </div>
             </div>
           </div>

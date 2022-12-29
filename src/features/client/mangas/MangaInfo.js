@@ -1,5 +1,5 @@
-import { HeartFilled, HeartOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { HeartFilled, HeartOutlined, EditOutlined, FileOutlined, ProfileOutlined } from '@ant-design/icons';
+import { Button, Space } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -129,12 +129,12 @@ function MangaInfo() {
                   <div className='grid grid-cols-4 gap-4 sm:grid-col-1 p-3'>
                     <div className='left col-span-1'>
                       <div className='mb-2'>
-                        <div className='w-full h-9 bg-cyan-600 max-w-xs rounded'>
+                        <div className='w-full h-9 bg-cyan-500 max-w-xs rounded'>
                           <div className='text-white text-bold text-center leading-9 text-base font-semibold'>Truyện tranh</div>
                         </div>
                         <div className='-mt-1 flex justify-center'>
                           <div className="overflow-hidden inline-block">
-                            <div className=" h-4 w-5 bg-cyan-600 -rotate-45 transform origin-top-left"></div>
+                            <div className=" h-4 w-5 bg-cyan-500 -rotate-45 transform origin-top-left"></div>
                           </div>
                         </div>
                       </div>
@@ -145,7 +145,7 @@ function MangaInfo() {
                       <div className='flex flex-wrap h-auto w-full mt-3 mb-3'>
                         {book.tags?.map((tag, index) => (
                           <a href='##' id={tag.code} className='no-underline' key={index}>
-                            <div className='w-fit h-fit bg-slate-100 px-3 py-1 font-normal text-xs mx-1 rounded-full text-black hover:text-cyan-600 mb-2'>{tag.name}</div>
+                            <div className='w-fit h-fit bg-slate-100 px-3 py-1 font-normal text-xs mx-1 rounded-full text-black hover:text-cyan-500 mb-2'>{tag.name}</div>
                           </a>
                         ))}
                       </div>
@@ -236,6 +236,13 @@ function MangaInfo() {
                   <div className='mx-auto my-auto text-sm font-semibold'><a href={`/user/${book.uploaderInfo?.id}`} className='no-underline text-white hover:text-cyan-100 line-clamp-1 px-2'>{book.uploaderInfo?.name}</a></div>
                 </div>
                 <div className='w-full h-1 bg-red-500 rounded-b-md'></div>
+              </div>
+              <div class='w-full bg-white h-fit rounded-md p-3 border border-solid border-gray-400'>
+                <Space direction="vertical" style={{ width: '100%' }}>
+                  <Button type="primary" block style={{ background: "#0087FF"}}><EditOutlined />Chỉnh sửa</Button>
+                  <Button type="primary" block style={{ background: "#28B463"}}><FileOutlined />Thêm tập</Button>
+                  <Button type="primary" block style={{ background: "#FFC300"}}><ProfileOutlined />Thêm chương</Button>
+                </Space>
               </div>
 
               {/* <div className='border border-solid border-gray-400 rounded-md'>

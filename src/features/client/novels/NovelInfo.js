@@ -1,8 +1,8 @@
+import { HeartFilled, HeartOutlined, EditOutlined, FileOutlined, ProfileOutlined } from '@ant-design/icons';
+import { Button, Space } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { Button } from 'antd';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { novelApi, userApi } from '../../../api/api';
 import CommentSection from '../../../components/CommentSection';
@@ -102,7 +102,13 @@ function NovelInfo() {
   }
 
   if (loading) {
-    return <div>Loading book...</div>;
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4">
+          Loading
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -110,13 +116,13 @@ function NovelInfo() {
     <div className='flex flex-col flex-wrap w-full h-fit bg-gray-50'>
       <div className='grid grid-cols-12 h-auto w-full mx-auto'>
         <div className='col-start-2 col-span-10 h-auto mt-10'>
-          {auth && (
+          {/* {auth && (
             <div className='flex justify-end mb-4'>
               <Link to={`/action/update-series/${id}`}>
                 <Button>Chỉnh sửa</Button>
               </Link>
             </div>
-          )}
+          )} */}
           <div className='grid xl:grid-cols-4 lg:grid-cols-4 gap-10 md:grid-cols-1 sm:grid-cols-1'>
             <div className='col-span-3 w-full'>
               <div className='max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md'>
@@ -124,12 +130,12 @@ function NovelInfo() {
                   <div className='grid grid-cols-4 gap-4 sm:grid-col-1 p-3'>
                     <div className='left col-span-1'>
                       <div className='mb-2'>
-                        <div className='w-full h-9 bg-cyan-600 max-w-xs rounded'>
+                        <div className='w-full h-9 bg-cyan-500 max-w-xs rounded'>
                           <div className='text-white text-bold text-center leading-9 text-base font-semibold'>Tiểu thuyết</div>
                         </div>
                         <div className='-mt-1 flex justify-center'>
                           <div className="overflow-hidden inline-block">
-                            <div className=" h-4 w-5 bg-cyan-600 -rotate-45 transform origin-top-left"></div>
+                            <div className=" h-4 w-5 bg-cyan-500 -rotate-45 transform origin-top-left"></div>
                           </div>
                         </div>
                       </div>
@@ -165,8 +171,8 @@ function NovelInfo() {
                 </div>
                 <div class='py-5 w-full h-auto border-y border-x-0 border-gray-200 border-solid'>
                   <div class='flex flex-col justify-center items-center cursor-pointer'>
-                    <div><HeartOutlined style={{fontSize: '32px', color: '#fda4af'}} />
-                    <HeartFilled style={{fontSize: '32px', color: '#fb7185'}} />
+                    <div><HeartOutlined style={{ fontSize: '32px', color: '#fda4af' }} />
+                      <HeartFilled style={{ fontSize: '32px', color: '#fb7185' }} />
                     </div>
                     <div class='text-rose-300 mt-1 font-semibold hover:text-rose-400'>Theo dõi</div>
                   </div>
@@ -227,6 +233,19 @@ function NovelInfo() {
                   <div className='mx-auto my-auto text-sm font-semibold'><a href={`/user/${book.uploaderInfo?.id}`} className='no-underline text-white hover:text-cyan-100 line-clamp-1 px-2'>{book.uploaderInfo?.name}</a></div>
                 </div>
                 <div className='w-full h-1 bg-red-500 rounded-b-md'></div>
+              </div>
+              <div class='w-full bg-white h-fit rounded-md p-3 border border-solid border-gray-400'>
+                <Space direction="vertical" style={{ width: '100%' }}>
+                  {auth && (
+                    <Link to={`/action/update-series/${id}`}>
+                      <Button type="primary" block style={{ background: "#0087FF"}}>
+                        <EditOutlined />Chỉnh sửa
+                      </Button>
+                    </Link>
+                  )}
+                  <Button type="primary" block style={{ background: "#28B463"}}><FileOutlined />Thêm tập</Button>
+                  <Button type="primary" block style={{ background: "#FFC300"}}><ProfileOutlined />Thêm chương</Button>
+                </Space>
               </div>
 
               {/* <div className='border border-solid border-gray-400 rounded-md'>

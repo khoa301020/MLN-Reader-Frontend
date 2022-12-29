@@ -28,6 +28,7 @@ function MangaChapter() {
         mangaTitle: res.data.result.mangaTitle,
         chapterId: chapter.id,
         chapterTitle: chapter.title,
+        lastRead: Date.now(),
       };
 
       if (localStorage.getItem('username') !== null) {

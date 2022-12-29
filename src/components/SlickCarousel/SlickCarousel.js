@@ -7,8 +7,8 @@ function SlickCarousel(data) {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 2,
+    slidesToShow: 5,
+    slidesToScroll: 1,
     arrows: false,
   };
   return (

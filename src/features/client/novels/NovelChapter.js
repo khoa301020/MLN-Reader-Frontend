@@ -29,6 +29,7 @@ function NovelChapter() {
         novelTitle: res.data.result.novelTitle,
         chapterId: chapter.id,
         chapterTitle: chapter.title,
+        lastRead: Date.now(),
       };
 
       if (localStorage.getItem('username') !== null) {

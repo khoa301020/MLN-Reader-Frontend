@@ -56,11 +56,13 @@ export default function BookArea() {
                 {displayBooks?.map((book, index) => (
                   <div class='grid grid-cols-4 gap-5 w-full h-36 rounded-md shadow' key={index}>
                     <div class='col-span-1 max-w-full'>
-                      <img class='w-24 h-36 object-cover rounded-l-md' src={book.cover} alt='' />
-                      <div class='w-24 block absolute -mt-7 bg-black bg-opacity-50 py-1 rounded-bl-md hover:bg-opacity-100 cursor-pointer'> 
-                        <div class='overflow-hidden opacity-100 line-clamp-1 text-white font-bold text-xs px-2'>
-                          Chương 10 Elit nos Nisi Lorem proident culpa irure.
-                        </div>
+                      <a href={`/${book.type}/${book.id}`}>
+                        <img class='w-24 h-36 object-cover rounded-l-md' src={book.cover} alt='' />
+                      </a>
+                      <div class='w-24 block absolute -mt-7 bg-black bg-opacity-50 py-1 rounded-bl-md hover:bg-opacity-100 cursor-pointer'>
+                        <a href={`/novel-chapter/${book.lastChapter?.id}`} class='overflow-hidden opacity-100 line-clamp-1 text-white font-bold text-xs px-2'>
+                          {book.lastChapter?.title}
+                        </a>
                       </div>
                     </div>
                     <div class='col-span-3 py-3 pr-4'>

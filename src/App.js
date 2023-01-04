@@ -29,6 +29,7 @@ function App() {
         <Route path="manga/:id" element={<MangaInfo />} />
         <Route path="manga-chapter/:id" element={<MangaChapter />} />
         <Route path="user/:id" element={<User />} />
+        <Route path="me" element={<User isSelf={true} />} />
         <Route path="manga" element={<MangaArea />} />
         <Route path="lightnovel" element={<NovelArea />} />
         <Route path="newupdate" element={<NewUpdate />} />

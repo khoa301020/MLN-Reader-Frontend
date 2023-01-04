@@ -1,4 +1,4 @@
-import { SearchOutlined,LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined, SearchOutlined } from '@ant-design/icons';
 import Cookies from 'js-cookie';
 import React from 'react';
 import { toast } from 'react-hot-toast';
@@ -81,7 +81,7 @@ function Header() {
                 </div>
                 {Cookies.get('token') ? (
                   <>
-                    <Link to='/user' class='no-underline' ><div className="text-black font-sm">Xin chào, {localStorage.getItem('username')}</div></Link>
+                    <Link to='/me' class='no-underline' ><div className="text-black font-sm">Xin chào, {localStorage.getItem('username')}</div></Link>
                     <button className="bg-cyan-400 hover:bg-teal-400 duration-300 text-white py-2 px-2 rounded-full border-none ml-3"
                       onClick={handleLogout}>
                       <LogoutOutlined />

@@ -1,22 +1,41 @@
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Upload } from 'antd';
+import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
 import { userApi } from '../../../api/api';
 import coverProfile from '../../../assets/img/coverProfile.png';
 
-export default function User() {
-  const { id } = useParams();
-  const [isSelf, setIsSelf] = useState(false);
+export default function User({ isSelf = false }) {
+  const { id } = useParams() || null;
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    userApi.getUser(id).then((res) => {
-      setUser(res.data.result);
-      setIsSelf(res.data.result.name === localStorage.getItem('username'));
-    });
-  }, [id]);
+    if (isSelf) {
+      const token = Cookies.get('token');
+      if (!token) {
+        toast.error('Bạn phải đăng nhập để xem trang này');
+        navigate('/');
+      }
+      userApi.getMe(token).then((res) => {
+        setUser(res.data.result);
+        setLoading(false);
+      }).catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message);
+        navigate('/');
+      });
+    } else {
+      userApi.getUser(id).then((res) => {
+        setUser(res.data.result);
+        setLoading(false);
+      });
+    }
+  }, [id, isSelf, navigate]);
 
   const onFinish = (values) => {
     console.log('Success:', values);
@@ -24,6 +43,16 @@ export default function User() {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4">
+          Loading
+        </div>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -90,7 +119,7 @@ export default function User() {
                   </Modal>
                   <div class='grid grid-cols-7 gap-4 mt-5 justify-items-center'>
                     <div class='grid col-start-2 col-span-2 justify-items-center'>
-                      <div class='font-bold text-3xl'>{user?.chapterUploaded?.novel?.length + user.chapterUploaded?.manga?.length}</div>
+                      <div class='font-bold text-3xl'>{user?.uploadedNovelChapters + user?.uploadedMangaChapters}</div>
                       <div class='text-sm'>Chương đã đăng</div>
                     </div>
                     <div class='w-1.5 h-16 bg-black mx-10 rounded-sm'></div>
@@ -103,33 +132,53 @@ export default function User() {
                 <div class='p-5 mt-5'>
                   <div class='w-full mb-5' >
                     <div class='flex flex-row items-center'>
-                      <div class='p-2 bg-black text-white font-bold'>03</div>
-                      <div class='ml-3 font-bold uppercase'>Truyện đã đăng</div>
+                      <div class='p-2 bg-black text-white font-bold'>{user?.uploadedNovels?.length}</div>
+                      <div class='ml-3 font-bold uppercase'>Tiểu thuyết đã đăng</div>
                     </div>
                     <div class='w-full h-1 bg-black'></div>
                   </div>
                   <div class='grid grid-cols-2 gap-5'>
-                    <div class='grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow'>
-                      <img class='w-full h-32 object-cover rounded-l-md' src='https://melonbooks.akamaized.net/user_data/packages/resize_image.php?image=211000128616.jpg' alt='' />
-                      <div class='col-span-2 py-2 pr-2.5'>
-                        <div class='text-white w-fit h-fit p-1 bg-cyan-500 text-xs mb-1'>Tiểu thuyết</div>
-                        <a href='##' class='text-md font-bold line-clamp-4 no-underline text-black hover:text-cyan-500 duration-300'>Oujo Denka wa Oikari no You desu</a>
+                    {user?.uploadedNovels && user.uploadedNovels.map((novel, index) => (
+                      <div class='grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow' key={index}>
+                        <a href={`/novel/${novel.id}`} class='w-full h-32 object-cover rounded-l-md hover:opacity-80 duration-300'>
+                          <img class='w-full h-32 object-cover rounded-l-md' src={novel.cover} alt='cover' />
+                        </a>
+                        <div class='col-span-2 py-2 pr-2.5'>
+                          <div class={`text-white w-fit h-fit p-1 
+                          ${novel.status === 'Tạm ngưng' ? 'bg-red-500' : novel.status === 'Đang tiến hành' ? 'bg-yellow-500' : 'bg-green-500'}
+                          text-xs mb-1`}>
+                            {novel.status}
+                          </div>
+                          <a href={`/novel/${novel.id}`} class='text-md font-bold line-clamp-4 no-underline text-black hover:text-cyan-500 duration-300'>{novel.title}</a>
+                        </div>
                       </div>
+                    ))}
+                  </div>
+                </div>
+                <div class='p-5 mt-5'>
+                  <div class='w-full mb-5' >
+                    <div class='flex flex-row items-center'>
+                      <div class='p-2 bg-black text-white font-bold'>{user?.uploadedMangas.length}</div>
+                      <div class='ml-3 font-bold uppercase'>Truyện tranh đã đăng</div>
                     </div>
-                    <div class='grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow'>
-                      <img class='w-full h-32 object-cover rounded-l-md' src='https://melonbooks.akamaized.net/user_data/packages/resize_image.php?image=211000128616.jpg' alt='' />
-                      <div class='col-span-2 py-2 pr-2.5'>
-                        <div class='text-white w-fit h-fit p-1 bg-cyan-500 text-xs mb-1'>Tiểu thuyết</div>
-                        <a href='##' class='text-md font-bold line-clamp-4 no-underline text-black hover:text-cyan-500 duration-300'>Oujo Denka wa Oikari no You desu</a>
+                    <div class='w-full h-1 bg-black'></div>
+                  </div>
+                  <div class='grid grid-cols-2 gap-5'>
+                    {user?.uploadedMangas?.map((manga, index) => (
+                      <div class='grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow' key={index}>
+                        <a href={`/manga/${manga.id}`} class='w-full h-32 object-cover rounded-l-md hover:opacity-80 duration-300'>
+                          <img class='w-full h-32 object-cover rounded-l-md' src={manga.cover} alt='cover' />
+                        </a>
+                        <div class='col-span-2 py-2 pr-2.5'>
+                          <div class={`text-white w-fit h-fit p-1
+                          ${manga.status === 'Tạm ngưng' ? 'bg-red-500' : manga.status === 'Đang tiến hành' ? 'bg-yellow-500' : 'bg-green-500'}
+                          text-xs mb-1`}>
+                            {manga.status}
+                          </div>
+                          <a href={`/manga/${manga.id}`} class='text-md font-bold line-clamp-4 no-underline text-black hover:text-cyan-500 duration-300'>{manga.title}</a>
+                        </div>
                       </div>
-                    </div>
-                    <div class='grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow'>
-                      <img class='w-full h-32 object-cover rounded-l-md' src='https://melonbooks.akamaized.net/user_data/packages/resize_image.php?image=211000128616.jpg' alt='' />
-                      <div class='col-span-2 py-2 pr-2.5'>
-                        <div class='text-white w-fit h-fit p-1 bg-cyan-500 text-xs mb-1'>Truyện tranh</div>
-                        <a href='##' class='text-md font-bold line-clamp-4 no-underline text-black hover:text-cyan-500 duration-300'>Oujo Denka wa Oikari no You desu</a>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>

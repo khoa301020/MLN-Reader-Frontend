@@ -1,4 +1,4 @@
-import { HeartFilled, HeartOutlined, EditOutlined, FileOutlined, ProfileOutlined } from '@ant-design/icons';
+import { EditOutlined, FileOutlined, HeartFilled, HeartOutlined, ProfileOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
@@ -21,8 +21,6 @@ function MangaInfo() {
   const [comment, setComment] = useState([]);
 
   useEffect(() => {
-
-    console.log(id);
     setLoading(true);
     mangaApi.getManga(id).then((res) => {
       setBook(res.data.result);
@@ -92,7 +90,6 @@ function MangaInfo() {
       action: 'comment'
     }
     userApi.comment(data, token).then(res => {
-      console.log(res.data);
       toast.success("Bình luận thành công");
       window.location.reload();
     }).catch(err => {
@@ -115,13 +112,13 @@ function MangaInfo() {
     <div className='flex flex-col flex-wrap w-full h-fit bg-gray-50'>
       <div className='grid grid-cols-12 h-auto w-full mx-auto'>
         <div className='col-start-2 col-span-10 h-auto mt-10'>
-          {auth && (
+          {/* {auth && (
             <div className='flex justify-end mb-4'>
               <Link to={`/action/update-series/${id}`}>
                 <Button>Chỉnh sửa</Button>
               </Link>
             </div>
-          )}
+          )} */}
           <div className='grid xl:grid-cols-4 lg:grid-cols-4 gap-10 md:grid-cols-1 sm:grid-cols-1'>
             <div className='col-span-3 max-w-full'>
               <div className='max-w-full h-fit bg-white border border-solid border-gray-400 rounded-md'>
@@ -190,7 +187,10 @@ function MangaInfo() {
               {book.sections?.map((section, index) => (
                 <div className='w-auto h-fit bg-white border border-solid border-gray-400 rounded-md mt-8 pb-3' key={index}>
                   <div className='grid grid-cols-6 gap-4 sm:grid-col-1'>
-                    <div className='col-span-6 bg-gray-100 w-full h-fit mb-3 p-3 font-bold text-xl rounded-t-md'>{section.name}</div>
+                    <div className='col-span-6 bg-gray-100 w-full h-fit mb-3 p-3 font-bold text-xl rounded-t-md'>
+                      {section.name}
+                      <span className='float-right font-bold text-xl'>{section.chapters?.length} chương</span>
+                    </div>
                     <div className='left col-span-1 pl-3'>
                       <img className='w-full h-auto object-cover max-w-md' src={section.cover} alt={section.title} />
                     </div>
@@ -237,13 +237,40 @@ function MangaInfo() {
                 </div>
                 <div className='w-full h-1 bg-red-500 rounded-b-md'></div>
               </div>
-              <div class='w-full bg-white h-fit rounded-md p-3 border border-solid border-gray-400'>
-                <Space direction="vertical" style={{ width: '100%' }}>
-                  <Button type="primary" block style={{ background: "#0087FF"}}><EditOutlined />Chỉnh sửa</Button>
-                  <Button type="primary" block style={{ background: "#28B463"}}><FileOutlined />Thêm tập</Button>
-                  <Button type="primary" block style={{ background: "#FFC300"}}><ProfileOutlined />Thêm chương</Button>
-                </Space>
+              {auth && (
+                <div class='w-full bg-white h-fit rounded-md p-3 border border-solid border-gray-400'>
+                  <Space direction="vertical" style={{ width: '100%' }}>
+                    <Link to={`/action/update-series/${id}`}>
+                      <Button type="primary" block style={{ background: "#0087FF" }}>
+                        <EditOutlined />Chỉnh sửa
+                      </Button>
+                    </Link>
+                    <Button type="primary" block style={{ background: "#28B463" }}><FileOutlined />Thêm tập</Button>
+                    <Button type="primary" block style={{ background: "#FFC300" }}><ProfileOutlined />Thêm chương</Button>
+                  </Space>
+                </div>
+              )}
+              {/* Show table of sections */}
+              {book.sections && (<div className='border border-solid border-gray-400 rounded-md mb-6 mt-6'>
+                <div className='w-full h-10 bg-cyan-600 flex flex-row rounded-t-md'>
+                  <div className='mx-auto my-auto text-sm font-semibold text-white'>Danh sách tập</div>
+                </div>
+                <div className='w-full h-1 bg-red-500 rounded-b-md'></div>
+                <div className='w-full h-fit bg-white p-2 rounded-b-md'>
+                  <div className='text-gray-900 text-sm text-justify'>
+                    {book.sections?.map((section) => (
+                      <div className='flex flex-row'>
+                        <div className='w-11/12'>
+                          <div className='text-gray-900 text-sm text-justify'>
+                            <a href={`#${section.id}`} className='no-underline text-cyan-700 hover:text-cyan-600'>{section.name}</a>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
+              )}
 
               {/* <div className='border border-solid border-gray-400 rounded-md'>
                 <div className='col-span-6 bg-gray-100 w-full h-fit p-3 font-bold text-md rounded-t-md'>Ghi chú thêm</div>

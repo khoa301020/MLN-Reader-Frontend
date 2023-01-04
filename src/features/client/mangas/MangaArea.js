@@ -61,7 +61,7 @@ export default function BookArea() {
                       </a>
                       <div class='w-24 block absolute -mt-7 bg-black bg-opacity-50 py-1 rounded-bl-md hover:bg-opacity-100 cursor-pointer'>
                         <a href={`/novel-chapter/${book.lastChapter?.id}`} class='overflow-hidden opacity-100 line-clamp-1 text-white font-bold text-xs px-2'>
-                          {book.lastChapter.title}
+                          {book.lastChapter?.title}
                         </a>
                       </div>
                     </div>

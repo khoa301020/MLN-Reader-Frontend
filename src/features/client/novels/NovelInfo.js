@@ -1,5 +1,5 @@
 import { EditOutlined, FileOutlined, HeartFilled, HeartOutlined, ProfileOutlined } from '@ant-design/icons';
-import { Button, Space } from 'antd';
+import { Button, Space, Modal } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -19,6 +19,11 @@ function NovelInfo() {
   const [book, setBook] = useState([]);
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -186,7 +191,7 @@ function NovelInfo() {
                   <div className='grid grid-cols-6 gap-4 sm:grid-col-1'>
                     <div className='col-span-6 bg-gray-100 w-full h-fit mb-3 p-3 font-bold text-xl rounded-t-md'>
                       {section.name}
-                      <span className='float-right font-bold text-xl'>{section.chapters?.length} chương</span>
+                      <span className='float-right font-bold text-xl text-gray-300 hover:text-gray-700 duration-500 cursor-pointer'>{section.chapters?.length} chương</span>
                     </div>
                     <div className='left col-span-1 pl-3'>
                       <img className='w-full h-auto object-cover max-w-md' src={section.cover} alt={section.title} />
@@ -211,8 +216,8 @@ function NovelInfo() {
                         <div>
                           <Editor onEditorChange={onEditorChange} />
                         </div>
-                        <div className='mt-3'>
-                          <button type='submit' onClick={handleComment} className='bg-cyan-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-cyan-700'>Bình luận</button>
+                        <div className='mt-3 float-right'>
+                          <button type='submit' onClick={handleComment} className='bg-cyan-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-cyan-600 border-0 border-white'>Bình luận</button>
                         </div>
                       </div>
                     )}
@@ -225,7 +230,7 @@ function NovelInfo() {
             </div>
             <div className='h-screen w-full rounded-md'>
 
-              <div className='border border-solid border-gray-400 rounded-md mb-6'>
+              <div className='border border-solid border-transparent rounded-md mb-6'>
                 <div className='w-full h-10 bg-cyan-600 flex flex-row rounded-t-md'>
                   <div>
                     <img className='w-10 h-10 object-cover rounded-tl-md' src={book.uploaderInfo?.avatar} alt='' />
@@ -242,18 +247,27 @@ function NovelInfo() {
                         <EditOutlined />Chỉnh sửa
                       </Button>
                     </Link>
-                    <Button type="primary" block style={{ background: "#28B463" }}><FileOutlined />Thêm tập</Button>
-                    <Button type="primary" block style={{ background: "#FFC300" }}><ProfileOutlined />Thêm chương</Button>
+                    <Link to='/action/update-series/novel-volume'><Button type="primary" block style={{ background: "#28B463" }}><FileOutlined />Thêm tập</Button></Link>
+                    <Button type="primary" block style={{ background: "#FFC300" }} onClick={showModal}><ProfileOutlined />Thêm chương</Button>
+                    <Modal title="Thêm chương" open={isModalOpen}>
+                    <label for="volumes" class="block mb-2 text-sm font-medium dark:text-white">Chọn tập</label>
+                    <select id="volumes" class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <option value="v1">Tập 1</option>
+                      <option value="v2">Tập 2</option>
+                      <option value="v3">Tập 3</option>
+                      <option value="v4" selected>Tập 4</option>
+                    </select>
+                    </Modal>
                   </Space>
                 </div>
               )}
               {/* Show table of sections */}
-              {book.sections && (<div className='border border-solid border-gray-400 rounded-md mb-6 mt-6'>
+              {book.sections && (<div className='rounded-md mb-6 mt-6'>
                 <div className='w-full h-10 bg-cyan-600 flex flex-row rounded-t-md'>
                   <div className='mx-auto my-auto text-sm font-semibold text-white'>Danh sách tập</div>
                 </div>
-                <div className='w-full h-1 bg-red-500 rounded-b-md'></div>
-                <div className='w-full h-fit bg-white p-2 rounded-b-md'>
+                <div className='w-full h-1 bg-red-500'></div>
+                <div className='w-full h-fit bg-white p-2 rounded-b-md border border-t-0 border-solid border-gray-400'>
                   <div className='text-gray-900 text-sm text-justify'>
                     {book.sections?.map((section) => (
                       <div className='flex flex-row'>

@@ -20,7 +20,7 @@ export default function MyEditor({ initContent = "", onEditorChange, type = "htm
                         editor.getContent({ format: 'text' }))}
                 initialValue={content ? content : ""}
                 init={{
-                    height: 300,
+                    height: 400,
                     menubar: false,
                     branding: false,
                     plugins: [

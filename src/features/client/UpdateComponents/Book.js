@@ -160,50 +160,50 @@ export default function Book({ id }) {
           <div className='w-full h-auto p-3 bg-gray-100 text-black font-semibold rounded-t-md'>
             Chỉnh sửa thông tin truyện
           </div>
-          <div className='px-8 py-10 min-h-screen'>
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
+          <div className='px-5 py-10 min-h-screen'>
+            <div className='grid grid-cols-9 gap-4 content-center mb-4'>
+              <div className='text-right place-items-center my-2'>
                 <label className='text-right text-gray-900'>Tiêu đề<span className='text-red-500'>*</span></label>
               </div>
-              <div className='col-span-6'>
+              <div className='col-span-7'>
                 <input type="text" name='title' className="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" required value={title ? title : ""} onChange={e => setTitle(e.target.value)} />
               </div>
             </div>
 
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
+            <div className='grid grid-cols-9 gap-4 content-center mb-4'>
+              <div className='text-right place-items-center my-2'>
                 <label className='text-right text-gray-900'>Tên khác</label>
               </div>
-              <div className='col-span-6'>
+              <div className='col-span-7'>
                 <input type="text" name='otherNames' className="bg-white placeholder-gray-400 border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder='Ngăn cách nhiều tên bằng dấu chấm phẩy ;' required value={otherNames} onChange={e => setOtherNames(e.target.value)} />
               </div>
             </div>
 
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
+            <div className='grid grid-cols-9 gap-4 content-center mb-4'>
+              <div className='text-right place-items-center my-2'>
                 <label className='text-right text-gray-900'>Tác giả<span className='text-red-500'>*</span></label>
               </div>
-              <div className='col-span-6'>
+              <div className='col-span-7'>
                 <input type="text" name='author' className="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" required
                   value={author} onChange={e => setAuthor(e.target.value)} />
               </div>
             </div>
 
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
+            <div className='grid grid-cols-9 gap-4 content-center mb-4'>
+              <div className='text-right place-items-center my-2'>
                 <label className='text-right text-gray-900'>Hoạ sĩ</label>
               </div>
-              <div className='col-span-6'>
+              <div className='col-span-7'>
                 <input type="text" name='artist' className="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" required
                   value={artist} onChange={e => setArtist(e.target.value)} />
               </div>
             </div>
 
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
+            <div className='grid grid-cols-9 gap-4 content-center mb-4'>
+              <div className='text-right place-items-center my-2'>
                 <label className='text-right text-gray-900'>Ảnh bìa</label>
               </div>
-              <div className='col-span-6'>
+              <div className='col-span-7'>
                 <input className="bg-white border border-solid border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" id="file_input" type="file"
                   ref={fileInput} accept="image/*"
                   onChange={handleImageChange} />
@@ -238,11 +238,11 @@ export default function Book({ id }) {
               </div>
             </div>
 
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
+            <div className='grid grid-cols-9 gap-4 content-center mb-4'>
+              <div className='text-right place-items-center my-2'>
                 <label className='text-right text-gray-900'>Thể loại<span className='text-red-500'>*</span></label>
               </div>
-              <div className='col-span-6 my-2'>
+              <div className='col-span-7 my-2'>
                 <div className='grid grid-cols-4 gap-x-4'>
                   {showTags.map((tag, index) => (<div className="flex items-center mb-4" key={index}>
                     <input id={tag.code} type="checkbox" code={tag.code} name={tag.name} checked={selectedTags?.find(e => e.code === tag.code)} onChange={handleTagCheck} className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2" />
@@ -253,20 +253,20 @@ export default function Book({ id }) {
               </div>
             </div>
 
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
+            <div className='grid grid-cols-9 gap-4 content-center mb-4'>
+              <div className='text-right place-items-center my-2'>
                 <label className='text-right text-gray-900'>Mô tả<span className='text-red-500'>*</span></label>
               </div>
-              <div className='col-span-6'>
+              <div className='col-span-7'>
                 <EditorForm initContent={info.description} onEditorChange={onEditorChange} type="text" />
               </div>
             </div>
 
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
-              <div className='col-span-2 text-right place-items-center my-2'>
-                <label className='text-right text-gray-900'>Tình trạng dịch<span className='text-red-500'>*</span></label>
+            <div className='grid grid-cols-9 gap-4 content-center mb-4'>
+              <div className='text-right place-items-center my-2'>
+                <label className='text-right text-gray-900'>Tình trạng<span className='text-red-500'>*</span></label>
               </div>
-              <div className='col-span-6'>
+              <div className='col-span-7'>
                 <select id="TheLoai" className="w-fit bg-white border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2"
                   value={status} onChange={(e) => setStatus(e.target.value)}>
                   <option value="Đang tiến hành">Đang tiến hành</option>
@@ -276,9 +276,9 @@ export default function Book({ id }) {
               </div>
             </div>
 
-            <div className='grid grid-cols-9 gap-9 content-center mb-4'>
+            <div className='grid grid-cols-9 gap-9 content-center mb-4 mt-8'>
 
-              <div className='col-start-3 col-span-6'>
+              <div className='col-start-4 col-span-6'>
                 <button type="button"
                   disabled={!check ? true : false}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 border border-solid border-transparent font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2 focus:outline-none "

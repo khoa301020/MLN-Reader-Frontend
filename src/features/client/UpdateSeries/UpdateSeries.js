@@ -8,6 +8,8 @@ import Book from '../UpdateComponents/Book';
 import MangaChapter from '../UpdateComponents/MangaChapter';
 import NovelChapter from '../UpdateComponents/NovelChapter';
 import Section from '../UpdateComponents/Section';
+import NovelVolume from '../UpdateComponents/NovelVolume';
+import NovelNewChapter from '../UpdateComponents/NovelNewChapter';
 
 export default function UpdateSeries() {
   const { id } = useParams();
@@ -51,7 +53,7 @@ export default function UpdateSeries() {
   return (
     <div className='w-full min-h-screen flex flex-row'>
       <div className='grid grid-cols-12 gap-6 w-full'>
-        <div className='col-start-1 col-span-2 w-full h-full overflow-auto border-r border-t-0 border-l-0 border-b-0  border-gray-400 border-solid pr-2'>
+        <div className='col-start-1 col-span-2 w-full h-full overflow-hidden border-r border-t-0 border-l-0 border-b-0  border-gray-400 border-solid pr-2'>
           <TreeView id={id} onSubjectClick={onSubjectClick} />
         </div>
 
@@ -60,6 +62,8 @@ export default function UpdateSeries() {
           {(type.includes('section')) && <Section id={childId} />}
           {(type === 'novel-chapter') && <NovelChapter id={childId} />}
           {(type === 'manga-chapter') && <MangaChapter id={childId} />}
+          {(type.includes('novel-volume')) && <NovelVolume id={childId} />}
+          {(type === 'novel-new-chapter') && <NovelNewChapter id={childId} />}
         </div>
       </div>
     </div>

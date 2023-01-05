@@ -153,21 +153,29 @@ function Home() {
                     <div className='grid gap-y-1 gap-x-6 grid-cols-3 mb-6'>
                       {newBooks.map((book, index) => (
                         <div className='grid grid-cols-3 gap-y-1 gap-x-4 w-full mt-3' key={index}>
-                          <a href={`/${book.type}/` + book.id}><img class='w-full' src={book.cover} alt={book.title} /></a>
+                          <a href={`/${book.type}/` + book.id}><img class='w-full h-40 object-cover' src={book.cover} alt={book.title} /></a>
                           <div className='col-span-2'>
-                            {/* type of book */}
-                            <div className="flex flex-col justify-center ml-auto">
-                                <div className="px-3 py-0 text-xs text-white bg-cyan-500 rounded-full w-fit">
+                            <div className='flex flex-col max-h-40'>
+                              {/* type of book */}
+                              {/* <div className="flex flex-col justify-center ml-auto">
+                                  <div className="px-3 py-0 text-xs text-white bg-cyan-500 rounded-full w-fit">
+                                    {book.type === 'novel' ? 'Novel' : 'Manga'}
+                                  </div>
+                              </div> */}
+                              <a href={`/${book.type}/` + book.id} className='no-underline text-black hover:text-cyan-600 duration-300'>
+                                <div className='h-7 text-base font-bold truncate ...'>
+                                  {book.title}
+                                </div>
+                              </a>
+                              <div className='text-xs line-clamp-6 h-24'>
+                                {book.description?.split(/\n/).map((line, index) => <p key={index}>{line}</p>)}
+                              </div>
+                              {/* type of book */}
+                              <div className="flex justify-end items-end h-9">
+                                <div className="flex w-fit px-2 py-0 text-xs text-white bg-cyan-500 rounded-full mb-1">
                                   {book.type === 'novel' ? 'Novel' : 'Manga'}
                                 </div>
                               </div>
-                            <a href={`/${book.type}/` + book.id} className='no-underline text-black hover:text-cyan-600 duration-300 '>
-                              <div className='text-base font-bold truncate ...'>
-                                {book.title}
-                              </div>
-                            </a>
-                            <div className='text-xs line-clamp-6'>
-                              {book.description?.split(/\n/).map((line, index) => <p key={index}>{line}</p>)}
                             </div>
                           </div>
                         </div>

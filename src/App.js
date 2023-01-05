@@ -17,6 +17,8 @@ import UpdateSeries from './features/client/UpdateSeries/UpdateSeries';
 import User from './features/client/User/User';
 import Home from './features/common/Home/Home';
 import NewUpdate from './features/common/NewUpdate/NewUpdate';
+import NovelVolume from './features/client/UpdateComponents/NovelVolume';
+import NovelNewChapter from './features/client/UpdateComponents/NovelNewChapter';
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
         <Route path="manga" element={<MangaArea />} />
         <Route path="lightnovel" element={<NovelArea />} />
         <Route path="newupdate" element={<NewUpdate />} />
+        <Route path="novelvolume" element={<NovelVolume />} />
+        <Route path="novelnewchapter" element={<NovelNewChapter />} />
 
       </Route>
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function CommentList({ comments }) {
     return (
-        <div className="flex bg-white divide-y rounded-lg flex-none w-full">
+        <div className="flex bg-transparent divide-y rounded-lg flex-none w-full">
             <div className="flex flex-col space-y-2 w-full">
                 {comments?.map((comment, index) => (
                     <div key={index}>

@@ -24,6 +24,12 @@ function NovelInfo() {
   const showModal = () => {
     setIsModalOpen(true);
   };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -249,7 +255,7 @@ function NovelInfo() {
                     </Link>
                     <Link to='/action/update-series/novel-volume'><Button type="primary" block style={{ background: "#28B463" }}><FileOutlined />Thêm tập</Button></Link>
                     <Button type="primary" block style={{ background: "#FFC300" }} onClick={showModal}><ProfileOutlined />Thêm chương</Button>
-                    <Modal title="Thêm chương" open={isModalOpen}>
+                    <Modal title="Thêm chương" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                     <label for="volumes" class="block mb-2 text-sm font-medium dark:text-white">Chọn tập</label>
                     <select id="volumes" class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                       <option value="v1">Tập 1</option>

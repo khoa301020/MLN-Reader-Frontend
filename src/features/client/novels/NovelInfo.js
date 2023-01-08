@@ -367,8 +367,8 @@ function NovelInfo() {
                   <div className="w-full h-1 bg-red-500"></div>
                   <div className="w-full h-fit bg-white p-2 rounded-b-md border border-t-0 border-solid border-gray-400">
                     <div className="text-gray-900 text-sm text-justify">
-                      {book.sections?.map((section) => (
-                        <div className="flex flex-row">
+                      {book.sections?.map((section, index) => (
+                        <div className="flex flex-row" key={index}>
                           <div className="w-11/12">
                             <div className="text-gray-900 text-sm text-justify">
                               <a href={`#${section.id}`} className="no-underline text-cyan-700 hover:text-cyan-600">

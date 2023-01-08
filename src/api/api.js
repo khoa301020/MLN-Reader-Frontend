@@ -24,11 +24,13 @@ export const homeApi = {
   getNewestComment: () => api.get('/common/get-newest-comments'),
   getHistory: (username) => api.get('/common/get-history?username=' + username),
   getNewest: () => api.get('/common/get-latest'),
+  getSearch: (keyword) => api.get(`/common/get-latest?keyword=${keyword}`),
   getNewestHome: () => api.get('/common/get-latest?limit=6'),
   getCompleted: () => api.get('/common/get-completed'),
 };
 
 export const novelApi = {
+  searchNovel: (keyword) => api.get(`/novel/search?keyword=${keyword}`),
   getNovel: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}`),
   getNovelOnly: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}&isOnly=true`),
   getNovelUpdate: (novelId) => api.get(`/novel/get-novel-update?novelId=${novelId}`),
@@ -53,6 +55,7 @@ export const novelApi = {
 };
 
 export const mangaApi = {
+  searchManga: (keyword) => api.get(`/manga/search?keyword=${keyword}`),
   getManga: (mangaId) => api.get(`/manga/get-manga?mangaId=${mangaId}`),
   getMangaOnly: (mangaId) => api.get(`/manga/get-manga?mangaId=${mangaId}&isOnly=true`),
   getMangaUpdate: (mangaId) => api.get(`/manga/get-manga-update?mangaId=${mangaId}`),

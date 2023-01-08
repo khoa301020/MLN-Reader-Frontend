@@ -13,13 +13,13 @@ import MangaInfo from './features/client/mangas/MangaInfo';
 import NovelArea from './features/client/novels/NovelArea';
 import NovelChapter from './features/client/novels/NovelChapter';
 import NovelInfo from './features/client/novels/NovelInfo';
+import SearchArea from './features/client/Search/SearchArea';
+import NovelNewChapter from './features/client/UpdateComponents/NovelNewChapter';
+import NovelVolume from './features/client/UpdateComponents/NovelVolume';
 import UpdateSeries from './features/client/UpdateSeries/UpdateSeries';
 import User from './features/client/User/User';
 import Home from './features/common/Home/Home';
 import NewUpdate from './features/common/NewUpdate/NewUpdate';
-import NovelVolume from './features/client/UpdateComponents/NovelVolume';
-import NovelNewChapter from './features/client/UpdateComponents/NovelNewChapter';
-
 
 function App() {
   return (
@@ -37,7 +37,7 @@ function App() {
         <Route path="newupdate" element={<NewUpdate />} />
         <Route path="novelvolume" element={<NovelVolume />} />
         <Route path="novelnewchapter" element={<NovelNewChapter />} />
-
+        <Route path="search" element={<SearchArea />} />
       </Route>
 
       <Route path="/auth" element={<LayoutAuth />}>
@@ -51,7 +51,6 @@ function App() {
         <Route path="/action/create-series" element={<CreateSeries />} />
         <Route path="/action/update-series/:id" element={<UpdateSeries />} />
       </Route>
-
     </Routes>
   );
 }

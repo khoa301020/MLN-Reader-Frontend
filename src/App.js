@@ -6,6 +6,8 @@ import LayoutAuth from '../src/components/LayoutAuth/LayoutAuth';
 import LayoutDashboard from '../src/components/LayoutDashboard/LayoutDashboard';
 import Login from './features/auth/Login';
 import Register from './features/auth/Register';
+import CreateChapter from './features/client/CreateComponents/Chapter';
+import CreateSection from './features/client/CreateComponents/Section';
 import CreateSeries from './features/client/CreateSeries/CreateSeries';
 import MangaArea from './features/client/mangas/MangaArea';
 import MangaChapter from './features/client/mangas/MangaChapter';
@@ -50,6 +52,8 @@ function App() {
       <Route path="/action" element={<LayoutDashboard />}>
         <Route path="/action/create-series" element={<CreateSeries />} />
         <Route path="/action/update-series/:id" element={<UpdateSeries />} />
+        <Route path="/action/create-section/:bookId" element={<CreateSection />} />
+        <Route path="/action/create-chapter/:sectionId" element={<CreateChapter />} />
       </Route>
     </Routes>
   );

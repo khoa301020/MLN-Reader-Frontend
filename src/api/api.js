@@ -46,7 +46,8 @@ export const novelApi = {
   createSection: (data) => api.post('/novel/create-action', data),
   updateSection: (data) => api.post('/novel/update-action', data),
   deleteSection: (data) => api.post('/novel/delete-action', Object.assign({ subject: 'section' }, data)),
-  createChapter: (data) => api.post('/novel/create-action', data),
+  createChapter: (token, data) =>
+    api.post('/novel/create-action', data, { headers: { Authorization: `Bearer ${token}` } }),
   updateChapter: (data) => api.post('/novel/update-action', data),
   deleteChapter: (data) => api.post('/novel/delete-action', Object.assign({ subject: 'chapter' }, data)),
   createNote: (data) => api.post('/novel/create-action', data),
@@ -71,7 +72,8 @@ export const mangaApi = {
   createSection: (data) => api.post('/manga/create-section', data),
   updateSection: (data) => api.post('/manga/update-section', data),
   deleteSection: (data) => api.post('/manga/delete-action', Object.assign({ subject: 'section' }, data)),
-  createChapter: (data) => api.post('/manga/create-chapter', data),
+  createChapter: (token, data) =>
+    api.post('/manga/create-chapter', data, { headers: { Authorization: `Bearer ${token}` } }),
   updateChapter: (data) => api.post('/manga/update-chapter', data),
   deleteChapter: (data) => api.post('/manga/delete-action', Object.assign({ subject: 'chapter' }, data)),
 };

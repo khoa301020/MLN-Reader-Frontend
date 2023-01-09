@@ -21,12 +21,19 @@ function NovelInfo() {
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState([]);
 
+  const [sectionToCreate, setSectionToCreate] = useState('');
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
   const handleOk = () => {
+    if (sectionToCreate === '') {
+      toast.error('Vui lòng chọn tập để tạo');
+      return;
+    }
     setIsModalOpen(false);
+    navigate(`/action/create-chapter/${sectionToCreate}`);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -329,7 +336,7 @@ function NovelInfo() {
                         Chỉnh sửa
                       </Button>
                     </Link>
-                    <Link to="/action/update-series/novel-volume">
+                    <Link to={`/action/create-section/${id}`}>
                       <Button type="primary" block style={{ background: '#28B463' }}>
                         <FileOutlined />
                         Thêm tập
@@ -340,20 +347,34 @@ function NovelInfo() {
                       Thêm chương
                     </Button>
                     <Modal title="Thêm chương" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                      <label for="volumes" class="block mb-2 text-sm font-medium dark:text-white">
-                        Chọn tập
+                      <label htmlFor="volumes" class="block mb-2 text-sm font-medium dark:text-white">
+                        Thêm chương
                       </label>
-                      <select
-                        id="volumes"
-                        class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      >
-                        <option value="v1">Tập 1</option>
-                        <option value="v2">Tập 2</option>
-                        <option value="v3">Tập 3</option>
-                        <option value="v4" selected>
-                          Tập 4
-                        </option>
-                      </select>
+                      {book.sections?.length > 0 ? (
+                        <select
+                          id="volumes"
+                          class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          onChange={(e) => setSectionToCreate(e.target.value)}
+                        >
+                          <option value="">Chọn tập</option>
+                          {book.sections?.map((section, index) => (
+                            <option value={section.id} key={index}>
+                              {section.name}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <div class="text-sm font-normal mb-2">
+                          Bạn phải{' '}
+                          <Link
+                            to={`/action/create-section/${id}`}
+                            className="no-underline text-cyan-700 hover:text-cyan-600"
+                          >
+                            thêm tập
+                          </Link>{' '}
+                          trước khi thêm chương.
+                        </div>
+                      )}
                     </Modal>
                   </Space>
                 </div>

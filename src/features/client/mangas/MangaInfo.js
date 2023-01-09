@@ -20,6 +20,7 @@ function MangaInfo() {
   const [followCount, setFollowCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState([]);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   const [sectionToCreate, setSectionToCreate] = useState('');
 
@@ -48,7 +49,7 @@ function MangaInfo() {
         setFollowCount(res.data.result.followersCount);
       })
       .catch((err) => {
-        console.log(err);
+        setIsNotFound(true);
       })
       .finally(() => {
         setLoading(false);
@@ -68,12 +69,14 @@ function MangaInfo() {
           else setAuth(false);
         })
         .catch((err) => {
-          Cookies.remove('token');
-          localStorage.removeItem('username');
-          localStorage.removeItem('role');
-          console.log(err);
-          toast.error('Phiên đăng nhập đã hết hạn');
-          window.location.href = '/auth/login';
+          if (err.response.status === 401) {
+            Cookies.remove('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('role');
+            console.log(err);
+            toast.error('Phiên đăng nhập đã hết hạn');
+            window.location.href = '/auth/login';
+          }
         });
     }
   }, [id]);
@@ -159,6 +162,16 @@ function MangaInfo() {
       <div className="flex justify-center items-center h-screen">
         <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4">
           Loading
+        </div>
+      </div>
+    );
+  }
+
+  if (isNotFound) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4">
+          Novel not found
         </div>
       </div>
     );

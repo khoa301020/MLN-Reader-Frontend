@@ -59,17 +59,17 @@ export default function User({ isSelf = false }) {
 
   return (
     <>
-      <div className="wrapper" class="flex w-full h-fit min-h-screen bg-gray-50 justify-center">
+      <div className="wrapper" class="flex w-full h-fit min-h-screen bg-zinc-800 justify-center">
         <div className="container" class="grid grid-cols-12 w-full">
           <div
             className="profile"
-            class="grid col-start-3 col-end-11 max-w-7xl w-full h-fit my-12 shadow-md rounded-md bg-black bg-fixed"
+            class="grid col-start-3 col-end-11 max-w-7xl w-full h-fit my-12 shadow-md rounded-md bg-zinc-800 bg-fixed"
           >
-            <div class="flex flex-col w-full">
+            <div class="flex flex-col w-full shadow-[0_0px_20px_-5px_rgb(255,255,255,0.3)]">
               <div class="h-72 opacity-50">
                 <img class="w-full h-72 object-cover rounded-t-md" src={coverProfile} alt="coverProfile" />
               </div>
-              <div class="block my-0 mx-auto w-4/5 h-fit bg-white -mt-20 relative rounded-md mb-10">
+              <div class="block my-0 mx-auto w-4/5 h-fit bg-zinc-900 -mt-20 relative rounded-md mb-10">
                 <div className="Photo" class="flex flex-col z-10">
                   <div class="-mt-20 mx-auto block">
                     <img
@@ -80,10 +80,10 @@ export default function User({ isSelf = false }) {
                   </div>
                 </div>
                 <div class="p-5 pt-1 flex flex-col items-center">
-                  <div class="font-bold text-2xl">{user?.name}</div>
+                  <div class="font-bold text-2xl text-zinc-100">{user?.name}</div>
                   {isSelf && (
                     <div
-                      class="text-xs cursor-pointer text-gray-500 hover:text-cyan-500 duration-300"
+                      class="text-xs cursor-pointer text-zinc-500 hover:text-cyan-500 duration-300"
                       onClick={() => setOpen(true)}
                     >
                       sửa
@@ -131,30 +131,30 @@ export default function User({ isSelf = false }) {
                   </Modal>
                   <div class="grid grid-cols-7 gap-4 mt-5 justify-items-center">
                     <div class="grid col-start-2 col-span-2 justify-items-center">
-                      <div class="font-bold text-3xl">{user?.uploadedNovelChapters + user?.uploadedMangaChapters}</div>
-                      <div class="text-sm">Chương đã đăng</div>
+                      <div class="font-bold text-3xl text-zinc-100">{user?.uploadedNovelChapters + user?.uploadedMangaChapters}</div>
+                      <div class="text-sm text-zinc-100">Chương đã đăng</div>
                     </div>
-                    <div class="w-1.5 h-16 bg-black mx-10 rounded-sm"></div>
+                    <div class="w-1.5 h-16 bg-zinc-100 mx-10 rounded-sm "></div>
                     <div class="grid col-start-5 col-span-2 justify-items-center">
-                      <div class="font-bold text-3xl">
+                      <div class="font-bold text-3xl text-zinc-100">
                         {user.followingNovels?.length + user.followingNovels?.length}
                       </div>
-                      <div class="text-sm">Truyện theo dõi</div>
+                      <div class="text-sm text-zinc-100">Truyện theo dõi</div>
                     </div>
                   </div>
                 </div>
                 <div class="p-5 mt-5">
                   <div class="w-full mb-5">
                     <div class="flex flex-row items-center">
-                      <div class="p-2 bg-black text-white font-bold">{user?.uploadedNovels?.length}</div>
-                      <div class="ml-3 font-bold uppercase">Tiểu thuyết đã đăng</div>
+                      <div class="p-2 bg-cyan-500 text-white font-bold">{user?.uploadedNovels?.length}</div>
+                      <div class="ml-3 font-bold uppercase text-zinc-100">Tiểu thuyết đã đăng</div>
                     </div>
-                    <div class="w-full h-1 bg-black"></div>
+                    <div class="w-full h-1 bg-cyan-500"></div>
                   </div>
                   <div class="grid grid-cols-2 gap-5">
                     {user?.uploadedNovels &&
                       user.uploadedNovels.map((novel, index) => (
-                        <div class="grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow" key={index}>
+                        <div class="grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow bg-zinc-800" key={index}>
                           <a
                             href={`/novel/${novel.id}`}
                             class="w-full h-32 object-cover rounded-l-md hover:opacity-80 duration-300"
@@ -177,7 +177,7 @@ export default function User({ isSelf = false }) {
                             </div>
                             <a
                               href={`/novel/${novel.id}`}
-                              class="text-md font-bold line-clamp-4 no-underline text-black hover:text-cyan-500 duration-300"
+                              class="text-md font-bold line-clamp-4 no-underline text-zinc-100 hover:text-cyan-500 duration-300"
                             >
                               {novel.title}
                             </a>
@@ -189,14 +189,14 @@ export default function User({ isSelf = false }) {
                 <div class="p-5 mt-5">
                   <div class="w-full mb-5">
                     <div class="flex flex-row items-center">
-                      <div class="p-2 bg-black text-white font-bold">{user?.uploadedMangas.length}</div>
-                      <div class="ml-3 font-bold uppercase">Truyện tranh đã đăng</div>
+                      <div class="p-2 bg-cyan-500 text-white font-bold">{user?.uploadedMangas.length}</div>
+                      <div class="ml-3 font-bold uppercase text-zinc-100">Truyện tranh đã đăng</div>
                     </div>
-                    <div class="w-full h-1 bg-black"></div>
+                    <div class="w-full h-1 bg-cyan-500"></div>
                   </div>
                   <div class="grid grid-cols-2 gap-5">
                     {user?.uploadedMangas?.map((manga, index) => (
-                      <div class="grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow" key={index}>
+                      <div class="grid grid-cols-3 gap-4 w-full h-32 rounded-md shadow bg-zinc-800" key={index}>
                         <a
                           href={`/manga/${manga.id}`}
                           class="w-full h-32 object-cover rounded-l-md hover:opacity-80 duration-300"
@@ -219,7 +219,7 @@ export default function User({ isSelf = false }) {
                           </div>
                           <a
                             href={`/manga/${manga.id}`}
-                            class="text-md font-bold line-clamp-4 no-underline text-black hover:text-cyan-500 duration-300"
+                            class="text-md font-bold line-clamp-4 no-underline text-zinc-100 hover:text-cyan-500 duration-300"
                           >
                             {manga.title}
                           </a>

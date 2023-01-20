@@ -27,17 +27,17 @@ function Header2() {
 
   return (
     <>
-      <div className='wrapper flex flex-row flex-wrap w-full h-auto min-h-fit bg-gray-100 justify-center'>
+      <div className='wrapper flex flex-row flex-wrap w-full h-auto min-h-fit bg-zinc-200 justify-center'>
         <div className='flex flex-row justify-between items-center max-w-screen-xl py-4 px-8 w-full'>
           <div>
-            <div className='flex uppercase text-xl font-semibold'>Bảng điều khiển</div>
+            <div className='flex uppercase text-xl font-semibold text-zinc-800'>Bảng điều khiển</div>
           </div>
 
           <div>
 
-            <div className="dropdown inline-block relative">
-              <button className="text-gray-700 font-semibold py-2 px-4 inline-flex items-center border-none" onClick={handleLogout}>
-                Logout
+            <div className="dropdown inline-block relative bg-slate-200">
+              <button className="text-zinc-400 bg-zinc-100 font-semibold py-2 px-4 inline-flex items-center border-none hover:text-zinc-600 hover:bg-zinc-200" onClick={handleLogout}>
+                Đăng xuất
               </button>
             </div>
           </div>

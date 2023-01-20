@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import DefaultLayout from '../src/components/DefaulftLayout/DefaultLayout';
 import LayoutAuth from '../src/components/LayoutAuth/LayoutAuth';
 import LayoutDashboard from '../src/components/LayoutDashboard/LayoutDashboard';
+import LayoutAdmin from '../src/components/LayoutAdmin/LayoutAdmin';
 import Login from './features/auth/Login';
 import Register from './features/auth/Register';
 import CreateChapter from './features/client/CreateComponents/Chapter';
@@ -20,6 +21,7 @@ import UpdateSeries from './features/client/UpdateSeries/UpdateSeries';
 import User from './features/client/User/User';
 import Home from './features/common/Home/Home';
 import NewUpdate from './features/common/NewUpdate/NewUpdate';
+import Users from './features/server/Users/Users';
 
 function App() {
   return (
@@ -48,6 +50,10 @@ function App() {
         <Route path="/action/update-series/:id" element={<UpdateSeries />} />
         <Route path="/action/create-section/:bookId" element={<CreateSection />} />
         <Route path="/action/create-chapter/:sectionId" element={<CreateChapter />} />
+      </Route>
+      
+      <Route path="/dashboard" element={<LayoutAdmin />}>
+        <Route path="/dashboard/users" element={<Users />} />
       </Route>
     </Routes>
   );

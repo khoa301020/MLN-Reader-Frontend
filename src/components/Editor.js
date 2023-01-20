@@ -20,9 +20,13 @@ export default function MyEditor({ initContent = "", onEditorChange, type = "htm
                         editor.getContent({ format: 'text' }))}
                 initialValue={content ? content : ""}
                 init={{
-                    height: 400,
+                    selector: 'textarea',
+                    height: 300,
+                    max_height: 500,
                     menubar: false,
                     branding: false,
+                    // skin: "oxide-dark",
+                    // content_css: "dark",
                     plugins: [
                         'autolink', 'link', 'image', 'charmap',
                         'searchreplace', 'fullscreen', 'emoticons', 'wordcount'

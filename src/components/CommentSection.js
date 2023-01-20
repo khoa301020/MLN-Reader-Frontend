@@ -28,13 +28,13 @@ function CommentSection({ comments }) {
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full sm:px-6 lg:px-8">
           <div className="overflow-hidden">
-            <div className='grid grid-cols-10 gap-4'>
+            <div className='grid grid-cols-10 gap-1'>
               {displayComments?.map((comment, index) => (
-                <div key={index} className='grid col-span-10'>
+                <div key={index} className='grid col-span-12'>
                   <div className='mx-auto w-fit'>
                     <img className="min-w-6 min-h-6 w-14 h-14 object-cover rounded-full" src={comment.user?.avatar} alt="Rounded avatar" />
                   </div>
-                  <div className='col-start-2 col-span-9 bg-gray-100 mr-3 px-3 py-2 text-base w-auto'>
+                  <div className='col-start-2 col-span-11 bg-zinc-700 mr-3 px-3 py-2 text-base w-auto rounded-md text-zinc-100'>
                     <div>
                       <div className='nameUser font-bold mb-1'>{comment.user?.name}</div>
                       <div className='commentUser'>
@@ -49,13 +49,13 @@ function CommentSection({ comments }) {
             {/* Pagination */}
             <div className='flex justify-center mt-5'>
               <div className='flex space-x-3'>
-                <button className='px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50' onClick={handlePrevious} >
+                <button className='px-3 py-1 bg-zinc-700 border border-solid border-zinc-600 rounded-md text-xs font-medium text-zinc-400 hover:border-cyan-500 hover:text-zinc-100 hover:bg-cyan-900' onClick={handlePrevious} >
                   Previous
                 </button>
-                <p className='px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50'>
+                <p className='px-3 py-1 bg-zinc-700 border border-solid border-zinc-600 rounded-md text-xs font-medium text-zinc-400 hover:border-cyan-500 hover:text-zinc-100 hover:bg-cyan-900'>
                   {page}
                 </p>
-                <button className='px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50' onClick={handleNext}>
+                <button className='px-3 py-1 bg-zinc-700 border border-solid border-zinc-600 rounded-md text-xs font-medium text-zinc-400 hover:border-cyan-500 hover:text-zinc-100 hover:bg-cyan-900' onClick={handleNext}>
                   Next
                 </button>
               </div>

@@ -12,16 +12,20 @@ const TreeView = ({ id, onSubjectClick }) => {
     if (id?.includes('novel')) fetch = novelApi.getNovelUpdate(id);
     if (id?.includes('manga')) fetch = mangaApi.getMangaUpdate(id);
 
-    fetch.then((res) => {
-      if (res.data.result) {
-        setBook([res.data.result]);
-      } else {
-        setBook({});
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
+    fetch
+      .then((res) => {
+        if (res.data.result) {
+          setBook([res.data.result]);
+        } else {
+          setBook({});
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [id]);
+
+  if (!book.length > 0) return <div>Không có dữ liệu</div>;
 
   return (
     <Tree

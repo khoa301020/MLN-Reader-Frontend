@@ -8,7 +8,7 @@ function DefaultLayout() {
         <>
             <Header />
             <CoverHeader />
-            <div className='LayoutContainer min-h-screen'>
+            <div className='LayoutContainer min-h-screen bg-zinc-800'>
                 <Outlet />
             </div>
             <Footer />

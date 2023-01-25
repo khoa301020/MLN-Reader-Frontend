@@ -16,7 +16,7 @@ function SlickCarousel(data) {
       <Slider {...settings}>
         {data.books.map((book, index) => (
           <div key={index}>
-            <a href={'/novel/' + book.id} className='hover:opacity-75'><img className='w-44 h-64 object-cover' src={book.cover} alt={book.title} /></a>
+            <a href={'/novel/' + book.id} className='hover:opacity-75'><img className='w-44 h-64 object-cover rounded-md' src={book.cover} alt={book.title} /></a>
           </div>
         ))}
       </Slider>

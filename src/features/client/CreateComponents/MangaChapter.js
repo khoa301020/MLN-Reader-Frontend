@@ -25,13 +25,13 @@ export default function MangaChapter({ section, onSubmit }) {
             Thêm mới chương truyện
           </div>
           <div className="px-5 py-10 min-h-screen">
-            <div className="grid grid-cols-9 gap-4 content-center mb-4">
-              <div className="text-right place-items-center my-2">
+            <div className="grid grid-cols-12 gap-4 content-center mb-4">
+              <div className="col-span-3 text-right place-items-center my-2">
                 <label className="text-right text-gray-900">
                   Tiêu đề<span className="text-red-500">*</span>
                 </label>
               </div>
-              <div className="col-span-7">
+              <div className="col-span-8">
                 <input
                   type="text"
                   name="title"
@@ -44,13 +44,13 @@ export default function MangaChapter({ section, onSubmit }) {
             </div>
 
             {/* Upload new zip */}
-            <div className="grid grid-cols-9 gap-4 content-center mb-4">
-              <div className="text-right place-items-center my-2">
+            <div className="grid grid-cols-12 gap-4 content-center mb-4">
+              <div className="col-span-3 text-right place-items-center my-2">
                 <label className="text-right text-gray-900">
                   Tải lên trang (zip file)<span className="text-red-500">*</span>
                 </label>
               </div>
-              <div className="col-span-7">
+              <div className="col-span-8">
                 <input
                   type="file"
                   ref={fileInput}
@@ -63,14 +63,14 @@ export default function MangaChapter({ section, onSubmit }) {
             </div>
 
             <div className="grid grid-cols-9 gap-9 content-center mb-4 mt-8">
-              <div className="col-start-4 col-span-6">
+              <div className="col-start-5 col-span-7">
                 <button
                   type="button"
                   disabled={!title || !fileInput.current?.files[0]}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 border border-solid border-transparent font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2 focus:outline-none "
                   onClick={handleSubmit}
                 >
-                  Lưu thay đổi
+                  Tạo chương mới
                 </button>
               </div>
             </div>

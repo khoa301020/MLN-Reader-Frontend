@@ -5,7 +5,7 @@ function DefaultLayout() {
     return (
         <>
             <Header2 />
-            <div className="LayoutContainer">
+            <div className="LayoutContainer bg-zinc-100">
                 <Outlet />
             </div>
         </>

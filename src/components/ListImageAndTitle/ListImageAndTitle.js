@@ -9,10 +9,10 @@ function ListImageAndTitle({ books, prefix }) {
                 <img
                   src={book.cover}
                   alt={book.title}
-                  className="h-full w-full object-cover object-center group-hover:opacity-75"
+                  className="h-full w-full object-cover rounded-md object-center group-hover:opacity-75"
                 />
               </div>
-              <h3 className="mt-1 text-sm text-gray-700 text-center hover:opacity-75 line-clamp-2">{book.title}</h3>
+              <h3 className="mt-1 text-xs text-zinc-300 text-center hover:text-zinc-100 line-clamp-2">{book.title}</h3>
             </a>
           ))}
         </div>

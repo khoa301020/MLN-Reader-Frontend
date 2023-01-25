@@ -75,7 +75,7 @@ export default function NovelChapter({ section, onSubmit }) {
             </div>
 
             <div className="grid grid-cols-9 gap-9 content-center mb-4 mt-8">
-              <div className="col-start-4 col-span-6">
+              <div className="col-start-5 col-span-7">
                 <button
                   type="button"
                   disabled={!check ? true : false}

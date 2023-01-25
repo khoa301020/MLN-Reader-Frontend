@@ -77,23 +77,17 @@ function JustRead({ type = 'both' }) {
                 {history && history.map((item, index) => (
                     <div className="flex flex-col mb-2" key={index}>
                         <div className="flex">
-                            <a href={`/${item.type}/${item.type === 'novel' ? item.novelId : item.mangaId}`} className='hover:opacity-75'><img src={item.type === 'novel' ? item.novelCover : item.mangaCover} className="object-cover w-17 h-24" alt="" /></a>
-                            <div className="flex flex-col pl-3 max-h-24">
-                                {/* type of book */}
-                                {/* <div className="flex flex-col">
-                                    <div className="flex w-fit px-2 py-0 text-xs text-white bg-cyan-500 rounded-full mb-1">
-                                        {item.type === 'novel' ? 'Novel' : 'Manga'}
-                                    </div>
-                                </div> */}
-                                <a href={`/${item.type}/${item.type === 'novel' ? item.novelId : item.mangaId}`} className='no-underline text-black hover:text-cyan-700'>
+                            <a href={`/${item.type}/${item.type === 'novel' ? item.novelId : item.mangaId}`} className='hover:opacity-75'><img src={item.type === 'novel' ? item.novelCover : item.mangaCover} className="object-cover w-16 h-24 rounded-sm" alt="" /></a>
+                            <div className="flex flex-col pl-3 max-h-24 w-full">
+                                <a href={`/${item.type}/${item.type === 'novel' ? item.novelId : item.mangaId}`} className='no-underline text-cyan-500 hover:text-cyan-400'>
                                     <div className='font-bold line-clamp-1 space-x-3 mb-1'>{item.type === 'novel' ? item.novelTitle : item.mangaTitle}</div>
                                 </a>
-                                <a href={`/${item.type}-chapter/${item.chapterId}`} className='no-underline text-sm text-black hover:text-cyan-700'>
+                                <a href={`/${item.type}-chapter/${item.chapterId}`} className='no-underline text-xs text-zinc-300 hover:text-zinc-100'>
                                     <div className='line-clamp-2'>{item.chapterTitle}</div>
                                 </a>
                                 {/* type of book */}
                                 <div className="flex justify-end items-end h-full">
-                                    <div className="flex w-fit px-2 py-0 text-xs text-white bg-cyan-500 rounded-full mb-1">
+                                    <div className="flex w-fit px-2 py-0 text-xs text-zinc-100 bg-sky-900 rounded-full mb-1 border-solid border border-cyan-500">
                                         {item.type === 'novel' ? 'Novel' : 'Manga'}
                                     </div>
                                 </div>

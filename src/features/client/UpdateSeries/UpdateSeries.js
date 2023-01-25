@@ -55,7 +55,7 @@ export default function UpdateSeries() {
   return (
     <div className="w-full min-h-screen flex flex-row">
       <div className="grid grid-cols-12 gap-6 w-full">
-        <div className="col-start-1 col-span-2 w-full h-full overflow-hidden border-r border-t-0 border-l-0 border-b-0  border-gray-400 border-solid pr-2">
+        <div className="col-start-1 col-span-2 w-full h-full overflow-hidden border-r border-t-0 border-l-0 border-b-0 border-gray-400 border-solid pr-2 bg-white">
           <TreeView id={id} onSubjectClick={onSubjectClick} />
         </div>
 
@@ -64,7 +64,7 @@ export default function UpdateSeries() {
           {type.includes('section') && <Section id={childId} />}
           {type === 'novel-chapter' && <NovelChapter id={childId} />}
           {type === 'manga-chapter' && <MangaChapter id={childId} />}
-          {type.includes('novel-volume') && <NovelVolume id={childId} />}
+          {type === 'novel-volume' && <NovelVolume id={childId} />}
         </div>
       </div>
     </div>

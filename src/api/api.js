@@ -24,11 +24,13 @@ export const homeApi = {
   getNewestComment: () => api.get('/common/get-newest-comments'),
   getHistory: (username) => api.get('/common/get-history?username=' + username),
   getNewest: () => api.get('/common/get-latest'),
+  getSearch: (keyword) => api.get(`/common/get-latest?keyword=${keyword}`),
   getNewestHome: () => api.get('/common/get-latest?limit=6'),
   getCompleted: () => api.get('/common/get-completed'),
 };
 
 export const novelApi = {
+  searchNovel: (keyword) => api.get(`/novel/search?keyword=${keyword}`),
   getNovel: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}`),
   getNovelOnly: (novelId) => api.get(`/novel/get-novel?novelId=${novelId}&isOnly=true`),
   getNovelUpdate: (novelId) => api.get(`/novel/get-novel-update?novelId=${novelId}`),
@@ -40,20 +42,18 @@ export const novelApi = {
   getHistory: (username) => api.get('/novel/get-history?username=' + username),
   createNovel: (data) => api.post('/novel/create-action', data),
   updateNovel: (data) => api.post('/novel/update-action', data),
-  deleteNovel: (data) => api.post('/novel/delete-action', Object.assign({ subject: 'novel' }, data)),
   createSection: (data) => api.post('/novel/create-action', data),
   updateSection: (data) => api.post('/novel/update-action', data),
-  deleteSection: (data) => api.post('/novel/delete-action', Object.assign({ subject: 'section' }, data)),
-  createChapter: (token, data) =>
-    api.post('/novel/create-action', data, { headers: { Authorization: `Bearer ${token}` } }),
+  createChapter: (data) => api.post('/novel/create-action', data),
   updateChapter: (data) => api.post('/novel/update-action', data),
-  deleteChapter: (data) => api.post('/novel/delete-action', Object.assign({ subject: 'chapter' }, data)),
   createNote: (data) => api.post('/novel/create-action', data),
   updateNote: (data) => api.post('/novel/update-action', data),
-  deleteNote: (data) => api.post('/novel/delete-action', Object.assign({ subject: 'note' }, data)),
+  deleteAction: (token, data) =>
+    api.post('/novel/delete-action', data, { headers: { Authorization: `Bearer ${token}` } }),
 };
 
 export const mangaApi = {
+  searchManga: (keyword) => api.get(`/manga/search?keyword=${keyword}`),
   getManga: (mangaId) => api.get(`/manga/get-manga?mangaId=${mangaId}`),
   getMangaOnly: (mangaId) => api.get(`/manga/get-manga?mangaId=${mangaId}&isOnly=true`),
   getMangaUpdate: (mangaId) => api.get(`/manga/get-manga-update?mangaId=${mangaId}`),
@@ -65,14 +65,16 @@ export const mangaApi = {
   getHistory: (username) => api.get('/manga/get-history?username=' + username),
   createManga: (data) => api.post('/manga/create-manga', data),
   updateManga: (data) => api.post('/manga/update-manga', data),
-  deleteManga: (data) => api.post('/manga/delete-action', Object.assign({ subject: 'manga' }, data)),
+  deleteManga: (token, id) =>
+    api.post('/manga/delete-manga', { type: 'manga', id }, { headers: { Authorization: `Bearer ${token}` } }),
   createSection: (data) => api.post('/manga/create-section', data),
   updateSection: (data) => api.post('/manga/update-section', data),
-  deleteSection: (data) => api.post('/manga/delete-action', Object.assign({ subject: 'section' }, data)),
-  createChapter: (token, data) =>
-    api.post('/manga/create-chapter', data, { headers: { Authorization: `Bearer ${token}` } }),
+  deleteSection: (token, id) =>
+    api.post('/manga/delete-section', { type: 'section', id }, { headers: { Authorization: `Bearer ${token}` } }),
+  createChapter: (data) => api.post('/manga/create-chapter', data),
   updateChapter: (data) => api.post('/manga/update-chapter', data),
-  deleteChapter: (data) => api.post('/manga/delete-action', Object.assign({ subject: 'chapter' }, data)),
+  deleteChapter: (token, id) =>
+    api.post('/manga/delete-chapter', { type: 'chapter', id }, { headers: { Authorization: `Bearer ${token}` } }),
 };
 
 export const userApi = {
@@ -88,10 +90,10 @@ export const userApi = {
   // updateProfile: (data) => api.post("/user/update-profile", data),
   // updateAvatar: (data) => api.post("/user/update-avatar", data),
   // updatePassword: (data) => api.post("/user/update-password", data),
-  followNovel: (data) => api.post('/novel/follow-action', data),
-  unfollowNovel: (data) => api.post('/novel/follow-action', data),
-  followManga: (data) => api.post('/manga/follow-action', data),
-  unfollowManga: (data) => api.post('/manga/follow-action', data),
+  followAction: (token, bookId) =>
+    api.post('/common/follow', { bookId }, { headers: { Authorization: `Bearer ${token}` } }),
+  checkFollow: (token, bookId) =>
+    api.get(`/common/check-follow?bookId=${bookId}`, { headers: { Authorization: `Bearer ${token}` } }),
   comment: (data, token) => api.post('/common/comment-action', data, { headers: { Authorization: `Bearer ${token}` } }),
   // rate: (data) => api.post("/user/rate", data),
 };

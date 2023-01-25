@@ -48,6 +48,9 @@ export default function Comments() {
                                 Bình luận
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Ngày đăng
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Người đăng
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -76,6 +79,9 @@ export default function Comments() {
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.
                             </td>
                             <td class="px-6 py-4">
+                                10/10/2019
+                            </td>
+                            <td class="px-6 py-4">
                                 Maice Alice 
                             </td>
                             <td class="px-6 py-4">
@@ -100,6 +106,9 @@ export default function Comments() {
                             </th>
                             <td class="px-6 py-4">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.
+                            </td>
+                            <td class="px-6 py-4">
+                                10/10/2019
                             </td>
                             <td class="px-6 py-4">
                                 Maice Alice 

@@ -89,7 +89,7 @@ function Header() {
                       </li>
                     )}
                     <li>
-                        <Link to="/dashboard"
+                        <Link to="/dashboard/users"
                           class="no-underline rounded-md pr-4 font-medium text-zinc-100 border border-solid border-transparent hover:bg-sky-900 hover:border-cyan-500 duration-700"
                         >
                           Quản lý

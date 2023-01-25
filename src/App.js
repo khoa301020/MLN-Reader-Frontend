@@ -1,5 +1,3 @@
-// import { Toaster } from 'react-hot-toast';
-// import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import DefaultLayout from '../src/components/DefaulftLayout/DefaultLayout';
 import LayoutAuth from '../src/components/LayoutAuth/LayoutAuth';
@@ -22,6 +20,9 @@ import User from './features/client/User/User';
 import Home from './features/common/Home/Home';
 import NewUpdate from './features/common/NewUpdate/NewUpdate';
 import Users from './features/server/Users/Users';
+import Mangas from './features/server/Mangas/Mangas';
+import LightNovels from './features/server/LightNovels/LightNovel';
+import Comments from './features/server/Comments/Comments';
 
 function App() {
   return (
@@ -54,6 +55,9 @@ function App() {
       
       <Route path="/dashboard" element={<LayoutAdmin />}>
         <Route path="/dashboard/users" element={<Users />} />
+        <Route path="/dashboard/mangas" element={<Mangas />} />
+        <Route path="/dashboard/lightnovels" element={<LightNovels />} />
+        <Route path="/dashboard/comments" element={<Comments />} />
       </Route>
     </Routes>
   );

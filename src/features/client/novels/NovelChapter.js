@@ -7,7 +7,6 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { novelApi, userApi } from '../../../api/api';
 import CommentSection from '../../../components/CommentSection';
 import Editor from '../../../components/Editor';
-import './image.css';
 
 function NovelChapter() {
   const { id } = useParams();
@@ -156,7 +155,7 @@ function NovelChapter() {
   return (
     <div className="wrapper">
       <div className="container max-w-full min-h-screen bg-zinc-900">
-        <div className="grid grid-cols-12 h-auto w-full mx-auto">
+        <div className="grid grid-cols-12 h-auto w-fit mx-auto">
           <div className="col-start-2 col-span-10 h-auto mt-10 max-w-screen-xl">
             <div className="ChapterInfo text-center">
               <div className="Season font-bold text-3xl mb-3 text-sky-500">{chapter.sectionInfo.name}</div>

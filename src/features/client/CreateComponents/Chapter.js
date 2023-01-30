@@ -69,9 +69,9 @@ export default function Chapter() {
   return (
     <div className="w-full min-h-screen flex flex-row">
       <div className="grid grid-cols-12 gap-6 w-full">
-        <div className="col-start-1 col-span-2 w-full h-full overflow-hidden border-r border-t-0 border-l-0 border-b-0  border-gray-400 border-solid pr-2">
-          {/* <TreeView /> */}
-        </div>
+        {/* <div className="col-start-1 col-span-2 w-full h-full overflow-hidden border-r border-t-0 border-l-0 border-b-0  border-gray-400 border-solid pr-2">
+          <TreeView />
+        </div> */}
 
         <div className="col-start-3 col-span-8 bg-white min-h-screen h-auto border-solid border border-gray-400 rounded my-20">
           {type === 'novel' && <NovelChapter section={section} onSubmit={onSubmit} />}

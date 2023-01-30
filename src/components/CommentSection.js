@@ -1,6 +1,8 @@
 import parse from 'html-react-parser';
 import React, { useEffect, useState } from 'react';
 import { datetimeConverter, timeDiff } from '../helpers/helper';
+import { ConfigProvider, theme, Pagination } from 'antd';
+
 function CommentSection({ comments }) {
   const [displayComments, setDisplayComments] = useState([]);
   const [page, setPage] = useState(1);
@@ -48,7 +50,7 @@ function CommentSection({ comments }) {
             </div>
             {/* Pagination */}
             <div className='flex justify-center mt-5'>
-              <div className='flex space-x-3'>
+              {/* <div className='flex space-x-3'>
                 <button className='px-3 py-1 bg-zinc-700 border border-solid border-zinc-600 rounded-md text-xs font-medium text-zinc-400 hover:border-cyan-500 hover:text-zinc-100 hover:bg-cyan-900' onClick={handlePrevious} >
                   Previous
                 </button>
@@ -58,7 +60,24 @@ function CommentSection({ comments }) {
                 <button className='px-3 py-1 bg-zinc-700 border border-solid border-zinc-600 rounded-md text-xs font-medium text-zinc-400 hover:border-cyan-500 hover:text-zinc-100 hover:bg-cyan-900' onClick={handleNext}>
                   Next
                 </button>
-              </div>
+              </div> */}
+
+              <ConfigProvider
+                  theme={{
+                    algorithm: theme.darkAlgorithm,
+                  }}
+                >
+                  <Pagination
+                    // defaultCurrent={page}
+                    // defaultPageSize={pageSize}
+                    // onChange={(value) => setPage(value)}
+                    // total={filteredBooks.length}
+                    // showSizeChanger showQuickJumper
+                    // pageSizeOptions={[10, 20, 50]}
+                    // onShowSizeChange={(current, size) => setPageSize(size)}
+                  />
+                </ConfigProvider>
+              
             </div>
           </div>
         </div>

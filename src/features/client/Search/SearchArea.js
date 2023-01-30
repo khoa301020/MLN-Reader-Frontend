@@ -1,4 +1,4 @@
-import { Checkbox, Pagination, Spin } from 'antd';
+import { ConfigProvider, theme, Checkbox, Pagination, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useSearchParams } from 'react-router-dom';
@@ -120,7 +120,12 @@ export default function SearchArea() {
                 </div>
                 <div class="flex justify-center my-8">
                   <div class="flex justify-center pt-14">
-                    <Pagination
+                    <ConfigProvider
+                  theme={{
+                    algorithm: theme.darkAlgorithm,
+                  }}
+                >
+                  <Pagination
                       defaultCurrent={novelPage}
                       defaultPageSize={novelPageSize}
                       onChange={(value) => setNovelPage(value)}
@@ -130,6 +135,7 @@ export default function SearchArea() {
                       pageSizeOptions={[4, 10, 20]}
                       onShowSizeChange={(current, size) => setNovelPageSize(size)}
                     />
+                </ConfigProvider>
                   </div>
                 </div>
               </div>
@@ -170,7 +176,12 @@ export default function SearchArea() {
                 </div>
                 <div class="flex justify-center my-8">
                   <div class="flex justify-center pt-14">
-                    <Pagination
+                    <ConfigProvider
+                  theme={{
+                    algorithm: theme.darkAlgorithm,
+                  }}
+                >
+                  <Pagination
                       defaultCurrent={mangaPage}
                       defaultPageSize={mangaPageSize}
                       onChange={(value) => setMangaPage(value)}
@@ -180,6 +191,7 @@ export default function SearchArea() {
                       pageSizeOptions={[4, 10, 20]}
                       onShowSizeChange={(current, size) => setMangaPageSize(size)}
                     />
+                </ConfigProvider>
                   </div>
                 </div>
               </div>

@@ -42,7 +42,7 @@ export default function Comments() {
                     <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                Ảnh bìa
+                                Thông tin truyện
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Bình luận
@@ -72,7 +72,7 @@ export default function Comments() {
                                 </a>
                                 <div class="pl-3">
                                     <div class="text-md font-semibold">Phá Đảo Dị Giới Cùng Nữ Thần Không Tín Đồ</div>
-                                    <div class="font-normal text-gray-500">Oosaki Airu</div>
+                                    <div class="font-normal text-gray-500">Tiểu thuyết</div>
                                 </div>  
                             </th>
                             <td class="px-6 py-4">
@@ -101,7 +101,7 @@ export default function Comments() {
                                 </a>
                                 <div class="pl-3">
                                     <div class="text-md font-semibold">Phá Đảo Dị Giới Cùng Nữ Thần Không Tín Đồ</div>
-                                    <div class="font-normal text-gray-500">Oosaki Airu</div>
+                                    <div class="font-normal text-gray-500">Truyện tranh</div>
                                 </div>  
                             </th>
                             <td class="px-6 py-4">

@@ -1,4 +1,4 @@
-import { Checkbox, Pagination, Spin } from 'antd';
+import { ConfigProvider, theme, Checkbox, Pagination, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { mangaApi } from '../../../api/api';
 
@@ -78,6 +78,11 @@ export default function BookArea() {
               </div>
               <div class='flex justify-center my-10'>
                 <div class='flex justify-center my-10 pt-14'>
+                <ConfigProvider
+                  theme={{
+                    algorithm: theme.darkAlgorithm,
+                  }}
+                >
                   <Pagination
                     defaultCurrent={page}
                     defaultPageSize={pageSize}
@@ -86,7 +91,9 @@ export default function BookArea() {
                     showSizeChanger showQuickJumper
                     pageSizeOptions={[10, 20, 50]}
                     onShowSizeChange={(current, size) => setPageSize(size)}
+                    // style={{backgroundColor: '#52525b', padding: '10px', borderRadius: '10px', borderWidth:'1px', borderColor:'#71717a', borderStyle:'solid'}}
                   />
+                </ConfigProvider>
                 </div>
               </div>
             </div>

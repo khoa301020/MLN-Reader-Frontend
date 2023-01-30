@@ -22,14 +22,14 @@ function MangaChapter() {
     mangaApi
       .getChapter(id)
       .then((res) => {
-        const chapter = res.data.result.chapter;
+        const chapter = res.data.result;
 
         setChapter(chapter);
 
         const newReadingManga = {
-          mangaId: chapter.mangaId,
-          mangaCover: res.data.result.mangaCover,
-          mangaTitle: res.data.result.mangaTitle,
+          mangaId: chapter.mangaInfo.id,
+          mangaCover: chapter.mangaInfo.cover,
+          mangaTitle: chapter.mangaInfo.title,
           chapterId: chapter.id,
           chapterTitle: chapter.title,
           lastRead: Date.now(),
@@ -174,29 +174,37 @@ function MangaChapter() {
                 })}
               </div>
               <div className="TableOfcontents grid grid-cols-3 rounded-full w-full mt-10 border border-solid border-zinc-700 hover:border-cyan-500 duration-300">
-                <a href="##">
-                  <div className="col-span-1 bg-zinc-800 rounded-l-full p-3 hover:bg-sky-900 duration-700">
+                <div
+                  className={`col-span-1 bg-zinc-800 rounded-l-full p-3 hover:bg-sky-900 duration-700 ${
+                    !chapter.nav.hasOwnProperty('prev') && 'disabledDiv'
+                  }`}
+                >
+                  <a href={`/manga-chapter/${chapter.nav.prev}`}>
                     <div className="flex justify-center items-center">
                       <CaretLeftOutlined style={{ color: '#f4f4f5', fontSize: '200%' }} />
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
 
-                <a href="##">
-                  <div className="col-span-1 bg-zinc-800 p-3 hover:bg-sky-900 duration-700">
+                <div className="col-span-1 bg-zinc-800 p-3 hover:bg-sky-900 duration-700">
+                  <a href={`/manga/${chapter.mangaId}`}>
                     <div className="flex justify-center items-center">
                       <HomeFilled style={{ color: '#f4f4f5', fontSize: '200%' }} />
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
 
-                <a href="##">
-                  <div className="col-span-1 bg-zinc-800 rounded-r-full p-3 hover:bg-sky-900 duration-700">
+                <div
+                  className={`col-span-1 bg-zinc-800 rounded-r-full p-3 hover:bg-sky-900 duration-700 ${
+                    !chapter.nav.hasOwnProperty('next') && 'disabledDiv'
+                  }`}
+                >
+                  <a href={`/manga-chapter/${chapter.nav.next}`}>
                     <div className="flex justify-center items-center">
                       <CaretRightOutlined style={{ color: '#f4f4f5', fontSize: '200%' }} />
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
               </div>
             </div>
             <div className="Comment max-w-full h-fit bg-zinc-800 border border-solid border-zinc-700 rounded-md mt-8 pb-3 mb-10">

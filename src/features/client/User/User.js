@@ -1,4 +1,4 @@
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, CloudUploadOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Upload } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
@@ -68,19 +68,62 @@ export default function User({ isSelf = false }) {
             <div class="flex flex-col w-full shadow-[0_0px_20px_-5px_rgb(255,255,255,0.3)]">
               <div class="h-72 opacity-50">
                 <img class="w-full h-72 object-cover rounded-t-md" src={coverProfile} alt="coverProfile" />
+                
+                <div class="block relative -mt-72 float-right mr-1">
+                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-8 h-8 border border-gray-300 border-solid rounded-lg cursor-pointer bg-gray-50 opacity-50 hover:opacity-100 hover:bg-gray-100">
+                        <div class="flex flex-col items-center justify-center">
+                          <CloudUploadOutlined />
+                        </div>
+                        <input id="dropzone-file" type="file" class="hidden" />
+                    </label>
+                </div> 
+
               </div>
               <div class="block my-0 mx-auto w-4/5 h-fit bg-zinc-900 -mt-20 relative rounded-md mb-10">
                 <div className="Photo" class="flex flex-col z-10">
                   <div class="-mt-20 mx-auto block">
-                    <img
-                      class="w-40 h-40 rounded-full object-cover shadow-md"
-                      src={user?.avatar}
-                      alt="Rounded avatar"
-                    />
+                    <div class="w-40 h-40 rounded-full overflow-hidden">
+                      <img
+                        class="w-40 h-40 rounded-full object-cover shadow-md"
+                        src={user?.avatar}
+                        alt="Rounded avatar"
+                      />
+                      <div class="-mt-10 w-40">
+                      <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-9 border border-gray-300 border-solid rounded-lg cursor-pointer bg-gray-50 opacity-50 hover:opacity-100 hover:bg-gray-100">
+                          <div class="flex flex-col items-center justify-center">
+                            <CloudUploadOutlined />
+                          </div>
+                          <input id="dropzone-file" type="file" class="hidden" />
+                      </label>
+                      </div> 
+                    </div>
                   </div>
                 </div>
                 <div class="p-5 pt-1 flex flex-col items-center">
                   <div class="font-bold text-2xl text-zinc-100">{user?.name}</div>
+                  
+                  <input
+                    type="text"
+                    class="
+                      w-fit
+                      px-2
+                      py-1
+                      font-bold
+                      text-2xl
+                      text-white
+                      bg-zinc-900 bg-clip-padding
+                      border-b border-solid border-transparent
+                      rounded
+                      transition
+                      ease-in-out
+                      text-center
+                      focus:text-zinc-100 focus:bg-zinc-900 focus:border-b focus:border-cyan-500 focus:outline-none
+                    "
+                    id="example"
+                    placeholder="beast666"
+                  />
+                  <div class='text-xs cursor-pointer text-zinc-500 hover:text-cyan-500 duration-300'>Lưu</div>
+
                   {isSelf && (
                     <div
                       class="text-xs cursor-pointer text-zinc-500 hover:text-cyan-500 duration-300"

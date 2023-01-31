@@ -36,6 +36,7 @@ export default function Login() {
 
         localStorage.setItem('username', user.username);
         localStorage.setItem('role', user.role);
+        localStorage.setItem('avatar', user.avatar);
         console.log(res.data.result.token);
         Cookies.set('token', user.token);
         setUser('');

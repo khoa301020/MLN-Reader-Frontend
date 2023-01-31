@@ -99,16 +99,10 @@ export const userApi = {
 };
 
 export const adminApi = {
-  getProfile: () => api.get('/admin/get-profile'),
-  updateProfile: (data) => api.post('/admin/update-profile', data),
-  updateAvatar: (data) => api.post('/admin/update-avatar', data),
-  updatePassword: (data) => api.post('/admin/update-password', data),
-  getNovelList: (data) => api.get(`/admin/get-novel-list?page=${data.page}&limit=${data.limit}&sort=${data.sort}`),
-  getMangaList: (data) => api.get(`/admin/get-manga-list?page=${data.page}&limit=${data.limit}&sort=${data.sort}`),
-  getNovel: (novelId) => api.get(`/admin/get-novel?novelId=${novelId}`),
-  getManga: (mangaId) => api.get(`/admin/get-manga?mangaId=${mangaId}`),
-  getNovelChapter: (chapterId) => api.get(`/admin/get-novel-chapter?chapterId=${chapterId}`),
-  getMangaChapter: (chapterId) => api.get(`/admin/get-manga-chapter?chapterId=${chapterId}`),
+  getAllUsers: (token) => api.get('/admin/get-users', { headers: { Authorization: `Bearer ${token}` } }),
+  getAllNovels: (token) => api.get('/admin/get-novels', { headers: { Authorization: `Bearer ${token}` } }),
+  getAllMangas: (token) => api.get('/admin/get-mangas', { headers: { Authorization: `Bearer ${token}` } }),
+  getAllComments: (token) => api.get('/admin/get-comments', { headers: { Authorization: `Bearer ${token}` } }),
 };
 
 export default api;

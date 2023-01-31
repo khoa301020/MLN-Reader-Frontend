@@ -11,13 +11,14 @@ function LayoutAdmin() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
 
-  const handleLogout = async () => {
-    await userApi.logout({ username: localStorage.getItem('username') });
+  function handleLogout() {
     Cookies.remove('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    localStorage.removeItem('avatar');
     toast.success('Đăng xuất thành công');
     navigate('/auth/login');
-  };
+  }
 
   useEffect(() => {
     userApi

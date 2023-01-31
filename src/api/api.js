@@ -89,7 +89,8 @@ export const userApi = {
   getMe: (token) => api.get('/auth/me', { headers: { Authorization: `Bearer ${token}` } }),
   // updateProfile: (data) => api.post("/user/update-profile", data),
   // updateAvatar: (data) => api.post("/user/update-avatar", data),
-  // updatePassword: (data) => api.post("/user/update-password", data),
+  updateName: (name, token) =>
+    api.post('/common/change-name', { name }, { headers: { Authorization: `Bearer ${token}` } }),
   followAction: (token, bookId) =>
     api.post('/common/follow', { bookId }, { headers: { Authorization: `Bearer ${token}` } }),
   checkFollow: (token, bookId) =>

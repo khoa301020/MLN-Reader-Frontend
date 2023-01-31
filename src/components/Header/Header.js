@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import { userApi } from '../../api/api';
 import mlnLogo from '../../assets/icons/mlnLogo.png';
 
 function Header() {
@@ -14,23 +13,13 @@ function Header() {
     Cookies.remove('token');
     localStorage.removeItem('username');
     localStorage.removeItem('role');
+    localStorage.removeItem('avatar');
   }
 
   function handleLogout() {
-    const body = {
-      username: localStorage.getItem('username'),
-    };
-    userApi
-      .logout(body)
-      .then(() => {
-        removeAuth();
-        toast.success('Đăng xuất thành công');
-        navigate('/auth/login');
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.response.message);
-      });
+    removeAuth();
+    toast.success('Đăng xuất thành công');
+    navigate('/auth/login');
   }
 
   function preCreateSeries() {

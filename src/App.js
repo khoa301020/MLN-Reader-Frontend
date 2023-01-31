@@ -19,10 +19,10 @@ import UpdateSeries from './features/client/UpdateSeries/UpdateSeries';
 import User from './features/client/User/User';
 import Home from './features/common/Home/Home';
 import NewUpdate from './features/common/NewUpdate/NewUpdate';
-import Comments from './features/server/Comments/Comments';
-import LightNovels from './features/server/LightNovels/LightNovel';
-import Mangas from './features/server/Mangas/Mangas';
-import Users from './features/server/Users/Users';
+import Comments from './features/server/Comments';
+import LightNovels from './features/server/LightNovel';
+import Mangas from './features/server/Mangas';
+import Users from './features/server/Users';
 
 function App() {
   return (

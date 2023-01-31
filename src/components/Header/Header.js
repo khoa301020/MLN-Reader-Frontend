@@ -88,13 +88,16 @@ function Header() {
                         </div>
                       </li>
                     )}
-                    <li>
-                        <Link to="/dashboard/users"
+                    {localStorage.getItem('role') === 'admin' && (
+                      <li>
+                        <Link
+                          to="/dashboard/users"
                           class="no-underline rounded-md pr-4 font-medium text-zinc-100 border border-solid border-transparent hover:bg-sky-900 hover:border-cyan-500 duration-700"
                         >
                           Quản lý
                         </Link>
                       </li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -111,7 +114,7 @@ function Header() {
                     className="absolute right-0 top-0 mt-2 mr-2 bg-transparent border-0"
                     onClick={handleSearch}
                   >
-                    <SearchOutlined style={{color: "#a1a1aa"}} />
+                    <SearchOutlined style={{ color: '#a1a1aa' }} />
                   </button>
                 </form>
                 {Cookies.get('token') ? (

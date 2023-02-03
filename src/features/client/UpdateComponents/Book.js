@@ -45,7 +45,7 @@ export default function Book({ id }) {
             .then((res) => {
               if (res.data.result) {
                 toast.success('Xoá thành công');
-                navigate(0);
+                navigate('/');
               } else {
                 toast.error('Xoá thất bại');
               }
@@ -54,7 +54,7 @@ export default function Book({ id }) {
           mangaApi.deleteManga(token, id).then((res) => {
             if (res.data.result) {
               toast.success('Xoá thành công');
-              navigate(0);
+              navigate('/');
             } else {
               toast.error('Xoá thất bại');
             }

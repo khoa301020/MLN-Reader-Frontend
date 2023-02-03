@@ -115,7 +115,8 @@ export default function Users() {
                     <td class="px-6 py-4">{user.uploadedMangas.length}</td>
                     <td class="px-6 py-4">
                       <div class="flex items-center">
-                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2">{user.accountStatus.status}</div>
+                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
+                        <div>{user.accountStatus.status}</div>
                       </div>
                     </td>
                     <td class="px-6 py-4">

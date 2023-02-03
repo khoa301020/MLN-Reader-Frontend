@@ -1,28 +1,14 @@
-import { ExclamationCircleFilled, MinusCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleFilled, MinusCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Button, Modal, Pagination } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { adminApi } from '../../api/api';
 
-const { confirm } = Modal;
-const showConfirm = () => {
-  confirm({
-    title: 'Do you Want to delete these items?',
-    icon: <ExclamationCircleFilled />,
-    // content: 'Some descriptions',
-    okText: 'Xoá',
-    cancelText: 'Huỷ',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-};
 const token = Cookies.get('token');
 
 export default function LightMangas() {
+  const { confirm } = Modal;
   const [mangas, setMangas] = useState([]);
   const [filteredMangas, setFilteredMangas] = useState([]);
   const [displayMangas, setDisplayMangas] = useState([]);
@@ -58,6 +44,61 @@ export default function LightMangas() {
         ),
       );
   }, [mangas, query]);
+
+  const showDeleteConfirm = (manga) => {
+    confirm({
+      title: 'Bạn có muốn xoá truyện tranh này không?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn "Ok" để xoá truyện tranh',
+      onOk() {
+        adminApi
+          .deleteManga(manga.id, token)
+          .then((res) => {
+            if (res.data.code === 200) {
+              // const index = mangas.findIndex((mangaElement) => mangaElement.id === manga.id);
+              const newMangas = mangas.map((mangaElement) =>
+                mangaElement.id === manga.id ? res.data.result : mangaElement,
+              );
+              console.log(newMangas);
+              setMangas(newMangas);
+              return toast.success(res.data.message);
+            } else return toast.error('Đã có lỗi xảy ra');
+          })
+          .catch((err) => {
+            const msg = err.response.data.message ? err.response.data.message : 'Đã có lỗi xảy ra';
+            return toast.error(msg);
+          });
+      },
+      onCancel() {},
+    });
+  };
+
+  const showRestoreConfirm = (manga) => {
+    confirm({
+      title: 'Bạn có muốn khôi phục truyện tranh này không?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn "Ok" để khôi phục truyện tranh',
+      onOk() {
+        adminApi
+          .restoreManga(manga.id, token)
+          .then((res) => {
+            if (res.data.code === 200) {
+              // const index = mangas.findIndex((mangaElement) => mangaElement.id === manga.id);
+              const newMangas = mangas.map((mangaElement) =>
+                mangaElement.id === manga.id ? res.data.result : mangaElement,
+              );
+              setMangas(newMangas);
+              return toast.success(res.data.message);
+            } else return toast.error('Đã có lỗi xảy ra');
+          })
+          .catch((err) => {
+            const msg = err.response.data.message ? err.response.data.message : 'Đã có lỗi xảy ra';
+            return toast.error(msg);
+          });
+      },
+      onCancel() {},
+    });
+  };
 
   return (
     <>
@@ -146,11 +187,12 @@ export default function LightMangas() {
                     <td class="px-6 py-4">{manga.chapterCount}</td>
                     <td class="px-6 py-4">{manga.uploader}</td>
                     <td class="px-6 py-4">
-                      <Button type="link" onClick={showConfirm}>
-                        <div class="hover:opacity-80">
-                          <MinusCircleOutlined style={{ color: 'red' }} />
-                        </div>
-                      </Button>
+                      <Button
+                        onClick={() => (manga.deletedAt ? showRestoreConfirm(manga) : showDeleteConfirm(manga))}
+                        type="link"
+                        icon={manga.deletedAt ? <ReloadOutlined /> : <MinusCircleOutlined />}
+                        danger={!manga.deletedAt}
+                      />
                     </td>
                   </tr>
                 ))}

@@ -1,25 +1,10 @@
-import { ExclamationCircleFilled, MinusCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleFilled, MinusCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Button, Modal, Pagination } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { adminApi } from '../../api/api';
 
-const { confirm } = Modal;
-const showConfirm = () => {
-  confirm({
-    title: 'Do you Want to delete these items?',
-    icon: <ExclamationCircleFilled />,
-    // content: 'Some descriptions',
-    okText: 'Xoá',
-    cancelText: 'Huỷ',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-};
 const token = Cookies.get('token');
 // const statusMap = {
 //   'Đang tiến hành': 'green',
@@ -28,6 +13,7 @@ const token = Cookies.get('token');
 // };
 
 export default function LightNovels() {
+  const { confirm } = Modal;
   const [novels, setNovels] = useState([]);
   const [filteredNovels, setFilteredNovels] = useState([]);
   const [displayNovels, setDisplayNovels] = useState([]);
@@ -65,6 +51,61 @@ export default function LightNovels() {
       );
   }, [novels, query]);
 
+  const showDeleteConfirm = (novel) => {
+    confirm({
+      title: 'Bạn có muốn xoá tiểu thuyết không?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn "Ok" để xoá tiểu thuyết',
+      onOk() {
+        adminApi
+          .deleteNovel(novel.id, token)
+          .then((res) => {
+            if (res.data.code === 200) {
+              // const index = novels.findIndex((novelElement) => novelElement.id === novel.id);
+              const newNovels = novels.map((novelElement) =>
+                novelElement.id === novel.id ? res.data.result : novelElement,
+              );
+              console.log(newNovels);
+              setNovels(newNovels);
+              return toast.success(res.data.message);
+            } else return toast.error('Đã có lỗi xảy ra');
+          })
+          .catch((err) => {
+            const msg = err.response.data.message ? err.response.data.message : 'Đã có lỗi xảy ra';
+            return toast.error(msg);
+          });
+      },
+      onCancel() {},
+    });
+  };
+
+  const showRestoreConfirm = (novel) => {
+    confirm({
+      title: 'Bạn có muốn khôi phục tiểu thuyết này không?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn "Ok" để khôi phục tiểu thuyết',
+      onOk() {
+        adminApi
+          .restoreNovel(novel.id, token)
+          .then((res) => {
+            if (res.data.code === 200) {
+              // const index = novels.findIndex((novelElement) => novelElement.id === novel.id);
+              const newNovels = novels.map((novelElement) =>
+                novelElement.id === novel.id ? res.data.result : novelElement,
+              );
+              setNovels(newNovels);
+              return toast.success(res.data.message);
+            } else return toast.error('Đã có lỗi xảy ra');
+          })
+          .catch((err) => {
+            const msg = err.response.data.message ? err.response.data.message : 'Đã có lỗi xảy ra';
+            return toast.error(msg);
+          });
+      },
+      onCancel() {},
+    });
+  };
+
   return (
     <>
       <div className="wrapper" class="flex flex-col flex-wrap w-full min-h-fit h-fit mx-auto">
@@ -93,7 +134,7 @@ export default function LightNovels() {
                 </div>
                 <input
                   type="text"
-                  id="table-search-users"
+                  id="table-search-novels"
                   class="block p-2 pl-10 text-sm text-gray-900 border border-solid border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Tìm kiếm"
                   autoFocus
@@ -153,11 +194,12 @@ export default function LightNovels() {
                     <td class="px-6 py-4">{novel.chapterCount}</td>
                     <td class="px-6 py-4">{novel.uploader}</td>
                     <td class="px-6 py-4">
-                      <Button type="link" onClick={showConfirm}>
-                        <div class="hover:opacity-80">
-                          <MinusCircleOutlined style={{ color: 'red' }} />
-                        </div>
-                      </Button>
+                      <Button
+                        onClick={() => (novel.deletedAt ? showRestoreConfirm(novel) : showDeleteConfirm(novel))}
+                        type="link"
+                        icon={novel.deletedAt ? <ReloadOutlined /> : <MinusCircleOutlined />}
+                        danger={!novel.deletedAt}
+                      />
                     </td>
                   </tr>
                 ))}

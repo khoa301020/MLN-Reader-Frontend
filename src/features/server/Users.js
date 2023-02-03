@@ -1,13 +1,15 @@
-import { CheckCircleOutlined, StopOutlined } from '@ant-design/icons';
-import { Pagination } from 'antd';
+import { CheckCircleOutlined, ExclamationCircleFilled, StopOutlined } from '@ant-design/icons';
+import { Button, Modal, Pagination } from 'antd';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { adminApi } from '../../api/api';
 import { datetimeConverter } from '../../helpers/helper';
 
 const token = Cookies.get('token');
 
 export default function Users() {
+  const { confirm } = Modal;
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [displayUsers, setDisplayUsers] = useState([]);
@@ -40,6 +42,57 @@ export default function Users() {
         ),
       );
   }, [users, query]);
+
+  const showDisableConfirm = (user) => {
+    confirm({
+      title: 'Bạn có muốn chặn người dùng này không?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn "Ok" để chặn người dùng ',
+      onOk() {
+        adminApi
+          .banUser(user.id, token)
+          .then((res) => {
+            if (res.data.code === 200) {
+              // const index = users.findIndex((userElement) => userElement.id === user.id);
+              const newUsers = users.map((userElement) => (userElement.id === user.id ? res.data.result : userElement));
+              console.log(newUsers);
+              setUsers(newUsers);
+              return toast.success(res.data.message);
+            } else return toast.error('Đã có lỗi xảy ra');
+          })
+          .catch((err) => {
+            const msg = err.response.data.message ? err.response.data.message : 'Đã có lỗi xảy ra';
+            return toast.error(msg);
+          });
+      },
+      onCancel() {},
+    });
+  };
+
+  const showEnableConfirm = (user) => {
+    confirm({
+      title: 'Bạn có muốn bỏ chặn người dùng này không?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn "Ok" để bỏ chặn người dùng',
+      onOk() {
+        adminApi
+          .unbanUser(user.id, token)
+          .then((res) => {
+            if (res.data.code === 200) {
+              // const index = users.findIndex((userElement) => userElement.id === user.id);
+              const newUsers = users.map((userElement) => (userElement.id === user.id ? res.data.result : userElement));
+              setUsers(newUsers);
+              return toast.success(res.data.message);
+            } else return toast.error('Đã có lỗi xảy ra');
+          })
+          .catch((err) => {
+            const msg = err.response.data.message ? err.response.data.message : 'Đã có lỗi xảy ra';
+            return toast.error(msg);
+          });
+      },
+      onCancel() {},
+    });
+  };
   return (
     <>
       <div className="wrapper" class="flex flex-col flex-wrap w-full min-h-fit h-fit mx-auto">
@@ -115,17 +168,24 @@ export default function Users() {
                     <td class="px-6 py-4">{user.uploadedMangas.length}</td>
                     <td class="px-6 py-4">
                       <div class="flex items-center">
-                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
+                        {user.accountStatus.status === 'active' ? (
+                          <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
+                        ) : (
+                          <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div>
+                        )}
                         <div>{user.accountStatus.status}</div>
                       </div>
                     </td>
                     <td class="px-6 py-4">
-                      <div class="hover:opacity-80">
-                        {user.accountStatus.status === 'active' ? (
-                          <StopOutlined style={{ color: 'red' }} />
-                        ) : (
-                          <CheckCircleOutlined style={{ color: 'blue' }} />
-                        )}
+                      <div>
+                        <Button
+                          onClick={() =>
+                            user.accountStatus.status === 'active' ? showDisableConfirm(user) : showEnableConfirm(user)
+                          }
+                          type="link"
+                          icon={user.accountStatus.status === 'active' ? <StopOutlined /> : <CheckCircleOutlined />}
+                          danger={user.accountStatus.status === 'active'}
+                        />
                       </div>
                     </td>
                   </tr>

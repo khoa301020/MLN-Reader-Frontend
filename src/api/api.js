@@ -104,6 +104,22 @@ export const adminApi = {
   getAllNovels: (token) => api.get('/admin/get-novels', { headers: { Authorization: `Bearer ${token}` } }),
   getAllMangas: (token) => api.get('/admin/get-mangas', { headers: { Authorization: `Bearer ${token}` } }),
   getAllComments: (token) => api.get('/admin/get-comments', { headers: { Authorization: `Bearer ${token}` } }),
+  banUser: (userId, token) =>
+    api.post(`/admin/ban-user/${userId}`, {}, { headers: { Authorization: `Bearer ${token}` } }),
+  unbanUser: (userId, token) =>
+    api.post(`/admin/unban-user/${userId}`, {}, { headers: { Authorization: `Bearer ${token}` } }),
+  deleteNovel: (novelId, token) =>
+    api.post(`/admin/delete-novel/${novelId}`, {}, { headers: { Authorization: `Bearer ${token}` } }),
+  restoreNovel: (novelId, token) =>
+    api.post(`/admin/restore-novel/${novelId}`, {}, { headers: { Authorization: `Bearer ${token}` } }),
+  deleteManga: (mangaId, token) =>
+    api.post(`/admin/delete-manga/${mangaId}`, {}, { headers: { Authorization: `Bearer ${token}` } }),
+  restoreManga: (mangaId, token) =>
+    api.post(`/admin/restore-manga/${mangaId}`, {}, { headers: { Authorization: `Bearer ${token}` } }),
+  deleteComment: (commentId, token) =>
+    api.post(`/admin/delete-comment/${commentId}`, {}, { headers: { Authorization: `Bearer ${token}` } }),
+  restoreComment: (commentId, token) =>
+    api.post(`/admin/restore-comment/${commentId}`, {}, { headers: { Authorization: `Bearer ${token}` } }),
 };
 
 export default api;

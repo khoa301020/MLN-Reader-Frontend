@@ -1,8 +1,9 @@
-import { ExclamationCircleFilled, MinusCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleFilled, MinusCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Button, Modal, Pagination } from 'antd';
 import parse from 'html-react-parser';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { adminApi } from '../../api/api';
 import { datetimeConverter } from '../../helpers/helper';
 
@@ -13,24 +14,9 @@ const typeMap = {
   'novel-chapter': 'Chương tiểu thuyết',
   'manga-chapter': 'Chương truyện tranh',
 };
-const { confirm } = Modal;
-const showConfirm = () => {
-  confirm({
-    title: 'Do you Want to delete these items?',
-    icon: <ExclamationCircleFilled />,
-    // content: 'Some descriptions',
-    okText: 'Xoá',
-    cancelText: 'Huỷ',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-};
 
 export default function Comments() {
+  const { confirm } = Modal;
   const [comments, setComments] = useState([]);
   const [filteredComments, setFilteredComments] = useState([]);
   const [displayComments, setDisplayComments] = useState([]);
@@ -65,6 +51,61 @@ export default function Comments() {
         ),
       );
   }, [comments, query]);
+
+  const showDeleteConfirm = (comment) => {
+    confirm({
+      title: 'Bạn có muốn xoá bình luận này không?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn "Ok" để xoá bình luận',
+      onOk() {
+        adminApi
+          .deleteComment(comment.id, token)
+          .then((res) => {
+            if (res.data.code === 200) {
+              // const index = comments.findIndex((commentElement) => commentElement.id === comment.id);
+              const newComments = comments.map((commentElement) =>
+                commentElement.id === comment.id ? res.data.result : commentElement,
+              );
+              console.log(newComments);
+              setComments(newComments);
+              return toast.success(res.data.message);
+            } else return toast.error('Đã có lỗi xảy ra');
+          })
+          .catch((err) => {
+            const msg = err.response.data.message ? err.response.data.message : 'Đã có lỗi xảy ra';
+            return toast.error(msg);
+          });
+      },
+      onCancel() {},
+    });
+  };
+
+  const showRestoreConfirm = (comment) => {
+    confirm({
+      title: 'Bạn có muốn khôi phục bình luận này không?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Nhấn "Ok" để khôi phục bình luận',
+      onOk() {
+        adminApi
+          .restoreComment(comment.id, token)
+          .then((res) => {
+            if (res.data.code === 200) {
+              // const index = comments.findIndex((commentElement) => commentElement.id === comment.id);
+              const newComments = comments.map((commentElement) =>
+                commentElement.id === comment.id ? res.data.result : commentElement,
+              );
+              setComments(newComments);
+              return toast.success(res.data.message);
+            } else return toast.error('Đã có lỗi xảy ra');
+          })
+          .catch((err) => {
+            const msg = err.response.data.message ? err.response.data.message : 'Đã có lỗi xảy ra';
+            return toast.error(msg);
+          });
+      },
+      onCancel() {},
+    });
+  };
 
   return (
     <>
@@ -141,11 +182,12 @@ export default function Comments() {
                     <td class="px-6 py-4">{`${datetimeConverter(comment.createdAt).datetime}`}</td>
                     <td class="px-6 py-4">{comment.user.name}</td>
                     <td class="px-6 py-4">
-                      <Button type="link" onClick={showConfirm}>
-                        <div class="hover:opacity-80">
-                          <MinusCircleOutlined style={{ color: 'red' }} />
-                        </div>
-                      </Button>
+                      <Button
+                        onClick={() => (comment.deletedAt ? showRestoreConfirm(comment) : showDeleteConfirm(comment))}
+                        type="link"
+                        icon={comment.deletedAt ? <ReloadOutlined /> : <MinusCircleOutlined />}
+                        danger={!comment.deletedAt}
+                      />
                     </td>
                   </tr>
                 ))}

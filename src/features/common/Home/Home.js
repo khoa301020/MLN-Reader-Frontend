@@ -166,7 +166,7 @@ function Home() {
                   <div class="p-2 bg-cyan-500 text-white font-bold uppercase">Bình luận gần đây</div>
                 </div>
                 <div class="w-full h-1 bg-cyan-500 mb-5"></div>
-                <CommentList comments={comments} />
+                <CommentList comments={comments.filter((comment) => comment.target !== null)} />
               </div>
               <div class="mt-12">
                 <div class="flex flex-row items-center mt-7">

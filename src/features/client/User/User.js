@@ -176,7 +176,7 @@ export default function User({ isSelf = false }) {
                     <div class="w-1.5 h-16 bg-zinc-100 mx-10 rounded-sm "></div>
                     <div class="grid col-start-5 col-span-2 justify-items-center">
                       <div class="font-bold text-3xl text-zinc-100">
-                        {user.followingNovels?.length + user.followingNovels?.length}
+                        {user.followingNovels?.length + user.followingMangas?.length}
                       </div>
                       <div class="text-sm text-zinc-100">Truyện theo dõi</div>
                     </div>

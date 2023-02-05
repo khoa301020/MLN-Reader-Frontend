@@ -27,6 +27,8 @@ export default function Book({ id }) {
 
   const [check, setCheck] = useState(false);
 
+  const token = Cookies.get('token');
+
   const { confirm } = Modal;
   const showConfirm = () => {
     confirm({
@@ -34,7 +36,6 @@ export default function Book({ id }) {
       icon: <ExclamationCircleFilled />,
       content: 'Nhấn vào nút "Ok" để xoá',
       onOk() {
-        const token = Cookies.get('token');
         if (type === 'novel') {
           novelApi
             .deleteAction(token, {
@@ -167,13 +168,13 @@ export default function Book({ id }) {
 
     if (type === 'novel') {
       formData.append('subject', 'novel');
-      novelApi.updateNovel(formData).then((res) => {
+      novelApi.updateNovel(token, formData).then((res) => {
         toast.success('Cập nhật tiểu thuyết thành công');
         navigate(`/novel/${res.data.result.id}`);
       });
     } else if (type === 'manga') {
       formData.append('subject', 'manga');
-      mangaApi.updateManga(formData).then((res) => {
+      mangaApi.updateManga(token, formData).then((res) => {
         toast.success('Cập nhật truyện tranh thành công');
         navigate(`/manga/${res.data.result.id}`);
       });

@@ -5,6 +5,8 @@ import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { mangaApi, novelApi } from '../../../api/api';
 
+const token = Cookies.get('token');
+
 export default function NovelVolume() {
   const navigate = useNavigate();
   const { bookId } = useParams();
@@ -17,7 +19,6 @@ export default function NovelVolume() {
   const [title, setTitle] = useState('');
 
   useEffect(() => {
-    const token = Cookies.get('token');
     if (!token) {
       navigate('/auth/login');
     }
@@ -63,11 +64,11 @@ export default function NovelVolume() {
     let query;
     if (type === 'manga') {
       formData.append('mangaId', bookId);
-      query = mangaApi.createSection(formData);
+      query = mangaApi.createSection(token, formData);
     } else if (type === 'novel') {
       formData.append('subject', 'section');
       formData.append('novelId', bookId);
-      query = novelApi.createSection(formData);
+      query = novelApi.createSection(token, formData);
     }
 
     query

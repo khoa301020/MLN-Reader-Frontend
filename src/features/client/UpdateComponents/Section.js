@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { mangaApi, novelApi } from '../../../api/api';
 
+const token = Cookies.get('token');
+
 export default function Section({ id }) {
   const navigate = useNavigate();
   const { confirm } = Modal;
@@ -15,7 +17,6 @@ export default function Section({ id }) {
       icon: <ExclamationCircleFilled />,
       content: 'Nhấn vào nút "Ok" để xoá',
       onOk() {
-        const token = Cookies.get('token');
         if (type === 'novel') {
           novelApi
             .deleteAction(token, {
@@ -113,7 +114,7 @@ export default function Section({ id }) {
     if (type === 'novel') {
       formData.append('subject', 'section');
       novelApi
-        .updateSection(formData)
+        .updateSection(token, formData)
         .then((res) => {
           if (res.data.result) {
             toast.success('Cập nhật thành công');
@@ -126,7 +127,7 @@ export default function Section({ id }) {
         });
     } else if (type === 'manga') {
       mangaApi
-        .updateSection(formData)
+        .updateSection(token, formData)
         .then((res) => {
           if (res.data.result) {
             setSeed(seed + 1);

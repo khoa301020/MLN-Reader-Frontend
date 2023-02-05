@@ -40,14 +40,22 @@ export const novelApi = {
   getChapterOnly: (chapterId) => api.get(`/novel/get-chapter?chapterId=${chapterId}&isOnly=true`),
   addHistory: (data) => api.post('/novel/add-history', data),
   getHistory: (username) => api.get('/novel/get-history?username=' + username),
-  createNovel: (data) => api.post('/novel/create-action', data),
-  updateNovel: (data) => api.post('/novel/update-action', data),
-  createSection: (data) => api.post('/novel/create-action', data),
-  updateSection: (data) => api.post('/novel/update-action', data),
-  createChapter: (data) => api.post('/novel/create-action', data),
-  updateChapter: (data) => api.post('/novel/update-action', data),
-  createNote: (data) => api.post('/novel/create-action', data),
-  updateNote: (data) => api.post('/novel/update-action', data),
+  createNovel: (token, data) =>
+    api.post('/novel/create-action', data, { headers: { Authorization: `Bearer ${token}` } }),
+  updateNovel: (token, data) =>
+    api.post('/novel/update-action', data, { headers: { Authorization: `Bearer ${token}` } }),
+  createSection: (token, data) =>
+    api.post('/novel/create-action', data, { headers: { Authorization: `Bearer ${token}` } }),
+  updateSection: (token, data) =>
+    api.post('/novel/update-action', data, { headers: { Authorization: `Bearer ${token}` } }),
+  createChapter: (token, data) =>
+    api.post('/novel/create-action', data, { headers: { Authorization: `Bearer ${token}` } }),
+  updateChapter: (token, data) =>
+    api.post('/novel/update-action', data, { headers: { Authorization: `Bearer ${token}` } }),
+  createNote: (token, data) =>
+    api.post('/novel/create-action', data, { headers: { Authorization: `Bearer ${token}` } }),
+  updateNote: (token, data) =>
+    api.post('/novel/update-action', data, { headers: { Authorization: `Bearer ${token}` } }),
   deleteAction: (token, data) =>
     api.post('/novel/delete-action', data, { headers: { Authorization: `Bearer ${token}` } }),
 };
@@ -63,12 +71,16 @@ export const mangaApi = {
   getLastUpdateManga: () => api.get('/manga/get-last-update'),
   addHistory: (data) => api.post('/manga/add-history', data),
   getHistory: (username) => api.get('/manga/get-history?username=' + username),
-  createManga: (data) => api.post('/manga/create-manga', data),
-  updateManga: (data) => api.post('/manga/update-manga', data),
+  createManga: (token, data) =>
+    api.post('/manga/create-manga', data, { headers: { Authorization: `Bearer ${token}` } }),
+  updateManga: (token, data) =>
+    api.post('/manga/update-manga', data, { headers: { Authorization: `Bearer ${token}` } }),
   deleteManga: (token, id) =>
     api.post('/manga/delete-manga', { type: 'manga', id }, { headers: { Authorization: `Bearer ${token}` } }),
-  createSection: (data) => api.post('/manga/create-section', data),
-  updateSection: (data) => api.post('/manga/update-section', data),
+  createSection: (token, data) =>
+    api.post('/manga/create-section', data, { headers: { Authorization: `Bearer ${token}` } }),
+  updateSection: (token, data) =>
+    api.post('/manga/update-section', data, { headers: { Authorization: `Bearer ${token}` } }),
   deleteSection: (token, id) =>
     api.post('/manga/delete-section', { type: 'section', id }, { headers: { Authorization: `Bearer ${token}` } }),
   createChapter: (token, data) =>

@@ -71,8 +71,10 @@ export const mangaApi = {
   updateSection: (data) => api.post('/manga/update-section', data),
   deleteSection: (token, id) =>
     api.post('/manga/delete-section', { type: 'section', id }, { headers: { Authorization: `Bearer ${token}` } }),
-  createChapter: (data) => api.post('/manga/create-chapter', data),
-  updateChapter: (data) => api.post('/manga/update-chapter', data),
+  createChapter: (token, data) =>
+    api.post('/manga/create-chapter', data, { headers: { Authorization: `Bearer ${token}` } }),
+  updateChapter: (token, data) =>
+    api.post('/manga/update-chapter', data, { headers: { Authorization: `Bearer ${token}` } }),
   deleteChapter: (token, id) =>
     api.post('/manga/delete-chapter', { type: 'chapter', id }, { headers: { Authorization: `Bearer ${token}` } }),
 };

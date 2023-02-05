@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { mangaApi } from '../../../api/api';
 
+const token = Cookies.get('token');
+
 export default function MangaChapter({ id }) {
   const navigate = useNavigate();
   const { confirm } = Modal;
@@ -70,16 +72,16 @@ export default function MangaChapter({ id }) {
     formData.append('chapter', fileInput.current.files[0]);
 
     mangaApi
-      .updateChapter(formData)
+      .updateChapter(token, formData)
       .then((res) => {
-        if (res.data.result) {
+        if (res.data.code === 201) {
           setManga(res.data.result);
           toast.success('Cập nhật thành công');
-        } else {
-          toast.error('Cập nhật thất bại');
+          navigate(`/manga/${manga.mangaId}`);
         }
       })
       .catch((err) => {
+        toast.error(err.response.data.message);
         console.log(err);
       });
   };

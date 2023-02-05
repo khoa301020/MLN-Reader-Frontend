@@ -1,12 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 export default function MangaChapter({ section, onSubmit }) {
   const fileInput = useRef(null);
 
   const [title, setTitle] = useState('');
 
+  useEffect(() => {
+    if (title) console.log('Got title');
+    if (fileInput.current?.files[0]) console.log('Got title');
+  }, [title]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!title) return toast.error('Missing title');
+    if (!fileInput.current?.files[0]) return toast.error('Missing file');
+
+    console.log(section);
 
     const formData = new FormData();
     formData.append('mangaId', section.mangaId);
@@ -66,7 +77,6 @@ export default function MangaChapter({ section, onSubmit }) {
               <div className="col-start-5 col-span-7">
                 <button
                   type="button"
-                  disabled={!title || !fileInput.current?.files[0]}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 border border-solid border-transparent font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2 focus:outline-none "
                   onClick={handleSubmit}
                 >

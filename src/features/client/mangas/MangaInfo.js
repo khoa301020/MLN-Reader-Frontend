@@ -195,21 +195,27 @@ function MangaInfo() {
                   <div className="grid grid-cols-4 gap-4 sm:grid-col-1 p-3">
                     <div className="left col-span-1">
                       <div className="mb-2">
-                        <div className="w-full h-9 bg-sky-900 max-w-xs rounded">
+                        <div className="w-full h-9 bg-green-900 max-w-xs rounded">
                           <div className="text-white text-bold text-center leading-9 text-base font-semibold">
                             Truyện tranh
                           </div>
                         </div>
                         <div className="-mt-1 flex justify-center">
                           <div className="overflow-hidden inline-block">
-                            <div className="h-4 w-5 bg-sky-900 -rotate-45 transform origin-top-left"></div>
+                            <div className="h-4 w-5 bg-green-900 -rotate-45 transform origin-top-left"></div>
                           </div>
                         </div>
                       </div>
-                      <img className="w-full h-auto object-cover max-w-md rounded-md" src={book.cover} alt={book.title} />
+                      <img
+                        className="w-full h-auto object-cover max-w-md rounded-md"
+                        src={book.cover}
+                        alt={book.title}
+                      />
                     </div>
                     <div className="Info col-span-3 text-sm">
-                      <div className="xl:text-3xl sm:text-base lg:text-2xl md:text-xl font-semibold text-zinc-100">{book.title}</div>
+                      <div className="xl:text-3xl sm:text-base lg:text-2xl md:text-xl font-semibold text-zinc-100">
+                        {book.title}
+                      </div>
                       <div className="flex flex-wrap h-auto w-full mt-3 mb-3">
                         {book.tags?.map((tag, index) => (
                           <a href="##" id={tag.code} className="no-underline" key={index}>
@@ -273,7 +279,11 @@ function MangaInfo() {
                       </span>
                     </div>
                     <div className="left col-span-1 pl-3">
-                      <img className="w-full h-auto object-cover max-w-md rounded-md" src={section.cover} alt={section.title} />
+                      <img
+                        className="w-full h-auto object-cover max-w-md rounded-md"
+                        src={section.cover}
+                        alt={section.title}
+                      />
                     </div>
                     <div className="Info col-span-5 text-base pr-3">
                       <TableListChapter chapters={section.chapters} prefix="/manga-chapter/" />
@@ -344,18 +354,28 @@ function MangaInfo() {
                 <div class="w-full bg-zinc-800 h-fit rounded-md p-3 border border-solid border-zinc-700">
                   <Space direction="vertical" style={{ width: '100%' }}>
                     <Link to={`/action/update-series/${id}`}>
-                      <Button block className='bg-zinc-700 border border-solid border-zinc-600 text-zinc-300 hover:bg-sky-900 hover:border-cyan-500'>
+                      <Button
+                        block
+                        className="bg-zinc-700 border border-solid border-zinc-600 text-zinc-300 hover:bg-sky-900 hover:border-cyan-500"
+                      >
                         <EditOutlined />
                         Chỉnh sửa
                       </Button>
                     </Link>
                     <Link to={`/action/create-section/${id}`}>
-                      <Button block className='bg-zinc-700 border border-solid border-zinc-600 text-zinc-300 hover:bg-sky-900 hover:border-cyan-500'>
+                      <Button
+                        block
+                        className="bg-zinc-700 border border-solid border-zinc-600 text-zinc-300 hover:bg-sky-900 hover:border-cyan-500"
+                      >
                         <FileOutlined />
                         Thêm tập
                       </Button>
                     </Link>
-                    <Button block className='bg-zinc-700 border border-solid border-zinc-600 text-zinc-300 hover:bg-sky-900 hover:border-cyan-500' onClick={showModal}>
+                    <Button
+                      block
+                      className="bg-zinc-700 border border-solid border-zinc-600 text-zinc-300 hover:bg-sky-900 hover:border-cyan-500"
+                      onClick={showModal}
+                    >
                       <ProfileOutlined />
                       Thêm chương
                     </Button>
@@ -405,7 +425,10 @@ function MangaInfo() {
                         <div className="flex flex-row" key={index}>
                           <div className="w-11/12">
                             <div className="text-gray-900 text-sm text-justify">
-                              <a href={`#${section.id}`} className="no-underline text-zinc-300 hover:text-cyan-500 duration-300">
+                              <a
+                                href={`#${section.id}`}
+                                className="no-underline text-zinc-300 hover:text-cyan-500 duration-300"
+                              >
                                 {section.name}
                               </a>
                             </div>

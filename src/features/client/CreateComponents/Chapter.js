@@ -61,7 +61,7 @@ export default function Chapter() {
         }
       })
       .catch((err) => {
-        toast.error(err.response.data.error ? err.response.data.error : 'Thêm chương thất bại');
+        toast.error(err.response.data.message ? err.response.data.message : 'Thêm chương thất bại');
         console.log(err);
       });
   }
